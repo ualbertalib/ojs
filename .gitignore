@@ -2,6 +2,7 @@ config.inc.php
 build
 temp
 files
+cache
 .htaccess
 .project
 .buildpath
