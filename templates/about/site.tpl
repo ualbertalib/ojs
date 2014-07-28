@@ -9,7 +9,7 @@
  *}
 {strip}
 {assign var="pageTitle" value="about.aboutSite"}
-{include file="common/header.tpl"}
+{include file="common/uofaheader.tpl"}
 {/strip}
 
 {if !empty($about)}
@@ -29,5 +29,6 @@
 
 <a href="{url op="aboutThisPublishingSystem"}">{translate key="about.aboutThisPublishingSystem"}</a>
 
-{include file="common/footer.tpl"}
+
+{include file="common/uofafooter.tpl"}
 

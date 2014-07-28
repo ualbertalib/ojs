@@ -33,7 +33,17 @@
 			<td><a href="{url op="submission" path=$articleId}" class="action">{if $submission->getLocalizedTitle()}{$submission->getLocalizedTitle()|strip_tags|truncate:60:"..."}{else}{translate key="common.untitled"}{/if}</a></td>
 			<td align="right">
 				{assign var="status" value=$submission->getSubmissionStatus()}
-				{if $status==STATUS_QUEUED_UNASSIGNED}{translate key="submissions.queuedUnassigned"}
+				{if $status==STATUS_QUEUED_UNASSIGNED}
+					{**
+					* Custom Code By Jeremy for JPPS change "Awaiting Assignment" to "Under Review"
+					*}					
+					{if $currentJournal->getJournalInitials() == 'JPPS'}
+						Under Review
+					{else}
+						{translate key="submissions.queuedUnassigned"}
+					{/if}
+				
+				
 				{elseif $status==STATUS_QUEUED_REVIEW}
 					<a href="{url op="submissionReview" path=$articleId}" class="action">
 						{assign var=decision value=$submission->getMostRecentDecision()}

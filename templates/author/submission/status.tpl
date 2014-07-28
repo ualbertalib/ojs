@@ -16,7 +16,12 @@
 		<td width="20%" class="label">{translate key="common.status"}</td>
 		<td width="80%" class="value">
 			{if $status == STATUS_ARCHIVED}{translate key="submissions.archived"}
-			{elseif $status==STATUS_QUEUED_UNASSIGNED}{translate key="submissions.queuedUnassigned"}
+			{elseif $status==STATUS_QUEUED_UNASSIGNED} {* Custom Code Jeremy *}
+					{if $currentJournal->getJournalInitials() == 'JPPS'}
+						Under Review
+					{else}
+						{translate key="submissions.queuedUnassigned"}
+					{/if}	
 			{elseif $status==STATUS_QUEUED_EDITING}{translate key="submissions.queuedEditing"}
 			{elseif $status==STATUS_QUEUED_REVIEW}{translate key="submissions.queuedReview"}
 			{elseif $status==STATUS_PUBLISHED}{translate key="submissions.published"}&nbsp;&nbsp;&nbsp;&nbsp;{$issue->getIssueIdentification()|escape}

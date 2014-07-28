@@ -14,6 +14,64 @@
 
 
 {include file="article/header.tpl"}
+{**
+* Custom by Jeremy
+* Adds the author names/author affiliation/superscripting
+* also uses the getAuthor_Affiliation_SuperScript() from classes/article/Article.inc.php
+* 
+*}		
+			   {php}
+			
+				
+			     #$Auth_Afil_Sup = $this->_tpl_vars['article']->getAuthor_Affiliation_SuperScript() ;
+				 $Auth_Afil_Sup = $this->get_template_vars('article')->getAuthor_Affiliation_SuperScript() ;
+				 
+				  #echo count($Auth_Afil_Sup) . '<br>';
+				  #echo is_array($Auth_Afil_Sup) ? "yes" . '<br>' : "No"  . '<br>' ;
+				   $Auth_ary = $Auth_Afil_Sup['AuthorName']  ;
+				   $Affil_ary = $Auth_Afil_Sup['Affiliation'];
+			       $Sup_ary = $Auth_Afil_Sup['Superscript']  ;
+				   
+			  	  #echo 'AuthorName' . count($Auth_ary) . '<br>' ;
+				  #echo '<br><b>';
+				  #print_r(array_keys($Auth_ary));
+				  # echo '<br></b>';
+				  #echo '<br><br>';
+				  #  echo '<br><b>';
+				  #print_r($Affil_ary);
+				  #  echo '<br></b>';		
+				  #echo  $Auth_ary[0] ;
+				  
+				  $Auth_str= "";
+				  $counter = 0;	  
+				  foreach($Auth_ary as $a){
+				  	if (!empty($Auth_str)) {
+					    
+							$Auth_str .= ', ';
+							
+						}			
+						$Auth_str .= $a;
+						if (count($Auth_ary) > 1){
+						 $Auth_str .= '<sup>' . ($Sup_ary[$counter]  ) . '</sup>';
+						}
+						  
+						if (trim($Affil_ary[$counter]) != ""){
+						  # if there only 1 author a superscript is not neccassary.
+							if (count($Auth_ary) > 1){
+						    $affil_str .= '<br> <sup>' . ($Sup_ary[$counter]  ). '</sup>' . $Affil_ary[$counter]; 
+							}else{
+							 $affil_str .= '<br>'. $Affil_ary[$counter]; 
+							}
+							
+						}
+						
+						$counter +=1;			
+				  }
+				  #echo $Auth_str . '<br>';
+				  #echo $affil_str;
+				   
+			  {/php}
+  {** End CUSTOM *}
 
 {if $galley}
 	{if $galley->isHTMLGalley()}
@@ -43,11 +101,41 @@
 	{/if}
 	{call_hook name="Templates::Article::Article::ArticleCoverImage"}
 	<div id="articleTitle"><h3>{$article->getLocalizedTitle()|strip_unsafe_html}</h3></div>
-	<div id="authorString"><em>{$article->getAuthorString()|escape}</em></div>
+	<div id="authorString">
+
+		<em>
+	{**
+	* Custom by Jeremy
+	* Displays the Author names and affiliations and superscripts
+	*}
+			{if $currentJournal->getJournalId() == 14}
+				{php}echo $Auth_str . '<br>' . $affil_str ;{/php}	
+			{else}
+				{if $currentJournal->getJournalId() != 62}
+				{$article->getAuthorString()|escape}
+				 {/if}	
+			 {/if}	
+	{** End CUSTOM *}
+
+</em>
+
+	</div>
 	<br />
 	{if $article->getLocalizedAbstract()}
 		<div id="articleAbstract">
-		<h4>{translate key="article.abstract"}</h4>
+		
+		{**
+   	     * Custom Code by Jeremy  Change "ABSTRACT" to blank (journal 62)
+	    *}
+
+		{if $currentJournal->getJournalId() != 62}
+			<h4>{translate key="article.abstract"}</h4>
+		{else}
+			
+		{/if}	
+		{** End CUSTOM *}
+		
+		
 		<br />
 		<div>{$article->getLocalizedAbstract()|strip_unsafe_html|nl2br}</div>
 		<br />
@@ -62,6 +150,30 @@
 		<br />
 		</div>
 	{/if}
+	
+	{**
+		 *  Custom to show reference by Jeremy
+		 *  Example: J Pharm Pharm Sci, 10 (2); 23-28, 2007
+		 *}	
+	
+	 {php}
+		         $vol = $this->_tpl_vars['issue']->getData('volume');
+		         $num = $this->_tpl_vars['issue']->getData('number');
+		        $year = $this->_tpl_vars['issue']->getData('year');  
+		$journalTitle = $this->_tpl_vars['siteTitle']; 
+		
+	    $this->assign('volume',$vol);
+		$this->assign('number',$num);
+		$this->assign('issueYear',$year);
+		$this->assign('journalTitle',$journalTitle);
+	 {/php}
+	 
+	 {if $currentJournal->getJournalId() == 14}
+	 <!--- {$journalTitle|escape} ---> J Pharm Pharm Sci, {$volume|escape} ({$number|escape}): {$article->getPages()|escape}{if $article->getPages()},{/if} {$issueYear|escape}
+	 {/if}
+	
+	
+	
 
 	{if (!$subscriptionRequired || $article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN || $subscribedUser || $subscribedDomain)}
 		{assign var=hasAccess value=1}

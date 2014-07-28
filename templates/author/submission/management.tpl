@@ -79,7 +79,12 @@
 				{/if}
 				<br/>
                         {foreachelse}
+							{* Custom Code Jeremy *}
+							{if $currentJournal->getJournalInitials() == 'JPPS'}
+								Under Review
+							{else}
                                 {translate key="common.noneAssigned"}
+							{/if}	
                         {/foreach}
 		</td>
 	</tr>

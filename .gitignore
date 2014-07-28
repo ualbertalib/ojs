@@ -6,3 +6,7 @@ files
 .project
 .buildpath
 .settings
+public/journals/
+patches2.4.2/
+*.bak
+patch.sh

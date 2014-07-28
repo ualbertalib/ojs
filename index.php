@@ -53,6 +53,12 @@
  * Bootstrap code for OJS site. Loads required files and then calls the
  * dispatcher to delegate to the appropriate request handler.
  */
+ 
+// if ($_SERVER['REMOTE_ADDR']!='142.244.34.110'){
+// exit('UPGRADE IN PROGRESS' . $_SERVER['REMOTE_ADDR']);
+// }
+ 
+ 
 
 // Initialize global environment
 define('INDEX_FILE_LOCATION', __FILE__);

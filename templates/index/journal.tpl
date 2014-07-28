@@ -42,8 +42,23 @@
 {/if}
 
 {if $issue && $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}
+{**
+		* Custom Code By Jeremy for EBLIP
+		*
+		*}
+	{if $currentJournal->getJournalInitials() == 'EBLIP'}		
+			<script language="javascript">
+			//popup("https://surveys.mcgill.ca/limesurvey/index.php?sid=43915&lang=en");
+
+			{literal} 
+			function popup(Site)			{
+				window.open(Site,"survey","toolbar=yes,statusbar=yes, location=no,scrollbars=yes,resizable=yes");
+			}
+		   {/literal}
+			</script>	
+	{/if}
 	{* Display the table of contents or cover page of the current issue. *}
-	<br />
+	
 	<h3>{$issue->getIssueIdentification()|strip_unsafe_html|nl2br}</h3>
 	{include file="issue/view.tpl"}
 {/if}

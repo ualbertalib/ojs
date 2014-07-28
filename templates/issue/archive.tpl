@@ -13,6 +13,28 @@
 {/strip}
 
 <div id="issues">
+{**
+* Custom Code By Jeremy for JPPS
+*
+*}
+{if $currentJournal->getJournalInitials() == 'JPPS'}
+<a target="JPPS" href="http://www.ualberta.ca/~csps/Journals/JournalArchives.htm"><b>To view our archives Volume 1 - Volume 10, No 3, 2007 please click here.</b></a>
+{/if}
+
+{if $currentJournal->getJournalInitials() == 'EBLIP'}		
+			<script language="javascript">
+			//popup("https://surveys.mcgill.ca/limesurvey/index.php?sid=43915&lang=en");
+
+			{literal} 
+			function popup(Site)			{
+				window.open(Site,"survey","toolbar=yes,statusbar=yes, location=no,scrollbars=yes,resizable=yes");
+			}
+		   {/literal}
+			</script>	
+	{/if}
+	
+<a name="issues"></a>
+
 {iterate from=issues item=issue}
 	{if $issue->getYear() != $lastYear}
 		{if !$notFirstYear}
