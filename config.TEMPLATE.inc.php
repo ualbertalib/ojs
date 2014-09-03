@@ -94,7 +94,7 @@ enable_cdn = On
 citation_checking_max_processes = 3
 
 ; Display a message on the site admin and journal manager user home pages if there is an upgrade available
-show_upgrade_warning = On
+show_upgrade_warning = Off
 
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
