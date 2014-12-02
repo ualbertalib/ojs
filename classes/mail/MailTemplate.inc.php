@@ -96,8 +96,12 @@ class MailTemplate extends PKPMailTemplate {
 			$this->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
 		}
 
+/**
+	Jeremy Custom Code add article ID
+**/
+
 		if ($journal && !Request::getUserVar('continued')) {
-			$this->setSubject('[' . $journal->getLocalizedSetting('initials') . '] ' . $this->getSubject());
+			$this->setSubject('[' . $journal->getLocalizedSetting('initials') . '] ' . $this->getSubject() . ' [Article ID:{$articleId}]');
 		}
 
 		$this->journal =& $journal;

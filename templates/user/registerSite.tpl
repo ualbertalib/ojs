@@ -9,7 +9,7 @@
  *
  *}
 {strip}
-{include file="common/header.tpl"}
+{include file="common/uofaheader.tpl"}
 {/strip}
 <div id="journals">
 {iterate from=journals item=journal}
@@ -26,5 +26,5 @@
 	</ul>
 {/if}
 </div>
-{include file="common/footer.tpl"}
+{include file="common/uofafooter.tpl"}
 

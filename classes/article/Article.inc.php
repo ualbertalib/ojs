@@ -86,7 +86,40 @@ class Article extends Submission {
 		if (Config::getVar('debug', 'deprecation_warnings')) trigger_error('Deprecated function.');
 		return $this->getLocalizedAbstract();
 	}
-
+	/**
+	 * Custom Function for the Abstract By Jeremy
+	 * 
+	 * Superscript is used to point to the Authors affiliation if available
+	 * Return associative array of arrays containing author names, affiliations, superscripts 
+	 * @return array
+	 */
+	function getAuthor_Affiliation_SuperScript() {
+		$author_ary = array();
+		$affil_ary = array();
+		$superscript_ary = array();
+		
+		$counter = 0;
+		$counter2 = 0;
+		foreach ($this->getAuthors() as $a) {
+				if (in_array($a->getLocalizedAffiliation(),$affil_ary)  ){
+					 	$superscript_ary[$counter] = $superscript_ary[array_search($a->getLocalizedAffiliation(),$affil_ary)] ;
+					}else{
+						if ($a->getLocalizedAffiliation() != ""){
+						$counter2 += 1;
+						$superscript_ary[$counter] = $counter2;
+						$affil_ary[$counter]=$a->getLocalizedAffiliation() ;						
+						}else{
+							$superscript_ary[$counter] = "";
+							$affil_ary[$counter]="";
+						}
+					}
+				$author_ary[$counter] = $a->getFullName(); 
+				$counter += 1;
+		}
+	   $auth_affil_ary = array("AuthorName"=>$author_ary, "Affiliation"=>$affil_ary,"Superscript"=>$superscript_ary);
+	
+		return $auth_affil_ary;
+	}
 	//
 	// Get/set methods
 	//

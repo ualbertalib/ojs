@@ -14,6 +14,13 @@
 {/strip}
 
 {call_hook name="Templates::About::EditorialTeam::Information"}
+{**
+* Custom by Jeremy
+* Only Display this if journal ID is NOT 21 ("Past Imperfect")
+*}
+{if $currentJournal->getJournalId() == 21}
+            Please see individual issues for editorial information.
+{/if}
 
 {foreach from=$groups item=group}
 <div id="group">

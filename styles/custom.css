@@ -1,0 +1,323 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+body{
+	background-color:#fff;
+	font: 0.85em/1.5 Verdana, 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+#header{
+	width:900px;
+	height:115px;
+	margin:auto;
+	background: url(../templates/images/custom/top_back.jpg) 0px 48px no-repeat;
+}
+h1{
+	color:#fff;
+	font-family: 'Abel', sans-serif;
+	padding-top:10px;
+	padding-left:20px;
+	text-align:left;
+	font-weight:100;
+	font-size:26px;
+	text-transform:uppercase;
+	letter-spacing:3px;
+	line-height:25px;
+}
+h1 span{
+	font-size:15px;
+	display:block;
+}
+h2, h3{
+	font-family: 'Abel', sans-serif;
+	font-weight:bold;
+	font-size:22px;
+	margin:0 0 15px 0;
+}
+h3{
+	color:#666;
+}
+#uanav{
+	float:right;
+	width:530px;
+	padding-top:30px;
+}
+#uanav li a{
+float:left;
+	font-size:11px;
+	color:#666;
+	padding:0 8px;
+	text-decoration:none;
+	border-right:1px solid #666;	
+	line-height:10px;
+}
+#uanav li a.last{
+	padding-right:0px;
+	border-right:0;
+}
+#uanav li a:hover{
+	text-decoration:underline;
+}
+#container{
+	width:900px;
+	margin:auto;
+	line-height:25px;
+}
+#welcome{
+	width:525px;
+	float:left;
+	min-height: 200px;
+}
+#info{
+	width:290px;
+	float:right;
+}
+.box{
+background: #F4F4F4;
+border: 1px solid #E0E0E0;
+box-shadow: 0px 0px 2px 1px #e0e0e0;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px 5px 5px 5px;
+color: #555;
+padding: 5px 15px;
+font-size: 0.95em;
+margin-bottom: 20px;
+}
+#navbar{
+	width:100%;
+	float:left;
+}
+#rightSidebar{
+	width:135px;
+	float:right;
+}
+#ejournals{
+	float:left;
+	width:680px;
+}
+.menu li a{
+	float:left;
+	width:179px;
+	text-align:center;
+	text-decoration:none;
+	color:#444;
+	border-right:1px solid #fff;
+	line-height:0.8em;
+	text-transform:uppercase;
+	font-weight:bold;
+	padding:10px 0;
+	font-size:11px;
+	background: #F4F4F4;
+	letter-spacing:1px;
+}
+.menu li a:hover{
+	color:#2b763b;
+	background-color:#FFF;
+}
+#ejournals h3{
+	color:#2b763b;
+	font-size:15px;
+	background-color:#fff;
+	border-top:1px solid #E0E0E0;
+	padding:2px 10px;
+	margin-top:20px;
+}
+#ejournals h3 a{
+	background:none;
+	padding:0;
+}
+#ejournals p{
+	padding:5px 0 0 10px;
+}
+#ejournals img{
+	background: #fff;
+	border: 1px solid #E0E0E0;
+	box-shadow: 0px 0px 2px 1px #e0e0e0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	padding:10px;
+	float:right;
+	margin-left:8px;
+	margin-top:15px;
+	max-width:300px;
+}	
+#ejournals a{
+	text-decoration:none;
+	color:#2b763b;
+	padding:5px 10px;
+	background-color:#f1f1f1;
+}
+#ejournals a.action{
+	color:#2966cb;
+	background-color:#e7ecf6;
+	border: 1px solid #E0E0E0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+#ejournals a.action:hover{
+	background-color:#e7eaef;
+	color:#0b295c;
+}
+.buttons{
+	margin:20px 0 0 10px;
+}
+.slider-wrapper{
+	padding-top:28px;
+}
+a.nivo-prevNav{
+	margin-left:-50px;
+}
+a.nivo-nextNav{
+	margin-right:-50px;
+}
+table{
+	margin-bottom:20px;
+}
+td label{
+	font-size:10px;
+}
+span.blockTitle{
+	font-weight:bold;
+	font-family: 'Abel', sans-serif;
+	font-size:20px;
+	display:block;
+	margin-bottom:5px\;
+}
+#sidebarDevelopedBy, #sidebarHelp{
+	display:none;
+}
+#sidebarLanguageToggle{
+	margin-bottom:20px;
+}
+#sidebarFontSize{
+	margin-top:-20px;
+}
+#sizer a{
+	display:block;
+	color:#999;
+	background-color:#fff;
+	border: 1px solid #E0E0E0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	text-decoration:none;
+	font-size:14px;
+	padding:2px;
+	margin-bottom:5px;
+	text-align:center;
+}	
+#sizer a:hover{
+	background-color:#f1f1f1;
+}
+#footer-wrap{
+	width:100%;
+	float:left;
+		background:url(../templates/images/custom/NavShadow.jpg) center top no-repeat;
+		margin-top:20px;
+}
+#footer{
+	width:900px;
+	margin:auto;
+	font-size:10px;
+	border-top: 1px solid #CCC;
+	padding-top:20px;
+
+}
+#footer ul{
+	width:100%;
+	float:left;
+}
+#footer a{
+	color:#2B763B;
+	text-decoration:none;
+}
+#footer a:hover{
+	text-decoration:underline;
+}
+#footer li a{
+	float:left;
+	margin-right:10px;
+}
+#copyright{
+	margin:10px 0 20px 0;
+	float:left;
+}
+#journals{
+	margin-top:20px;
+	float:left;
+	width:100%;
+}
+#journals ul li a{
+	font-size:14px;
+	color:#2B763B;
+	text-decoration:none;
+	padding:10px;
+	background-color:#f4f4f4;
+	margin-bottom:3px;
+	display:block;
+}
+#journals ul li a:hover{
+	background-color:#f0f0f0;
+}
+a.aboutsystem{
+	color:#2966cb;
+	background-color:#e7ecf6;
+	border: 1px solid #E0E0E0;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px 5px 5px 5px;
+	text-decoration:none;
+	padding:10px;
+	float:left;
+	margin-top:20px;
+}
+

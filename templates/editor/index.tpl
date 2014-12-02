@@ -18,7 +18,16 @@
 
 <ul class="plain">
 	<li>&#187; <a href="{url op="submissions" path="submissionsUnassigned"}">{translate key="common.queue.short.submissionsUnassigned"}</a>&nbsp;({if $submissionsCount[0]}{$submissionsCount[0]}{else}0{/if})</li>
-	<li>&#187; <a href="{url op="submissions" path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
+{**
+* Custom Code By Jeremy for JPPS
+*
+*}
+{if $currentJournal->getJournalInitials() == 'JPPS'}
+
+	<li>&#187; <a href="{url op="submissions" path="submissionsInReview"}">Under Review</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
+{else}
+<li>&#187; <a href="{url op="submissions" path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
+{/if}
 	<li>&#187; <a href="{url op="submissions" path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a>&nbsp;({if $submissionsCount[2]}{$submissionsCount[2]}{else}0{/if})</li>
 	<li>&#187; <a href="{url op="submissions" path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>
 	{call_hook name="Templates::Editor::Index::Submissions"}
@@ -114,7 +123,17 @@ function sortSearch(heading, direction) {
 				{print_issue_id articleId=$submission->getId()}
 			{elseif $status == STATUS_DECLINED}
 				{translate key="submissions.declined"}&nbsp;&nbsp;<a href="{url op="deleteSubmission" path=$articleId}" onclick="return confirm('{translate|escape:"jsparam" key="editor.submissionArchive.confirmDelete"}')" class="action">{translate key="common.delete"}</a>
-			{elseif $status==STATUS_QUEUED_UNASSIGNED}{translate key="submissions.queuedUnassigned"}
+			{elseif $status==STATUS_QUEUED_UNASSIGNED}
+{**
+    * Custom Code By Jeremy for JPPS
+    *}
+    {if $currentJournal->getJournalInitials() == 'JPPS'}
+ 	Under Review
+    {else} 
+    {translate key="submissions.queuedUnassigned"}
+    {/if}
+
+
 			{elseif $status==STATUS_QUEUED_EDITING}{translate key="submissions.queuedEditing"}
 			{elseif $status==STATUS_QUEUED_REVIEW}{translate key="submissions.queuedReview"}
 			{else}{* SUBMISSION_QUEUED -- between cracks? *}

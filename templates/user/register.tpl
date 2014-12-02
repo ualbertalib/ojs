@@ -27,6 +27,16 @@
 		<input type="hidden" name="existingUser" value="1"/>
 	{/if}
 
+	{**
+* Custom Code by Jeremy
+ * Added IF statement
+* Display the noted paragraph if the journal ID is journal is CJS (17)
+*}
+	{if $currentJournal->getJournalId()==17}
+	<p>
+	NOTE: If you want to be able to submit an article to this journal, you must choose the status "author" in the "Register as" section, below.
+	</p>
+	{/if}
 	<h3>{translate key="user.profile"}</h3>
 
 	{include file="common/formErrors.tpl"}
