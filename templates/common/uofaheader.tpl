@@ -16,8 +16,8 @@
 	<link rel="stylesheet" href="{$baseUrl}/styles/nivo-slider.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="{$baseUrl}/styles/nivo-default.css" type="text/css" media="screen" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
-	<script src="{$baseUrl}/lib/pkp/js/jquery.nivo.slider.pack.js" type="text/javascript"></script>
-		<script type="text/javascript" src="{$baseUrl}/lib/pkp/js/fontController.js"></script>
+	<script src="{$baseUrl}/js/uofa/jquery.nivo.slider.pack.js" type="text/javascript"></script>
+		<script type="text/javascript" src="{$baseUrl}/js/uofa/fontController.js"></script>
 	<script type="text/javascript">{literal}
 	$(window).load(function() {
 	    $('#slider').nivoSlider({
