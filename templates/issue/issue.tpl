@@ -10,7 +10,6 @@
  *}
 {foreach name=sections from=$publishedArticles item=section key=sectionId}
 {if $section.title}<h4 class="tocSectionTitle">{$section.title|escape}</h4>{/if}
-
 		{**
 		 * Custom Code by Jeremy 
 		 * Added IF statement
@@ -66,44 +65,18 @@
 			{/if}
 		</div>
 		<div class="tocAuthors">
-			{if (!$section.hideAuthor && $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_DEFAULT) || $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_SHOW}
-
 			{if $article->getArticleId()==4565}
 				<strong>Guest editors:</strong>
 			{/if}
+			{if (!$section.hideAuthor && $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_DEFAULT) || $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_SHOW}
 				{foreach from=$article->getAuthors() item=author name=authorList}
-					{$author->getFullName()|escape}{if !$smarty.foreach.authorList.last},{/if}
- {if $article->getJournalId() == 14 || $article->getJournalId()==13}
-					   <!--{$author->getCountryLocalized()|escape} -->
-					   
-					   {php}
-					     $Country[]=$this->_tpl_vars['author']->getCountryLocalized();
-					   {/php}
-					          
-					   {/if}	
+					
+					{if $article->getJournalId() == 14 || $article->getJournalId()==13}
+						{$author->getFullName()|escape} <strong>{$author->getCountryLocalized()|escape}</strong>{if !$smarty.foreach.authorList.last},{/if}
+					{else}
+						{$author->getFullName()|escape} {if !$smarty.foreach.authorList.last},{/if}
+					{/if}
 				{/foreach}
-{if $article->getJournalId() == 14 || $article->getJournalId()==13}
-			   {php}
-			    $dedup_Countryarray = array_unique($Country);
-			    //$dedup_Countryarray = array_values($dedup_Countryarray);
-			    $this->assign('dedup_Countryarray',$dedup_Countryarray);
-			   {/php}
-			   {*{foreach from=$dedup_Countryarray item=country name=countrylist}  
-			    <b>{$country|escape}{if (!$smarty.foreach.countrylist.last) },{/if}</b>
-			   {/foreach} *}
-			   
-			   {* Below displays the country name *}			   
-			   {section loop=$dedup_Countryarray name=country }
-				{if $dedup_Countryarray[$smarty.section.country.index] !=""}
-				<b>{$dedup_Countryarray[country]|escape}
-				{* Only display a comma if there is nothing else in the array*}
-			{if (!$smarty.section.country.last)}
-			{if ($dedup_Countryarray[$smarty.section.country.index_next] != "")},{/if}
-						{/if}</b>
-				{/if}
-				
-			   {/section}
-			  {/if}
 			{else}
 				&nbsp;
 			{/if}
@@ -111,11 +84,14 @@
 	</td>
 
 	<td class="tocArticleGalleysPages{if $showCoverPage} showCoverImage{/if}">
-		<div class="tocGalleys">
-{*
+	
+	
+	{*
  * Custom code by jeremy - added google anayltics code
  * onClick="_gaq.push(['_trackEvent', 'PDF', 'Open', 'in-page viewer']);"  href="{url page="article"
 *}
+
+		<div class="tocGalleys">
 			{if $hasAccess || ($subscriptionRequired && $showGalleyLinks)}
 				{foreach from=$article->getGalleys() item=galley name=galleyList}
 					<a onClick="_gaq.push(['_trackEvent', 'PDF', 'Open', 'in-page viewer']);"  href="{url page="article" op="view" path=$articlePath|to_array:$galley->getBestGalleyId($currentJournal)}" {if $galley->getRemoteURL()}target="_blank" {/if}class="file">{$galley->getGalleyLabel()|escape}</a>
@@ -149,4 +125,3 @@
 <div class="separator"></div>
 {/if}
 {/foreach}
-
