@@ -71,6 +71,10 @@
 			{if (!$section.hideAuthor && $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_DEFAULT) || $article->getHideAuthor() == $smarty.const.AUTHOR_TOC_SHOW}
 				{foreach from=$article->getAuthors() item=author name=authorList}
 					
+						{*
+						 * Custom code by jeremy - add country
+						 * 
+						*}
 					{if $article->getJournalId() == 14 || $article->getJournalId()==13}
 						{$author->getFullName()|escape} <strong>{$author->getCountryLocalized()|escape}</strong>{if !$smarty.foreach.authorList.last},{/if}
 					{else}
