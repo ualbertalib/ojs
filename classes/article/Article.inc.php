@@ -167,7 +167,7 @@ class Article extends Submission {
 	 * Get the localized copyright holder for this article.
 	 */
 	function getLocalizedCopyrightHolder() {
-		$copyrightHolders = $this->getCopyrightHolder(null);
+		$copyrightHolders = (array) $this->getCopyrightHolder(null);
 		foreach (AppLocale::getLocalePrecedence() as $locale) {
 			if (isset($copyrightHolders[$locale])) return $copyrightHolders[$locale];
 		}
@@ -877,7 +877,7 @@ class Article extends Submission {
 		preg_match('/^[^\d]*(\d+)\D*(.*)$/', $this->getPages(), $pages);
 		return $pages[2];
 	}
-	
+
 	/**
 	 * Initialize the copyright and license metadata for an article.
 	 * This should be called at creation and at publication, to setup license/copyright holder and copyright year, respectively.
@@ -889,6 +889,19 @@ class Article extends Submission {
 		$this->setCopyrightHolder($this->getDefaultCopyrightHolder(null), null);
 		if ($this->getStatus() == STATUS_PUBLISHED) {
 			$this->setCopyrightYear($this->getDefaultCopyrightYear());
+		}
+	}
+
+	/**
+	 * Determines whether or not the license for copyright on this Article is
+	 * a Creative Commons license or not.
+	 * @return boolean
+	 */
+	function isCCLicense() {
+		if (preg_match('/creativecommons\.org/i', $this->getLicenseURL())) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 }

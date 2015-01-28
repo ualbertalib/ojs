@@ -4,8 +4,8 @@
 <!--
   * plugins/generic/pln/locale/de_DE/locale.xml
   *
-  * Copyright (c) 2013-2014 Simon Fraser University Library
-  * Copyright (c) 2003-2014 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
   * PLN plugin localization strings
   * Please contact Marco Tullney, marco.tullney@fu-berlin.de, with any questions regarding this translation.
@@ -27,6 +27,7 @@
 	<message key="plugins.generic.pln.settings.refresh">Aktualisieren</message>
 	<message key="plugins.generic.pln.settings.refresh_help">Wenn aus irgendeinem Grund keine Einträge oben gelistet sind oder wenn Sie wissen, dass die Einträge aktualisiert worden sind, klicken Sie Aktualisieren um die Liste zu erneuern.</message>
 	
+
 	<message key="plugins.generic.pln.required.pln_network">Bitte wählen Sie ein PLN-Netzwerk.</message>
 	<message key="plugins.generic.pln.required.object_type">Bitte wählen Sie einen Typ für die Objektablieferung.</message>
 	<message key="plugins.generic.pln.required.object_threshold">Bitte wählen Sie eine Schwelle für die Objektablieferung.</message>

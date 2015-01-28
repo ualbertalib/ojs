@@ -206,7 +206,7 @@ class ObjectsForReviewEditorHandler extends Handler {
 	 * @param $request PKPRequest
 	 */
 	function createObjectForReview($args, &$request) {
-		$this->editObjectForReview($args, &$request);
+		$this->editObjectForReview($args, $request);
 	}
 
 	/**
@@ -1136,7 +1136,7 @@ class ObjectsForReviewEditorHandler extends Handler {
 				);
 			}
 			$email->addRecipient($userEmail, $userFullName);
-			$email->setFrom($editorEmail, $editorFullName);
+			$email->setReplyTo($editorEmail, $editorFullName);
 			$email->assignParams($paramArray);
 		}
 		$email->displayEditForm($returnUrl);

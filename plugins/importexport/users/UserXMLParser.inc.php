@@ -133,7 +133,10 @@ class UserXMLParser {
 								$newUser->setSignature($attrib->getValue(), $locale);
 								break;
 							case 'interests':
-								$newUser->setTemporaryInterests($attrib->getValue());
+								$interests = $attrib->getValue(); // Bug #9054
+								$oldInterests = $newUser->getTemporaryInterests();
+								if ($oldInterests) $interests = $oldInterests . ',' . $interests;
+								$newUser->setTemporaryInterests($interests);
 								break;
 							case 'gossip':
 								$locale = $attrib->getAttribute('locale');
@@ -193,7 +196,7 @@ class UserXMLParser {
 
 			$journalDao =& DAORegistry::getDAO('JournalDAO');
 			$journal =& $journalDao->getById($this->journalId);
-			$mail->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+			$mail->setReplyTo($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
 		}
 
 		for ($i=0, $count=count($this->usersToImport); $i < $count; $i++) {

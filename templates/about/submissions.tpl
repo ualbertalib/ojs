@@ -18,6 +18,7 @@
 	{assign var="authorFees" value=1}
 {/if}
 
+
 <ul class="plain">
 {**
 * Custom by Jeremy
@@ -30,18 +31,21 @@
 	{if $currentJournal->getLocalizedSetting('copyrightNotice') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="copyrightNotice"}">{translate key="about.copyrightNotice"}</a></li>{/if}
 	{if $currentJournal->getLocalizedSetting('privacyStatement') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>{/if}
 	{if $authorFees}<li>&#187; <a href="{url page="about" op="submissions" anchor="authorFees"}">{translate key="about.authorFees"}</a></li>{/if}	
+
 </ul>
 
-<div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
-<p>
-	{translate key="about.onlineSubmissions.haveAccount" journalTitle=$siteTitle|escape}<br />
-	<a href="{url page="login"}" class="action">{translate key="about.onlineSubmissions.login"}</a>
-</p>
-<p>
-	{translate key="about.onlineSubmissions.needAccount"}<br />
-	<a href="{url page="user" op="register"}" class="action">{translate key="about.onlineSubmissions.registration"}</a>
-</p>
-<p>{translate key="about.onlineSubmissions.registrationRequired"}</p>
+{if !$currentJournal->getSetting('disableUserReg')}
+	<div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
+	<p>
+		{translate key="about.onlineSubmissions.haveAccount" journalTitle=$siteTitle|escape}<br />
+		<a href="{url page="login"}" class="action">{translate key="about.onlineSubmissions.login"}</a>
+	</p>
+	<p>
+		{translate key="about.onlineSubmissions.needAccount"}<br />
+		<a href="{url page="user" op="register"}" class="action">{translate key="about.onlineSubmissions.registration"}</a>
+	</p>
+	<p>{translate key="about.onlineSubmissions.registrationRequired"}</p>
+{/if}
 
 <div class="separator">&nbsp;</div>
 {**
@@ -102,7 +106,7 @@
 	<p>{translate key="about.submissionPreparationChecklist.description"}</p>
 	<ol>
 		{foreach from=$submissionChecklist item=checklistItem}
-			<li>{$checklistItem.content|nl2br}</li>	
+			<li>{$checklistItem.content|nl2br}</li>
 		{/foreach}
 	</ol>
 	<div class="separator">&nbsp;</div>
@@ -135,11 +139,11 @@
 	{/if}
 	{if $currentJournal->getSetting('fastTrackFeeEnabled')}
 		<p>{$currentJournal->getLocalizedSetting('fastTrackFeeName')|escape}: {$currentJournal->getSetting('fastTrackFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')})<br />
-		{$currentJournal->getLocalizedSetting('fastTrackFeeDescription')|nl2br}<p>	
+		{$currentJournal->getLocalizedSetting('fastTrackFeeDescription')|nl2br}<p>
 	{/if}
 	{if $currentJournal->getSetting('publicationFeeEnabled')}
 		<p>{$currentJournal->getLocalizedSetting('publicationFeeName')|escape}: {$currentJournal->getSetting('publicationFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')})<br />
-		{$currentJournal->getLocalizedSetting('publicationFeeDescription')|nl2br}<p>	
+		{$currentJournal->getLocalizedSetting('publicationFeeDescription')|nl2br}<p>
 	{/if}
 	{if $currentJournal->getLocalizedSetting('waiverPolicy') != ''}
 		<p>{$currentJournal->getLocalizedSetting('waiverPolicy')|nl2br}</p>
