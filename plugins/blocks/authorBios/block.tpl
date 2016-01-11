@@ -1,7 +1,8 @@
 {**
  * plugins/blocks/authorBios/block.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Keyword cloud block plugin
@@ -17,9 +18,10 @@
 		{/if}
 	</span>
 	{foreach from=$article->getAuthors() item=author name=authors}
-	<div id="authorBio">
+	<div class="authorBio">
 	<p>
 		<em>{$author->getFullName()|escape}</em><br />
+		{if $author->getData('orcid')}<a href="{$author->getData('orcid')|escape}" target="_blank">{translate key="user.orcid"}</a>{/if}
 		{if $author->getUrl()}<a href="{$author->getUrl()|escape:"quotes"}">{$author->getUrl()|escape}</a><br/>{/if}
 		{assign var=authorAffiliation value=$author->getLocalizedAffiliation()}
 		{if $authorAffiliation}{$authorAffiliation|escape}{/if}

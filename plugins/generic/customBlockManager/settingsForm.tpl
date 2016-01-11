@@ -1,7 +1,8 @@
 {**
  * plugins/generic/customBlockManager/settingsForm.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form for Custom Block Plugin settings.
@@ -38,7 +39,7 @@
 	
 {foreach name=blocks from=$blocks key=blockIndex item=block}
 <tr valign="top">
-	<td width="20%" class="value" align="left"><input type="text" class="textField" name="blocks[{$blockIndex|escape}]" id="blocks-{$blockIndex|escape}" value="{$block}" size="20" maxlength="40" /></td>
+	<td width="20%" class="value" align="left"><input type="text" class="textField" name="blocks[{$blockIndex|escape}]" id="blocks-{$blockIndex|escape}" value="{$block|escape}" size="20" maxlength="40" /></td>
 	<td  align="left"><input type="submit" name="delBlock[{$blockIndex|escape}]" value="{translate key="plugins.generic.customBlockManager.delete"}" class="button" /></td>
 </tr>
 <tr>

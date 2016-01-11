@@ -4,15 +4,16 @@
 <!--
   * plugins/citationFormats/cbe/locale/zh_CN/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for this citation plugin in en_US.
   *
   -->
  
-<locale name="zh_CN" full_name="China">
-	<message key="plugins.citationFormats.cbe.displayName">CBE引文格式(CBE citation format plugin)</message>
+<locale name="zh_CN" full_name="简体中文">
+	<message key="plugins.citationFormats.cbe.displayName">CBE引用格式</message>
 	<message key="plugins.citationFormats.cbe.citationFormatName">CBE</message>
-	<message key="plugins.citationFormats.cbe.description">本插件实现了CBE引文格式(This plugin implements the CBE citation format).</message>
+	<message key="plugins.citationFormats.cbe.description">本插件实行CBE引用格式.</message>
 </locale>

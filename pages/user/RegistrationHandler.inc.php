@@ -3,7 +3,8 @@
 /**
  * @file pages/user/RegistrationHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class RegistrationHandler
@@ -77,11 +78,6 @@ class RegistrationHandler extends UserHandler {
 
 		if ($regForm->validate()) {
 			$regForm->execute();
-			if (Config::getVar('email', 'require_validation')) {
-				// Send them home; they need to deal with the
-				// registration email.
-				$request->redirect(null, 'index');
-			}
 
 			$reason = null;
 
@@ -89,6 +85,20 @@ class RegistrationHandler extends UserHandler {
 				Validation::login('', '', $reason);
 			} else {
 				Validation::login($regForm->getData('username'), $regForm->getData('password'), $reason);
+			}
+
+			if (!Validation::isLoggedIn()) {
+				if (Config::getVar('email', 'require_validation')) {
+					// Inform the user that they need to deal with the
+					// registration email.
+					$this->setupTemplate($request, true);
+					$templateMgr =& TemplateManager::getManager();
+					$templateMgr->assign('pageTitle', 'user.register.emailValidation');
+					$templateMgr->assign('errorMsg', 'user.register.emailValidationDescription');
+					$templateMgr->assign('backLink', $request->url(null, 'login'));
+					$templateMgr->assign('backLinkLabel', 'user.login');
+					return $templateMgr->display('common/error.tpl');
+				}
 			}
 
 			if ($reason !== null) {
@@ -113,7 +123,7 @@ class RegistrationHandler extends UserHandler {
 	 * Show error message if user registration is not allowed.
 	 * @param $request PKPRequest
 	 */
-	function registrationDisabled(&$request) {
+	function registrationDisabled($request) {
 		$this->setupTemplate($request, true);
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageTitle', 'user.register');
@@ -135,7 +145,7 @@ class RegistrationHandler extends UserHandler {
 
 		$journal =& $request->getJournal();
 		$userDao =& DAORegistry::getDAO('UserDAO');
-		$user =& $userDao->getUserByUsername($username);
+		$user =& $userDao->getByUsername($username);
 		if (!$user) $request->redirect(null, 'login');
 
 		// Checks user & token

@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/translator/TranslatorAction.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TranslatorAction
@@ -148,11 +149,13 @@ class TranslatorAction {
 			unset($referenceLocaleFile);
 		}
 
+		$pluginsReferenceLocaleFilenamesList = array();
 		$plugins =& PluginRegistry::loadAllPlugins();
 		foreach (array_keys($plugins) as $key) {
 			$plugin =& $plugins[$key];
 			$referenceLocaleFilenames = $plugin->getLocaleFilename($referenceLocale);
-			if ($referenceLocaleFilenames) {
+			if ($referenceLocaleFilenames && !in_array($referenceLocaleFilenames, $pluginsReferenceLocaleFilenamesList)) {
+				$pluginsReferenceLocaleFilenamesList[] = $referenceLocaleFilenames;
 				if (is_scalar($referenceLocaleFilenames)) $referenceLocaleFilenames = array($referenceLocaleFilenames);
 				$localeFilenames = $plugin->getLocaleFilename($locale);
 				if (is_scalar($localeFilenames)) $localeFilenames = array($localeFilenames);

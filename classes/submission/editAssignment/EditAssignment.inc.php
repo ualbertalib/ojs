@@ -3,7 +3,8 @@
 /**
  * @file classes/submission/editAssignment/EditAssignment.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class EditAssignment
@@ -123,6 +124,22 @@ class EditAssignment extends DataObject {
 		return $this->setData('isEditor', $isEditor);
 	}
 
+	/**
+	 * Get date editor assigned.
+	 * @return timestamp
+	 */
+	function getDateAssigned() {
+		return $this->getData('dateAssigned');
+	}
+
+	/**
+	 * Set date editor assigned.
+	 * @param $dateAssigned timestamp
+	 */
+	function setDateAssigned($dateAssigned) {
+		return $this->setData('dateAssigned', $dateAssigned);
+	}
+        
 	/**
 	 * Get date editor notified.
 	 * @return timestamp

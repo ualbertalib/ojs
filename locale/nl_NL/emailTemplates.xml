@@ -4,7 +4,8 @@
 <!--
   * locale/nl_NL/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -714,8 +715,8 @@ Link: {$url}
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nieuw bericht van {$siteTitle}</subject>
-		<body>U heeft een nieuw bericht van {$siteTitle}:
+		<subject>Nieuw bericht van {$journalName}</subject>
+		<body>U heeft een nieuw bericht van {$journalName}:
 --
 {$notificationContents}
 
@@ -727,8 +728,8 @@ Als u deze berichten niet meer wilt ontvangen, ga dan naar {$unsubscribeLink} en
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Welkom bij de {$siteTitle} maillijst!</subject>
-		<body>U heeft zich geregistreerd om berichten te ontvangen van {$siteTitle}.
+		<subject>Welkom bij de {$journalName} maillijst!</subject>
+		<body>U heeft zich geregistreerd om berichten te ontvangen van {$journalName}.
 
 Klik op deze link om uw verzoek te bevestigen en uw e-mail adres toe te voegen aan de lijst: {$confirmLink}
 

@@ -4,7 +4,8 @@
 <!--
   * 000002.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * table of contents for Editorial Process - Editor's Role - Submissions
@@ -18,6 +19,6 @@
 	<topic id="editorial/topic/000018" title="Archives" />
 
 	<breadcrumb url="editorial/topic/000000" title="Processus éditorial" />
-	<breadcrumb url="editorial/topic/000001" title="Editor's Role" />
+	<breadcrumb url="editorial/topic/000001" title="Rôle du rédacteur" />
 	<breadcrumb url="editorial/topic/000002" title="Soumissions" />
 </toc>

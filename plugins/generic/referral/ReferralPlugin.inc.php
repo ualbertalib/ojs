@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/referral/ReferralPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReferralPlugin
@@ -43,15 +44,15 @@ class ReferralPlugin extends GenericPlugin {
 	function getManagementVerbs() {
 		$verbs = array();
 		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.googleAnalytics.manager.settings'));
+			$verbs[] = array('settings', __('plugins.generic.referral.settings'));
 		}
 		return parent::getManagementVerbs($verbs);
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/*
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Result status message
 	 * @param $messageParams array Parameters for the message key
 	 * @return boolean
@@ -248,7 +249,7 @@ class ReferralPlugin extends GenericPlugin {
 			$referral->setUrl($referrer);
 			$referral->setStatus(REFERRAL_STATUS_NEW);
 			$referral->setDateAdded(Core::getCurrentDate());
-			$referralDao->insertReferral($referral);
+			$referralDao->replaceReferral($referral);
 		}
 		return false;
 	}

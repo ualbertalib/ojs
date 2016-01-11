@@ -1,7 +1,8 @@
 {**
  * @file plugins/importexport/datacite/templates/all.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Select all unregistered objects for export.
@@ -26,7 +27,8 @@
 <br/>
 
 <div id="allUnregistered">
-	<form action="{plugin_url path="exportAll"}" method="post" id="exportAllForm">
+	<form action="{plugin_url path="process"}" method="post" id="exportAllForm">
+		<input type="hidden" name="target" value="all" />
 		<table width="100%" class="listing">
 			<tr>
 				<td colspan="5" class="headseparator">&nbsp;</td>

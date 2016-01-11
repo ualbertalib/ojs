@@ -4,13 +4,13 @@
 <!--
   * plugins/generic/googleAnalytics/locale/de_DE/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
   * Google Analytics plugin localization strings for the de_DE (Deutsch (Deutschland)) locale.
-  *
+  * Please contact Marco Tullney, marco.tullney@fu-berlin.de, with any questions regarding this translation.
   -->
-  
+ 
 <locale name="de_DE" full_name="Deutsch (Deutschland)">
 
 	<!-- Google Analytics -->
@@ -26,8 +26,9 @@
 	<message key="plugins.generic.googleAnalytics.manager.settings.googleAnalyticsSiteIdRequired">Bitte geben Sie die Account-ID ein.</message>
 	<message key="plugins.generic.googleAnalytics.manager.settings.trackingCode">Tracking-Code</message>
 	<message key="plugins.generic.googleAnalytics.manager.settings.trackingCodeRequired">Bitte wählen Sie einen Tracking-Code zur Verwendung aus.</message>
-	<message key="plugins.generic.googleAnalytics.manager.settings.urchin">Legacy Tracking Code (urchin.js)</message>
-	<message key="plugins.generic.googleAnalytics.manager.settings.ga">Neuer Tracking-Code (ga.js)</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.urchin">Klassischer Tracking Code (urchin.js)</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.ga">Klassischer Tracking-Code (ga.js)</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.analytics">Neuer Tracking-Code für Universal Analytics (analytics.js)</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount">Google Analytics Account-Nummer</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount.description">Um die Leser/innenschaft veröffentlichter Artikel per Google Analytics zu verfolgen, geben Sie hier eine Account-Nummer ein (z.B. UA-xxxxxx-x).</message>
 	<message key="plugins.generic.googleAnalytics.authorAccountInvalid">Eine oder mehrere Google-Analytics-Accountnummern, die für Autor/innen des Beitrags eingegeben worden sind, sind nicht gültig.</message>

@@ -4,7 +4,8 @@
 <!--
   * plugins/citationFormats/endNote/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for this citation plugin in Greek.
@@ -18,8 +19,8 @@
   *
   -->
  
-<locale name="el_GR" full_name="Greek">	
-	<message key="plugins.citationFormats.endNote.displayName">Plugin σχήματος παραπομπής EndNote</message>
-	<message key="plugins.citationFormats.endNote.citationFormatName">EndNote - EndNote σχήμα (Macintosh &amp; Windows)</message>
-	<message key="plugins.citationFormats.endNote.description">Το plugin αυτό υλοποιεί το σχήμα παραπομπής EndNote.</message>
+<locale name="el_GR" full_name="ελληνικά">	
+	<message key="plugins.citationFormats.endNote.displayName">Πρόσθετο σχήματος παραπομπής EndNote</message>
+	<message key="plugins.citationFormats.endNote.citationFormatName"><![CDATA[EndNote - EndNote σχήμα (Macintosh & Windows)]]></message>
+	<message key="plugins.citationFormats.endNote.description">Το πρόσθετο αυτό υλοποιεί το σχήμα παραπομπής EndNote.</message>
 </locale>

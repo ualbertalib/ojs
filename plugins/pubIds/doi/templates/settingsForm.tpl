@@ -1,7 +1,8 @@
 {**
  * plugins/pubIds/doi/templates/settingsForm.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * DOI plugin settings
@@ -24,7 +25,8 @@
 			<tr valign="top">
 				<td width="20%" class="label">{fieldLabel name="doiObjects" required="true" key="plugins.pubIds.doi.manager.settings.doiObjects"}</td>
 				<td width="80%" class="value">
-					<span class="instruct">{translate key="plugins.pubIds.doi.manager.settings.explainDois"}</span><br />
+					<span class="instruct">{translate key="plugins.pubIds.doi.manager.settings.explainDois"}</span><br /><br />
+					<span class="instruct">{translate key="plugins.pubIds.doi.manager.settings.explainCrossRefDois"}</span><br /><br />
 					<input type="checkbox" name="enableIssueDoi" id="enableIssueDoi" value="1"{if $enableIssueDoi} checked="checked"{/if} />
 					{fieldLabel name="enableIssueDoi" key="plugins.pubIds.doi.manager.settings.enableIssueDoi"}<br />
 					<input type="checkbox" name="enableArticleDoi" id="enableArticleDoi" value="1"{if $enableArticleDoi} checked="checked"{/if} />
@@ -95,20 +97,12 @@
 						</tr>
 						<tr>
 							<td width="5%" class="label" align="right" valign="top">
-								<input type="radio" name="doiSuffix" id="doiSuffixDefault" value="default" {if !in_array($doiSuffix, array("pattern", "publisherId", "customId"))}checked{/if} />
+								<input type="radio" name="doiSuffix" id="doiSuffixDefault" value="default" {if !in_array($doiSuffix, array("pattern", "customId"))}checked{/if} />
 							</td>
 							<td width="95%" class="value">
 								{fieldLabel name="doiSuffixDefault" key="plugins.pubIds.doi.manager.settings.doiSuffixDefault"}
 								<br />
 								<span class="instruct">{translate key="plugins.pubIds.doi.manager.settings.doiSuffixDefault.description"}</span>
-							</td>
-						</tr>
-						<tr>
-							<td width="5%" class="label" align="right" valign="top">
-								<input type="radio" name="doiSuffix" id="doiSuffixPublisherId" value="publisherId" {if $doiSuffix eq "publisherId"}checked{/if} />
-							</td>
-							<td width="95%" class="value">
-								{fieldLabel name="doiSuffixPublisherId" key="plugins.pubIds.doi.manager.settings.doiSuffixPublisherId"}
 							</td>
 						</tr>
 						<tr>

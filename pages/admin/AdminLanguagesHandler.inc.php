@@ -3,7 +3,8 @@
 /**
  * @file pages/admin/AdminLanguagesHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AdminLanguagesHandler
@@ -174,11 +175,43 @@ class AdminLanguagesHandler extends AdminHandler {
 
 		if (in_array($locale, $site->getInstalledLocales())) {
 			AppLocale::reloadLocale($locale);
+
+			$user =& $request->getUser();
+
+			import('classes.notification.NotificationManager');
+			$notificationManager = new NotificationManager();
+			$notificationManager->createTrivialNotification($user->getId());
 		}
 
 		$request->redirect(null, null, 'languages');
 	}
 
+	/**
+	 * Reload default email templates for a locale.
+	 * @param $args array
+	 * @param $request object
+	 */
+	function reloadDefaultEmailTemplates($args, &$request) {
+		$this->validate();
+
+		$site =& $request->getSite();
+		$locale = $request->getUserVar('locale');
+
+		if (in_array($locale, $site->getInstalledLocales())) {
+			$emailTemplateDao =& DAORegistry::getDAO('EmailTemplateDAO');
+			$emailTemplateDao->deleteDefaultEmailTemplatesByLocale($locale);
+			$emailTemplateDao->installEmailTemplateData($emailTemplateDao->getMainEmailTemplateDataFilename($locale));
+
+			$user =& $request->getUser();
+
+			import('classes.notification.NotificationManager');
+			$notificationManager = new NotificationManager();
+			$notificationManager->createTrivialNotification($user->getId());
+		}
+
+		$request->redirect(null, null, 'languages');
+	}
+	
 	/**
 	 * Helper function to remove unsupported locales from journals.
 	 * @param $request object

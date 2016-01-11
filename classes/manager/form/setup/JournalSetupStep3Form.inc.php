@@ -3,7 +3,8 @@
 /**
  * @file classes/manager/form/setup/JournalSetupStep3Form.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class JournalSetupStep3Form
@@ -27,8 +28,13 @@ class JournalSetupStep3Form extends JournalSetupForm {
 				'authorGuidelines' => 'string',
 				'submissionChecklist' => 'object',
 				'copyrightNotice' => 'string',
-				'includeCreativeCommons' => 'bool',
+				'includeCopyrightStatement' => 'bool',
+				'licenseURL' => 'string',
+				'includeLicense' => 'bool',
 				'copyrightNoticeAgree' => 'bool',
+				'copyrightHolderType' => 'string',
+				'copyrightHolderOther' => 'string',
+				'copyrightYearBasis' => 'string',
 				'requireAuthorCompetingInterests' => 'bool',
 				'requireReviewerCompetingInterests' => 'bool',
 				'competingInterestGuidelines' => 'string',
@@ -54,7 +60,9 @@ class JournalSetupStep3Form extends JournalSetupForm {
 		);
 
 		$this->addCheck(new FormValidatorEmail($this, 'copySubmissionAckAddress', 'optional', 'user.profile.form.emailRequired'));
-		$this->addCheck(new FormValidatorLocaleURL($this, 'metaSubjectClassUrl', 'optional', 'manager.setup.subjectClassificationURLValid'));
+		// Only check the subject classification URL if the subject classification is enabled
+		$this->addCheck(new FormValidatorCustom($this, 'metaSubjectClassUrl', 'optional', 'manager.setup.subjectClassificationURLValid', create_function('$localeUrl, $form, $field, $type, $message', 'if (!$form->getData("metaSubjectClass")) return true; $f = new FormValidatorLocaleUrl($form, $field, $type, $message); return $f->isValid();'), array($this, 'metaSubjectClassUrl', 'optional', 'manager.setup.subjectClassificationURLValid')));
+		$this->addCheck(new FormValidatorURL($this, 'licenseURL', 'optional', 'submission.licenseURLValid'));
 	}
 
 	/**
@@ -62,7 +70,7 @@ class JournalSetupStep3Form extends JournalSetupForm {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array('authorGuidelines', 'submissionChecklist', 'copyrightNotice', 'metaDisciplineExamples', 'metaSubjectClassTitle', 'metaSubjectClassUrl', 'metaSubjectExamples', 'metaCoverageGeoExamples', 'metaCoverageChronExamples', 'metaCoverageResearchSampleExamples', 'metaTypeExamples', 'competingInterestGuidelines');
+		return array('authorGuidelines', 'submissionChecklist', 'copyrightNotice', 'metaDisciplineExamples', 'metaSubjectClassTitle', 'metaSubjectClassUrl', 'metaSubjectExamples', 'metaCoverageGeoExamples', 'metaCoverageChronExamples', 'metaCoverageResearchSampleExamples', 'metaTypeExamples', 'competingInterestGuidelines', 'copyrightHolderOther');
 	}
 
 	/**
@@ -117,6 +125,7 @@ class JournalSetupStep3Form extends JournalSetupForm {
 			$templateMgr->assign_by_ref('metaCitationOutputFilters', $metaCitationOutputFilters);
 		}
 
+		$templateMgr->assign('ccLicenseOptions', Application::getCCLicenseOptions());
 		parent::display($request, $dispatcher);
 	}
 }

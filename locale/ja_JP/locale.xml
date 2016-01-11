@@ -4,7 +4,8 @@
 <!--
   * locale/ja_JP/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the ja_JP (日本語) locale.
@@ -262,7 +263,7 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
   <!-- Setup Step 1 -->
   <!-- Setup Step 2 -->
   <message key="manager.setup.lockssDescription">
-    <![CDATA[オープン･ジャーナル･システムは、雑誌の安全で永続的なアーカイブを保証する<a href="http://lockss.org/" target="_blank">LOCKSS</a>（Lots of Copies Keep Stuff Safe）システムをサポートしています。LOCKSSはスタンフォード大学図書館で開発されたオープンソースのソフトウェアです。あらかじめ選択･登録したWeb雑誌で新たに公開されたコンテンツを定期的にチェックしてアーカイブすることにより、雑誌の保存を可能にします。各アーカイブは常に他の図書館のキャッシュと比較され、コンテンツの破損や不足が見つかった場合は、他のキャッシュや雑誌を使ってそれを修復します。<br /><br />
+    <![CDATA[オープン･ジャーナル･システムは、雑誌の安全で永続的なアーカイブを保証する<a href="http://www.lockss.org/" target="_blank">LOCKSS</a>（Lots of Copies Keep Stuff Safe）システムをサポートしています。LOCKSSはスタンフォード大学図書館で開発されたオープンソースのソフトウェアです。あらかじめ選択･登録したWeb雑誌で新たに公開されたコンテンツを定期的にチェックしてアーカイブすることにより、雑誌の保存を可能にします。各アーカイブは常に他の図書館のキャッシュと比較され、コンテンツの破損や不足が見つかった場合は、他のキャッシュや雑誌を使ってそれを修復します。<br /><br />
 オープン･ジャーナル･システムにおけるLOCKSSサポートの設定は、出版が完全に軌道に乗るまでは行う必要がありませんが、設定は次の2段階で行います。]]>
   </message>
   <!-- Setup Step 3 -->
@@ -477,7 +478,7 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
   <message key="search.allJournals">全雑誌</message>
   <message key="search.authorIndex">著者インデックスをブラウズ</message>
   <message key="search.authorDetails">著者情報</message>
-  <message key="search.syntaxInstructions"><![CDATA[検索のヒント: <ul>
+  <message key="search.syntaxInstructions"><![CDATA[<h4>検索のヒント: </h4><ul>
 <li>検査語は大文字・小文字を区別しません。</li>
 <li>一般的な語は無視されます</li>
 <li>デフォルトでは、検索語に指定した<em>すべての</em>語を含む論文だけがヒットします（すなわち、暗黙に<em>AND</em>検索が行われます）</li>
@@ -553,7 +554,7 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
   <message key="installer.ojsUpgrade">OJSのバージョンアップ</message>
   <message key="installer.installationInstructions"><![CDATA[<h4>OJS バージョン {$version}</h4>
 
-<p>Public Knowledgeプロジェクトの<strong>オープン･ジャーナル･システム</strong>をダウンロードしていただきありがとうございました。処理を進める前に、このソフトウェアに添付されている<a href="{$baseUrl}/docs/README">README</a>ファイルをお読みください。Public Knowledgeプロジェクトと本ソフトウェアプロジェクトに関してより詳しく知りたい方は、<a href="http://pkp.sfu.ca/" target="_blank">PKPのWebサイト</a>にアクセスしてください。オープン･ジャーナル･システムに関するバグ報告や技術的サポートに関する質問がある場合は、<a href="http://pkp.sfu.ca/support/forum">サポートフォーラム</a>、または、PKPのオンライン<a href="http://pkp.sfu.ca/bugzilla/" target="_blank">バグ報告システム</a>をご覧ください。連絡はサポートフォーラムでしていただくことを希望いたしますが、直接、<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>にメールしてくださっても構いません。</p>
+<p>Public Knowledgeプロジェクトの<strong>オープン･ジャーナル･システム</strong>をダウンロードしていただきありがとうございました。処理を進める前に、このソフトウェアに添付されている<a href="{$baseUrl}/docs/README">README</a>ファイルをお読みください。Public Knowledgeプロジェクトと本ソフトウェアプロジェクトに関してより詳しく知りたい方は、<a href="http://pkp.sfu.ca/" target="_blank">PKPのWebサイト</a>にアクセスしてください。オープン･ジャーナル･システムに関するバグ報告や技術的サポートに関する質問がある場合は、<a href="http://forum.pkp.sfu.ca">サポートフォーラム</a>、または、PKPのオンライン<a href="https://github.com/pkp/pkp-lib#issues" target="_blank">バグ報告システム</a>をご覧ください。連絡はサポートフォーラムでしていただくことを希望いたしますが、直接、<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>にメールしてくださっても構いません。</p>
 
 <h4>バージョンアップ</h4>
 
@@ -563,9 +564,9 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
 
 <ul>
 	<li><a href="http://www.php.net/" target="_blank">PHP</a> 4.2.x以降 （PHP 5.xを含む）</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 3.23.23以降（MySQL 4.xを含む）、または、<a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> 7.1以降（PostgreSQL 8.xを含む）</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> 4.1を含む）、または、<a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> 7.1以降（PostgreSQL 8.xを含む）</li>
 	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> 1.3.2x以降、または、2.0.4x以降、または、Microsoft IIS 6</li>
-	<li>OS: <a href="http://www.linux.org/" target="_blank">Linux</a>、<a href="http://www.bsd.org/" target="_blank">BSD</a>、<a href="http://www.sun.com/" target="_blank">Solaris</a>、<a href="http://www.apple.com/" target="_blank">Mac OS X</a>、<a href="http://www.microsoft.com/">Windows</a>など、上記のソフトウェアをサポートするすべてのOS。</li>
+	<li>OS: <a href="http://www.linux.org/" target="_blank">Linux</a>、<a href="http://www.bsd.org/" target="_blank">BSD</a>、<a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>、<a href="http://www.apple.com/" target="_blank">Mac OS X</a>、<a href="http://www.microsoft.com/">Windows</a>など、上記のソフトウェアをサポートするすべてのOS。</li>
 </ul>
 
 <p>PKPは、上記のソフトウェアバージョンとプラットフォームの可能なすべての組み合わせについてテストする資源を持っていませんので、正常な動作やサポートを保証するものではありません。</p>
@@ -595,7 +596,7 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
 <p>データベースのインストールをマニュアルで実行するには<strong>マニュアルインストール</strong>を選択してください。OJSデータベーススキーマおよび初期データを作成するために必要なSQL文が表示されます。 このオプションは、インストール、特にサポートしていないプラットフォームへのインストール時の問題をデバックする際に役に立ちます。このインストール法では、指定したデータベース設定が設定ファイルに書かれますが、データベースやテーブルは作成されないことに注意してください。</p>]]></message>
   <message key="installer.upgradeInstructions"><![CDATA[<h4>OJS バージョン {$version}</h4>
 	
-<p>Public Knowledgeプロジェクトの<strong>オープン･ジャーナル･システム</strong>をダウンロードしていただきありがとうございました。処理を進める前に、このソフトウェアに添付されている<a href="{$baseUrl}/docs/README">README</a>ファイルと<a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a>ファイルをお読みください。Public Knowledgeプロジェクトと本ソフトウェアプロジェクトに関してより詳しく知りたい方は、<a href="http://pkp.sfu.ca/" target="_blank">PKPのWebサイト</a>にアクセスしてください。オープン･ジャーナル･システムに関するバグ報告や技術的サポートに関する質問がある場合は、<a href="http://pkp.sfu.ca/support/forum">サポートフォーラム</a>、または、PKPのオンライン<a href="http://pkp.sfu.ca/bugzilla/" target="_blank">バグ報告システム</a>をご覧ください。連絡はサポートフォーラムでしていただくことを希望いたしますが、直接、<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>にメールしてくださっても構いません。</p>
+<p>Public Knowledgeプロジェクトの<strong>オープン･ジャーナル･システム</strong>をダウンロードしていただきありがとうございました。処理を進める前に、このソフトウェアに添付されている<a href="{$baseUrl}/docs/README">README</a>ファイルと<a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a>ファイルをお読みください。Public Knowledgeプロジェクトと本ソフトウェアプロジェクトに関してより詳しく知りたい方は、<a href="http://pkp.sfu.ca/" target="_blank">PKPのWebサイト</a>にアクセスしてください。オープン･ジャーナル･システムに関するバグ報告や技術的サポートに関する質問がある場合は、<a href="http://forum.pkp.sfu.ca">サポートフォーラム</a>、または、PKPのオンライン<a href="https://github.com/pkp/pkp-lib#issues" target="_blank">バグ報告システム</a>をご覧ください。連絡はサポートフォーラムでしていただくことを希望いたしますが、直接、<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>にメールしてくださっても構いません。</p>
 <p>処理を行う前に、データベース、ファイルディレクトリ、OJSインストールディレクトリのバックアップを行うことを<strong>強く推奨します</strong>。</p>
 <p>システムを<a href="http://www.php.net/features.safe-mode" target="_blank">PHPセーフモード</a>で運用している場合は、"php.ini"設定ファイルの"max_execution_time"ディレクティブに最大値が設定されていることを確認してください。この制限値、またはその他の時間制限（例えば、Apacheの"Timeout"ディレクティブ）に達すると、バージョンアップ処理は中断され、手作業による処理が必要になります。</p>]]></message>
   <message key="installer.localeSettingsInstructions"><![CDATA[Unicode（UTF-8）を完全にサポートするために、すべての文字セット設定でUTF-8を選択してください。これをサポートするには、現在のところ、MySQL 4.1.1以降、または、PostgreSQL 7.1以降のデータベースサーバを必要とすることに注意してください。また、Unicodeを完全にサポートするには、<a href="http://www.php.net/mbstring" target="_blank">mbstring</a>ライブラリのサポートを選択してコンパイルしたPHP 4.3.0以降を必要とすることにも注意してください（最近のほとんどのPHPのインストールではデフォルトで有効になっています）。サーバがこれらの要件を満たしていないと、拡張文字セットの使用時に問題が生じるかもしれません。
@@ -609,10 +610,10 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
 <p>設定ファイルを上書きする保存することができませんでした。システムを使用する前に、適当なエディターで <tt>config.inc.php</tt> ファイルを開いて、その内容を以下のテキストフィールドの内容に置き換えてください。</p>]]></message>
   <message key="installer.installationComplete"><![CDATA[<p>OJSのインストールが終了しました。</p>
 <p>このシステムの利用を開始するには、前画面でユーザ名とパスワードを入力して<a href="{$loginUrl}">ログイン</a>してください。</p>
-<p>お知らせや更新案内を受け取りたい場合は、<a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>で<strong>登録してください</strong>。ご質問やご意見がございましたら、<a href="http://pkp.sfu.ca/support/forum" target="_new">サポートフォーラム</a>にご参加ください。</p>]]></message>
+<p>お知らせや更新案内を受け取りたい場合は、<a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>で<strong>登録してください</strong>。ご質問やご意見がございましたら、<a href="http://forum.pkp.sfu.ca" target="_new">サポートフォーラム</a>にご参加ください。</p>]]></message>
   <message key="installer.upgradeComplete"><![CDATA[<p>OJS バージョン {$version} へのバージョンアップが終了しました。</p>
 <p> config.inc.php 設定ファイルの"installed"項目を<em>On</em>に戻すことを忘れないでください。</p>
-<p>もしまだ登録されていなくて、お知らせや更新案内を受け取りたい場合は、<a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>で<strong>登録してください</strong>。ご質問やご意見がございましたら、<a href="http://pkp.sfu.ca/support/forum" target="_new">サポートフォーラム</a>にご参加ください。</p>]]></message>
+<p>もしまだ登録されていなくて、お知らせや更新案内を受け取りたい場合は、<a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>で<strong>登録してください</strong>。ご質問やご意見がございましたら、<a href="http://forum.pkp.sfu.ca" target="_new">サポートフォーラム</a>にご参加ください。</p>]]></message>
   <!-- Article Logs -->
   <message key="log.author.submitted">{$authorName}が新規投稿ID {$submissionId} を行った。</message>
   <message key="log.author.documentRevised">{$authorName}が論文 {$articleId} を改訂した。新しいファイルIDは {$fileId} である。</message>
@@ -912,6 +913,6 @@ OJSのシステム設定を変更することにより、OAIインターフェ�
 	<message key="payment.authorFees">投稿料</message>
 	<message key="user.subscriptions.status.awaitingManualPaymentDescription">手作業による支払いは開始されましたが，まだ受け取っていません。</message>
 	<message key="user.subscriptions.status.awaitingOnlinePaymentDescription">オンライン支払は開始されましたが，キャンセルあるいは完了していません。</message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p>使用しているWebブラウザにPDFリーダープラグイン（例えば、<a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader</a> の最新版）をインストールしていれば，選択したPDFファイルがここにロードされるはずです。</p><p>また，PDFファイルをダウンロードすることもできます。ダウンロードしたファイルもPDFリーダーを使って開くことができます。 ダウンロードする場合は下記のリンクをクリックしてください。</p><p>PDFファイルの印刷，保存．作成などについてさらに詳しく知りたい場合は，Highwire Pressが提供している <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions about PDFs</a> が参考になります。</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p>使用しているWebブラウザにPDFリーダープラグイン（例えば、<a href="https://get.adobe.com/reader/">Adobe Acrobat Reader</a> の最新版）をインストールしていれば，選択したPDFファイルがここにロードされるはずです。</p><p>また，PDFファイルをダウンロードすることもできます。ダウンロードしたファイルもPDFリーダーを使って開くことができます。 ダウンロードする場合は下記のリンクをクリックしてください。</p><p>PDFファイルの印刷，保存．作成などについてさらに詳しく知りたい場合は，Highwire Pressが提供している <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions about PDFs</a> が参考になります。</p>]]></message>
 	<message key="user.subscriptions.statusInformation">アクティベートあるいは有効期限切れの講読が有効期限順に下記に表示されます。また，次のようなステータス情報がそれぞれの講読ごとに表示される場合があります。</message>
 </locale>

@@ -1,7 +1,8 @@
 {**
  * templates/sectionEditor/submission/status.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Subtemplate defining the submission status table.
@@ -15,7 +16,17 @@
 		<td width="20%" class="label">{translate key="common.status"}</td>
 		<td width="30%" class="value">
 			{if $status == STATUS_ARCHIVED}{translate key="submissions.archived"}
-			{elseif $status==STATUS_QUEUED_UNASSIGNED}{translate key="submissions.queuedUnassigned"}
+			{elseif $status==STATUS_QUEUED_UNASSIGNED}
+{**
+* Custom Code By Jeremy for JPPS
+*}
+    {if $currentJournal->getJournalInitials() == 'JPPS'}
+ 	Under Review
+    {else} 
+    {translate key="submissions.queuedUnassigned"}
+    {/if}
+
+
 			{elseif $status==STATUS_QUEUED_EDITING}{translate key="submissions.queuedEditing"}
 			{elseif $status==STATUS_QUEUED_REVIEW}{translate key="submissions.queuedReview"}
 			{elseif $status==STATUS_PUBLISHED}{translate key="submissions.published"}&nbsp;&nbsp;&nbsp;&nbsp;{$issue->getIssueIdentification()|escape}

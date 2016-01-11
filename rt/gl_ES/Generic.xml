@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE version SYSTEM "../../lib/pkp/dtd/rtVersion.dtd">
 
 <!--
@@ -8,7 +8,8 @@
   * co apoio de Miquel Rubirola e a Revista Olláparo (Cedeira-Galiza)
   * A tradución abranxe as ferramentas de lectura e de axuda.
   *
-  * Copyright (c)
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Reading Tools version: Generic (gl_ES)

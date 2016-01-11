@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/browse/BrowsePlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BrowsePlugin
@@ -77,10 +78,10 @@ class BrowsePlugin extends GenericPlugin {
 
 		$templateMgr =& TemplateManager::getManager();
 		if ($this->getSetting($journal->getId(), 'enableBrowseBySections')) {
-			$output .= '<li><a href="' . $templateMgr->smartyUrl(array('page' => 'browseSearch', 'op'=>'sections'), $smarty) . '">' . $templateMgr->smartyTranslate(array('key'=>'plugins.generic.browse.search.sections'), $smarty) . '</a></li>';
+			$output .= '<li id="linkBrowseBySections"><a href="' . $templateMgr->smartyUrl(array('page' => 'browseSearch', 'op'=>'sections'), $smarty) . '">' . $templateMgr->smartyTranslate(array('key'=>'plugins.generic.browse.search.sections'), $smarty) . '</a></li>';
 		}
 		if ($this->getSetting($journal->getId(), 'enableBrowseByIdentifyTypes')) {
-			$output .= '<li><a href="' . $templateMgr->smartyUrl(array('page' => 'browseSearch', 'op'=>'identifyTypes'), $smarty).'">' . $templateMgr->smartyTranslate(array('key'=>'plugins.generic.browse.search.identifyTypes'), $smarty) . '</a></li>';
+			$output .= '<li id="linkBrowseByIdentifyTypes"><a href="' . $templateMgr->smartyUrl(array('page' => 'browseSearch', 'op'=>'identifyTypes'), $smarty).'">' . $templateMgr->smartyTranslate(array('key'=>'plugins.generic.browse.search.identifyTypes'), $smarty) . '</a></li>';
 		}
 		return false;
 	}
@@ -146,14 +147,14 @@ class BrowsePlugin extends GenericPlugin {
 		return parent::getManagementVerbs($verbs);
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Location for the plugin to put a result msg
 	 * @param $messageParams array
- 	 * @return boolean
- 	 */
+	 * @return boolean
+	 */
 	function manage($verb, $args, &$message, &$messageParams) {
 		if (!parent::manage($verb, $args, $message, $messageParams)) return false;
 

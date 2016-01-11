@@ -3,7 +3,8 @@
 /**
  * @file pages/editor/IssueManagementHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class IssueManagementHandler
@@ -254,9 +255,14 @@ class IssueManagementHandler extends EditorHandler {
 		}
 		$issueForm->readInputData();
 
-		if ($issueForm->validate($issue)) {
-			$issueForm->execute($issueId);
-			$issueForm->initData($issueId);
+		$pubIdPlugins =& PluginRegistry::loadCategory('pubIds', true);
+		if (!HookRegistry::call('Editor::IssueManagementHandler::editIssue', array(&$issue, &$issueForm))) {
+			if ($issueForm->validate($issue)) {
+				$issueForm->execute($issueId);
+				$issueForm->initData($issueId);
+				$this->validate($issueId, true);
+				$issue =& $this->issue;
+			}
 		}
 
 		$templateMgr->assign_by_ref('issue', $issue);
@@ -905,20 +911,32 @@ class IssueManagementHandler extends EditorHandler {
 			$articleDao =& DAORegistry::getDAO('ArticleDAO');
 			$publishedArticles =& $publishedArticleDao->getPublishedArticles($issueId);
 			foreach ($publishedArticles as $publishedArticle) {
+				// Set the publication date to the current date
+				$publishedArticle->setDatePublished(Core::getCurrentDate());
+				$publishedArticleDao->updatePublishedArticle($publishedArticle);
+
+				// Set the article status and affected metadata
 				$article =& $articleDao->getArticle($publishedArticle->getId());
 				if ($article && $article->getStatus() == STATUS_QUEUED) {
 					$article->setStatus(STATUS_PUBLISHED);
 					$article->stampStatusModified();
 					$articleDao->updateArticle($article);
+					
+					// Call initialize permissions again to check if copyright year needs to be initialized.
+					$article->initializePermissions();
+					$articleDao->updateLocaleFields($article);
+				
 					if (!$articleSearchIndex) {
 						import('classes.search.ArticleSearchIndex');
 						$articleSearchIndex = new ArticleSearchIndex();
 					}
 					$articleSearchIndex->articleMetadataChanged($publishedArticle);
 				}
-				// delete article tombstone
+
+				// Delete article tombstone if necessary
 				$tombstoneDao =& DAORegistry::getDAO('DataObjectTombstoneDAO');
 				$tombstoneDao->deleteByDataObjectId($article->getId());
+
 				unset($article);
 			}
 		}
@@ -1018,12 +1036,12 @@ class IssueManagementHandler extends EditorHandler {
 		$issue =& $this->issue;
 		$this->setupTemplate(EDITOR_SECTION_ISSUES);
 
-		$userDao =& DAORegistry::getDAO('UserDAO');
 		$issueDao =& DAORegistry::getDAO('IssueDAO');
 		$roleDao =& DAORegistry::getDAO('RoleDAO');
 		$authorDao =& DAORegistry::getDAO('AuthorDAO');
 		$individualSubscriptionDao =& DAORegistry::getDAO('IndividualSubscriptionDAO');
 		$institutionalSubscriptionDao =& DAORegistry::getDAO('InstitutionalSubscriptionDAO');
+		$notificationMailListDao =& DAORegistry::getDAO('NotificationMailListDAO'); /* @var $notificationMailListDao NotificationMailListDAO */
 
 		$journal =& $request->getJournal();
 		$user =& $request->getUser();
@@ -1045,30 +1063,45 @@ class IssueManagementHandler extends EditorHandler {
 					$recipients =& $institutionalSubscriptionDao->getSubscribedUsers($journal->getId());
 					break;
 				case 'allAuthors':
-					$recipients =& $authorDao->getAuthorsAlphabetizedByJournal($journal->getId(), null, null, true);
+					$recipients =& $authorDao->getAuthorsAlphabetizedByJournal($journal->getId(), null, null, true, true);
 					break;
 				case 'allUsers':
 					$recipients =& $roleDao->getUsersByJournalId($journal->getId());
 					break;
 				case 'allReaders':
-				default:
 					$recipients =& $roleDao->getUsersByRoleId(
 						ROLE_ID_READER,
 						$journal->getId()
 					);
 					break;
+				default:
+					$recipients = null;
 			}
 
 			import('lib.pkp.classes.validation.ValidatorEmail');
-			while (!$recipients->eof()) {
+			$emails = array();
+			while ($recipients && !$recipients->eof()) {
 				$recipient =& $recipients->next();
-				if (preg_match(ValidatorEmail::getRegexp(), $recipient->getEmail())) {
-					$email->addRecipient($recipient->getEmail(), $recipient->getFullName());
-				} else {
-					error_log("Invalid email address: " . $recipient->getEmail());
+				if ($recipient instanceof User && $recipient->getDisabled()) continue;
+				if (!isset($emails[$recipient->getEmail()])) {
+					if (preg_match(ValidatorEmail::getRegexp(), $recipient->getEmail())) {
+						$email->addRecipient($recipient->getEmail(), $recipient->getFullName());
+					} else {
+						error_log("Invalid email address: " . $recipient->getEmail());
+					}
+					$emails[$recipient->getEmail()] = 1;
 				}
 				unset($recipient);
 			}
+
+			if($request->getUserVar('sendToMailList')) {
+				$mailList = $notificationMailListDao->getMailList($journal->getId());
+				foreach ($mailList as $mailListRecipient) {
+					if ($recipient instanceof User && $recipient->getDisabled()) continue;
+					$email->addRecipient($mailListRecipient);
+				}
+			}
+
 
 			if ($request->getUserVar('includeToc')=='1' && isset($issue)) {
 				$issue = $issueDao->getIssueById($request->getUserVar('issue'));
@@ -1112,7 +1145,7 @@ class IssueManagementHandler extends EditorHandler {
 			$allUsersCount = $roleDao->getJournalUsersCount($journal->getId());
 
 			// FIXME: There should be a better way of doing this.
-			$authors =& $authorDao->getAuthorsAlphabetizedByJournal($journal->getId(), null, null, true);
+			$authors =& $authorDao->getAuthorsAlphabetizedByJournal($journal->getId(), null, null, true, true);
 			$authorCount = $authors->getCount();
 
 
@@ -1127,6 +1160,7 @@ class IssueManagementHandler extends EditorHandler {
 					'allAuthorsCount' => $authorCount,
 					'allIndividualSubscribersCount' => $individualSubscriptionDao->getSubscribedUserCount($journal->getId()),
 					'allInstitutionalSubscribersCount' => $institutionalSubscriptionDao->getSubscribedUserCount($journal->getId()),
+					'allMailListCount' => count($notificationMailListDao->getMailList($journal->getId()))
 				)
 			);
 		}

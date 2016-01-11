@@ -1,7 +1,8 @@
 {**
  * templates/issue/archive.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Issue Archive.
@@ -21,20 +22,6 @@
 <a target="JPPS" href="http://www.ualberta.ca/~csps/Journals/JournalArchives.htm"><b>To view our archives Volume 1 - Volume 10, No 3, 2007 please click here.</b></a>
 {/if}
 
-{if $currentJournal->getJournalInitials() == 'EBLIP'}		
-			<script language="javascript">
-			//popup("https://surveys.mcgill.ca/limesurvey/index.php?sid=43915&lang=en");
-
-			{literal} 
-			function popup(Site)			{
-				window.open(Site,"survey","toolbar=yes,statusbar=yes, location=no,scrollbars=yes,resizable=yes");
-			}
-		   {/literal}
-			</script>	
-	{/if}
-	
-<a name="issues"></a>
-
 {iterate from=issues item=issue}
 	{if $issue->getYear() != $lastYear}
 		{if !$notFirstYear}
@@ -49,9 +36,14 @@
 		{assign var=lastYear value=$issue->getYear()}
 	{/if}
 
-	<div id="issue" style="clear:left;">
-	{if $issue->getLocalizedFileName() && $issue->getShowCoverPage($locale) && !$issue->getHideCoverPageArchives($locale)}
-		<div class="issueCoverImage"><a href="{url op="view" path=$issue->getBestIssueId($currentJournal)}"><img src="{$coverPagePath|escape}{$issue->getFileName($locale)|escape}"{if $issue->getCoverPageAltText($locale) != ''} alt="{$issue->getCoverPageAltText($locale)|escape}"{else} alt="{translate key="issue.coverPage.altText"}"{/if}/></a>
+	<div id="issue-{$issue->getId()}" style="clear:left;">
+	{if $issue->getFileName($locale)}
+		{assign var="coverLocale" value="$locale"}
+	{else}
+		{assign var="coverLocale" value="$primaryLocale"}
+	{/if}
+	{if $issue->getFileName($coverLocale) && $issue->getShowCoverPage($coverLocale) && !$issue->getHideCoverPageArchives($coverLocale)}
+		<div class="issueCoverImage"><a href="{url op="view" path=$issue->getBestIssueId($currentJournal)}"><img src="{$coverPagePath|escape}{$issue->getFileName($coverLocale)|escape}"{if $issue->getCoverPageAltText($coverLocale) != ''} alt="{$issue->getCoverPageAltText($coverLocale)|escape}"{else} alt="{translate key="issue.coverPage.altText"}"{/if}/></a>
 		</div>
 		<h4><a href="{url op="view" path=$issue->getBestIssueId($currentJournal)}">{$issue->getIssueIdentification()|escape}</a></h4>
 		<div class="issueCoverDescription">{$issue->getLocalizedCoverPageDescription()|strip_unsafe_html|nl2br}</div>

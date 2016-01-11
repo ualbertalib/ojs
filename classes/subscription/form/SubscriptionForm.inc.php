@@ -7,7 +7,8 @@
 /**
  * @file classes/subscription/form/SubscriptionForm.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubscriptionForm
@@ -85,6 +86,8 @@ class SubscriptionForm extends Form {
 
 		if (isset($this->subscription)) {
 			$subscriptionId = $this->subscription->getId();
+			$templateMgr->assign('dateRemindedBefore', $this->subscription->getDateRemindedBefore());
+			$templateMgr->assign('dateRemindedAfter', $this->subscription->getDateRemindedAfter());
 		} else {
 			$subscriptionId = null;
 		}
@@ -105,6 +108,7 @@ class SubscriptionForm extends Form {
 		$templateMgr->assign('userInitials', $user->getInitials());
 		$templateMgr->assign('userGender', $user->getGender());
 		$templateMgr->assign('userAffiliation', $user->getAffiliation(null)); // Localized
+		$templateMgr->assign('orcid', $user->getData('orcid'));
 		$templateMgr->assign('userUrl', $user->getUrl());
 		$templateMgr->assign('userFullName', $user->getFullName());
 		$templateMgr->assign('userEmail', $user->getEmail());
@@ -150,6 +154,7 @@ class SubscriptionForm extends Form {
 				'userInitials', $user->getInitials(),
 				'userGender', $user->getGender(),
 				'userAffiliation', $user->getAffiliation(null),
+				'orcid', $user->getData('orcid'),
 				'userUrl', $user->getUrl(),
 				'userEmail' => $user->getEmail(),
 				'userPhone' => $user->getPhone(),
@@ -161,13 +166,14 @@ class SubscriptionForm extends Form {
 				'notes' => $subscription->getNotes()
 			);
 		}
+		return parent::initData();
 	}
 
 	/**
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('status', 'userId', 'typeId', 'dateStartYear', 'dateStartMonth', 'dateStartDay', 'dateEndYear', 'dateEndMonth', 'dateEndDay', 'userSalutation', 'userFirstName', 'userMiddleName', 'userLastName', 'userInitials', 'userGender', 'userAffiliation', 'userUrl', 'userEmail', 'userPhone', 'userFax', 'userMailingAddress', 'userCountry', 'membership', 'referenceNumber', 'notes', 'notifyEmail'));
+		$this->readUserVars(array('status', 'userId', 'typeId', 'dateStartYear', 'dateStartMonth', 'dateStartDay', 'dateEndYear', 'dateEndMonth', 'dateEndDay', 'userSalutation', 'userFirstName', 'userMiddleName', 'userLastName', 'userInitials', 'userGender', 'userAffiliation', 'orcid', 'userUrl', 'userEmail', 'userPhone', 'userFax', 'userMailingAddress', 'userCountry', 'membership', 'referenceNumber', 'notes', 'notifyEmail'));
 		$this->_data['dateStart'] = Request::getUserDateVar('dateStart');
 		$this->_data['dateEnd'] = Request::getUserDateVar('dateEnd');
 
@@ -244,6 +250,7 @@ class SubscriptionForm extends Form {
 		$user->setInitials($this->getData('userInitials'));
 		$user->setGender($this->getData('userGender'));
 		$user->setAffiliation($this->getData('userAffiliation'), null); // Localized
+		$user->setData('orcid', $this->getData('orcid'));
 		$user->setUrl($this->getData('userUrl'));
 		$user->setEmail($this->getData('userEmail'));
 		$user->setPhone($this->getData('userPhone'));
@@ -251,6 +258,7 @@ class SubscriptionForm extends Form {
 		$user->setMailingAddress($this->getData('userMailingAddress'));
 		$user->setCountry($this->getData('userCountry'));
 
+		parent::execute($user);
 		$userDao->updateObject($user);
 	}
 
@@ -297,7 +305,7 @@ class SubscriptionForm extends Form {
 
 		import('classes.mail.MailTemplate');
 		$mail = new MailTemplate($mailTemplateKey);
-		$mail->setFrom($subscriptionEmail, $subscriptionName);
+		$mail->setReplyTo($subscriptionEmail, $subscriptionName);
 		$mail->addRecipient($user->getEmail(), $user->getFullName());
 		$mail->setSubject($mail->getSubject($journal->getPrimaryLocale()));
 		$mail->setBody($mail->getBody($journal->getPrimaryLocale()));

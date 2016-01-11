@@ -3,7 +3,8 @@
 /**
  * @file pages/about/AboutHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AboutHandler
@@ -57,10 +58,12 @@ class AboutHandler extends Handler {
 			$paymentManager = new OJSPaymentManager($request);
 			$templateMgr->assign('paymentConfigured', $paymentManager->isConfigured());
 
-			$groupDao =& DAORegistry::getDAO('GroupDAO');
-			$groups =& $groupDao->getGroups(ASSOC_TYPE_JOURNAL, $journal->getId(), GROUP_CONTEXT_PEOPLE);
+			if ($journal->getSetting('boardEnabled')) {
+				$groupDao =& DAORegistry::getDAO('GroupDAO');
+				$groups =& $groupDao->getGroups(ASSOC_TYPE_JOURNAL, $journal->getId(), GROUP_CONTEXT_PEOPLE);
+				$templateMgr->assign_by_ref('peopleGroups', $groups);
+			}
 
-			$templateMgr->assign_by_ref('peopleGroups', $groups);
 			$templateMgr->assign('helpTopicId', 'user.about');
 			$templateMgr->display('about/index.tpl');
 		} else {
@@ -305,8 +308,10 @@ class AboutHandler extends Handler {
 
 	/**
 	 * Display editorialPolicies page.
+	 * @param $args array
+	 * @param $request PKPRequest
 	 */
-	function editorialPolicies() {
+	function editorialPolicies($args, &$request) {
 		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
@@ -326,6 +331,10 @@ class AboutHandler extends Handler {
 			$sectionEditorEntriesBySection[$section->getId()] =& $sectionEditorsDao->getEditorsBySectionId($journal->getId(), $section->getId());
 		}
 		$templateMgr->assign_by_ref('sectionEditorEntriesBySection', $sectionEditorEntriesBySection);
+
+		import('classes.payment.ojs.OJSPaymentManager');
+		$paymentManager = new OJSPaymentManager($request);
+		$templateMgr->assign('paymentConfigured', $paymentManager->isConfigured());
 
 		$templateMgr->display('about/editorialPolicies.tpl');
 	}
@@ -438,6 +447,7 @@ class AboutHandler extends Handler {
 	 * Display Journal Sponsorship page.
 	 */
 	function journalSponsorship() {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -496,6 +506,7 @@ class AboutHandler extends Handler {
 	 * Display journal history.
 	 */
 	function history() {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
@@ -531,19 +542,34 @@ class AboutHandler extends Handler {
 	/**
 	 * Display a list of public stats for the current journal.
 	 * WARNING: This implementation should be kept roughly synchronized
-	 * with the reader's statistics view in the About pages.
+	 * with the journal manager's statistics view.
 	 */
-	function statistics() {
+	function statistics($args, $request) {
+		$this->addCheck(new HandlerValidatorJournal($this));
 		$this->validate();
 		$this->setupTemplate(true);
 
-		$journal =& Request::getJournal();
-		$templateMgr =& TemplateManager::getManager();
+		$journal =& $request->getJournal();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->assign('helpTopicId','user.about');
 
-		$statisticsYear = Request::getUserVar('statisticsYear');
-		if (empty($statisticsYear)) $statisticsYear = date('Y');
+		// Get the statistics year
+		$statisticsYear = (int) $request->getUserVar('statisticsYear');
+
+		// Ensure that the requested statistics year is within a sane range
+		$journalStatisticsDao =& DAORegistry::getDAO('JournalStatisticsDAO');
+		$lastYear = strftime('%Y');
+		$firstDate = $journalStatisticsDao->getFirstActivityDate($journal->getId());
+		if (!$firstDate) $firstYear = $lastYear;
+		else $firstYear = strftime('%Y', $firstDate);
+		if ($statisticsYear < $firstYear || $statisticsYear > $lastYear) {
+			// Request out of range; redirect to the current year's statistics
+			return $request->redirect(null, null, null, null, array('statisticsYear' => strftime('%Y')));
+		}
+
 		$templateMgr->assign('statisticsYear', $statisticsYear);
+		$templateMgr->assign('firstYear', $firstYear);
+		$templateMgr->assign('lastYear', $lastYear);
 
 		$sectionIds = $journal->getSetting('statisticsSectionIds');
 		if (!is_array($sectionIds)) $sectionIds = array();
@@ -555,7 +581,6 @@ class AboutHandler extends Handler {
 		$fromDate = mktime(0, 0, 0, 1, 1, $statisticsYear);
 		$toDate = mktime(23, 59, 59, 12, 31, $statisticsYear);
 
-		$journalStatisticsDao =& DAORegistry::getDAO('JournalStatisticsDAO');
 		$articleStatistics = $journalStatisticsDao->getArticleStatistics($journal->getId(), null, $fromDate, $toDate);
 		$templateMgr->assign('articleStatistics', $articleStatistics);
 

@@ -1,7 +1,8 @@
 {**
  * templates/index/journal.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Journal index page.
@@ -13,7 +14,7 @@
 {/strip}
 
 {if $journalDescription}
-	<div>{$journalDescription}</div>
+	<div id="journalDescription">{$journalDescription}</div>
 {/if}
 
 {call_hook name="Templates::Index::journal"}
@@ -25,7 +26,7 @@
 
 {if $additionalHomeContent}
 <br />
-{$additionalHomeContent}
+<div id="additionalHomeContent">{$additionalHomeContent}</div>
 {/if}
 
 {if $enableAnnouncementsHomepage}
@@ -42,23 +43,8 @@
 {/if}
 
 {if $issue && $currentJournal->getSetting('publishingMode') != $smarty.const.PUBLISHING_MODE_NONE}
-{**
-		* Custom Code By Jeremy for EBLIP
-		*
-		*}
-	{if $currentJournal->getJournalInitials() == 'EBLIP'}		
-			<script language="javascript">
-			//popup("https://surveys.mcgill.ca/limesurvey/index.php?sid=43915&lang=en");
-
-			{literal} 
-			function popup(Site)			{
-				window.open(Site,"survey","toolbar=yes,statusbar=yes, location=no,scrollbars=yes,resizable=yes");
-			}
-		   {/literal}
-			</script>	
-	{/if}
 	{* Display the table of contents or cover page of the current issue. *}
-	
+	<br />
 	<h3>{$issue->getIssueIdentification()|strip_unsafe_html|nl2br}</h3>
 	{include file="issue/view.tpl"}
 {/if}

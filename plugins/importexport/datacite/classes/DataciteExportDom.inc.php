@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/datacite/classes/DataciteExportDom.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DataciteExportDom
@@ -18,8 +19,8 @@ if (!class_exists('DOIExportDom')) { // Bug #7848
 }
 
 // XML attributes
-define('DATACITE_XMLNS' , 'http://datacite.org/schema/kernel-2.2');
-define('DATACITE_XSI_SCHEMALOCATION' , 'http://datacite.org/schema/kernel-2.2 http://schema.datacite.org/meta/kernel-2.2/metadata.xsd');
+define('DATACITE_XMLNS' , 'http://datacite.org/schema/kernel-3');
+define('DATACITE_XSI_SCHEMALOCATION' , 'http://datacite.org/schema/kernel-3 http://schema.datacite.org/meta/kernel-3/metadata.xsd');
 
 // Date types
 define('DATACITE_DATE_AVAILABLE', 'Available');
@@ -144,7 +145,7 @@ class DataciteExportDom extends DOIExportDom {
 		XMLCustomWriter::appendChild($rootElement, $this->_datesElement($issue, $article, $articleFile, $suppFile, $publicationDate));
 
 		// Language
-		XMLCustomWriter::createChildWithText($this->getDoc(), $rootElement, 'language', AppLocale::get3LetterIsoFromLocale($objectLocalePrecedence[0]));
+		XMLCustomWriter::createChildWithText($this->getDoc(), $rootElement, 'language', AppLocale::getIso1FromLocale($objectLocalePrecedence[0]));
 
 		// Resource Type
 		if (!is_a($object, 'SuppFile')) {
@@ -166,8 +167,11 @@ class DataciteExportDom extends DOIExportDom {
 		if (!empty($articleFile)) XMLCustomWriter::appendChild($rootElement, $this->_formatsElement($articleFile));
 
 		// Rights
-		$rights = $this->getPrimaryTranslation($journal->getSetting('copyrightNotice', null), $objectLocalePrecedence);
-		if (!empty($rights)) XMLCustomWriter::createChildWithText($this->getDoc(), $rootElement, 'rights', $rights);
+		$rightsURL = $article?$article->getLicenseURL():$journal->getSetting('licenseURL');
+		$rightsListElement =& XMLCustomWriter::createElement($this->getDoc(), 'rightsList');
+		$rightsElement = $this->createElementWithText('rights', strip_tags(Application::getCCLicenseBadge($rightsURL)), array('rightsURI' => $rightsURL));
+		XMLCustomWriter::appendChild($rightsListElement, $rightsElement);
+		XMLCustomWriter::appendChild($rootElement, $rightsListElement);
 
 		// Descriptions
 		$descriptionsElement =& $this->_descriptionsElement($issue, $article, $suppFile, $objectLocalePrecedence, $articlesByIssue);
@@ -207,8 +211,8 @@ class DataciteExportDom extends DOIExportDom {
 	function &retrievePublicationObjects(&$object) {
 		// Initialize local variables.
 		$nullVar = null;
- 		$journal =& $this->getJournal();
- 		$cache =& $this->getCache();
+		$journal =& $this->getJournal();
+		$cache =& $this->getCache();
 
 		// Retrieve basic OJS objects.
 		$publicationObjects = parent::retrievePublicationObjects($object);
@@ -267,18 +271,24 @@ class DataciteExportDom extends DOIExportDom {
 	 * @return array
 	 */
 	function &_retrieveSuppFilesByArticle(&$article) {
+		$suppFilesByArticle = array();
 		$cache =& $this->getCache();
 		$articleId = $article->getId();
 		if (!$cache->isCached('suppFilesByArticle', $articleId)) {
 			$suppFileDao =& DAORegistry::getDAO('SuppFileDAO'); /* @var $suppFileDao SuppFileDAO */
 			$suppFiles =& $suppFileDao->getSuppFilesByArticle($articleId);
-			foreach($suppFiles as $suppFile) {
-				$cache->add($suppFile, $article);
-				unset($suppFile);
+			if (!empty($suppFiles)) {
+				foreach($suppFiles as $suppFile) {
+					$cache->add($suppFile, $article);
+					unset($suppFile);
+				}
+				$cache->markComplete('suppFilesByArticle', $articleId);
+				$suppFilesByArticle = $cache->get('suppFilesByArticle', $articleId);
 			}
-			$cache->markComplete('suppFilesByArticle', $articleId);
+		} else {
+			$suppFilesByArticle = $cache->get('suppFilesByArticle', $articleId);
 		}
-		return $cache->get('suppFilesByArticle', $articleId);
+		return $suppFilesByArticle;
 	}
 
 	/**

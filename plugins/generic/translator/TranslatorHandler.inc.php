@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/translator/TranslatorHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class TranslatorHandler
@@ -408,6 +409,14 @@ class TranslatorHandler extends Handler {
 		import('lib.pkp.classes.file.FileManager');
 		$fileManager = new FileManager();
 		$fileManager->copyFile(TranslatorAction::determineReferenceFilename($locale, $filename), $filename);
+		$localeKeys = LocaleFile::load($filename);
+		import('lib.pkp.classes.file.EditableLocaleFile');
+		$file = new EditableLocaleFile($locale, $filename);
+		// remove default translations from keys
+		foreach (array_keys($localeKeys) as $key) {
+			$file->update($key, '');
+		}
+		$file->write();
 		Request::redirectUrl(Request::getUserVar('redirectUrl'));
 	}
 
@@ -462,7 +471,7 @@ class TranslatorHandler extends Handler {
 <!--
   * emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.

@@ -1,7 +1,8 @@
 {**
  * templates/index/site.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Site index.
@@ -41,6 +42,7 @@
 		{call_hook|assign:"rightSidebarCode" name="Templates::Common::RightSidebar"}
 		{$rightSidebarCode}
 	</div>
+
 <a name="journals"></a>
 <div id="ejournals" class="box">
 	<h2>Our Journals</h2>
@@ -60,6 +62,8 @@
 		{/if}
 		{if $site->getSetting('showTitle')}
 			<h3><a href="{url journal=$journal->getPath()}">{$journal->getLocalizedTitle()|escape}</a></h3>
+
+
 		{/if}
 		{if $site->getSetting('showDescription')}
 			{if $journal->getLocalizedDescription()}
@@ -73,9 +77,11 @@
 {/if}
 
 <div id="journalListPageInfo">{page_info iterator=$journals}</div>
+
 <div id="journalListPageLinks">{page_links anchor="journals" name="journals" iterator=$journals}
 </div>
 </div>
 </div>
 {include file="common/uofafooter.tpl"}
+
 

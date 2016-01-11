@@ -3,6 +3,7 @@
 /**
  * @file classes/payments/ojs/form/PaymentSettingsForm.inc.php
  *
+ * Copyright (c) 2013-2015 Simon Fraser University Library
  * Copyright (c) 2006-2009 Gunther Eysenbach, Juan Pablo Alperin
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
@@ -49,7 +50,7 @@ class PaymentSettingsForm extends Form {
 			'fastTrackFeeName' => 'string',
 			'fastTrackFeeDescription' => 'string',
 			'purchaseArticleFeeEnabled' => 'bool',
-		  	'purchaseArticleFee' => 'float',
+		 	'purchaseArticleFee' => 'float',
 			'purchaseArticleFeeName' => 'string',
 			'purchaseArticleFeeDescription' => 'string',
 			'purchaseIssueFeeEnabled' => 'bool',

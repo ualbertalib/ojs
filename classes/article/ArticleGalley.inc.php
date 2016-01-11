@@ -3,7 +3,8 @@
 /**
  * @file classes/article/ArticleGalley.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleGalley
@@ -83,16 +84,8 @@ class ArticleGalley extends ArticleFile {
 	 * @return int
 	 */
 	function getViews() {
-		return $this->getData('views');
-	}
-
-	/**
-	 * Set views count.
-	 * NOTE that the views count is NOT stored by the DAO update or insert functions.
-	 * @param $views int
-	 */
-	function setViews($views) {
-		return $this->setData('views', $views);
+		$application =& PKPApplication::getApplication();
+		return $application->getPrimaryMetricByAssoc(ASSOC_TYPE_GALLEY, $this->getId());
 	}
 
 	/**
@@ -163,7 +156,14 @@ class ArticleGalley extends ArticleFile {
 	 * @param $journal Object the journal this galley is in
 	 * @return string
 	 */
-	function getBestGalleyId(&$journal) {
+	function getBestGalleyId(&$journal = null) {
+		if (is_null($journal)) {
+			$articleDao =& DAORegistry::getDAO('ArticleDAO');  /* @var $articleDao ArticleDAO */
+			$journalDao =& DAORegistry::getDAO('JournalDAO');  /* @var $journalDao JournalDAO */
+			$journalId = $articleDao->getArticleJournalId($this->getArticleId());
+			$journal =& $journalDao->getById($journalId);
+		}
+
 		if ($journal->getSetting('enablePublicGalleyId')) {
 			$publicGalleyId = $this->getPubId('publisher-id');
 			if (!empty($publicGalleyId)) return $publicGalleyId;

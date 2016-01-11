@@ -4,10 +4,11 @@
 <!--
   * locale/sr_SR/admin.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the sr_SR (Srpski) locale.
+  * Localization strings for the sr_SR (Cрпски) locale.
   *
   -->
 
@@ -25,6 +26,7 @@
 	<message key="admin.languages.downloadFailed">Preuzimanje lokalizacije nije uspelo. Poruka o greškama niže objašnjava razloge.</message>
 	<message key="admin.languages.localeInstalled">"{$locale}" lokalizacija je instalirana.</message>
 	<message key="admin.languages.download">Preuzmi lokalizaciju</message>
+	<message key="admin.languages.reloadDefaultEmailTemplates">Reload podrazumevane predloške e-pošte</message>
 	<message key="admin.languages.download.cannotOpen">Ne mogu da otvorim deskriptor jezika sa PKP web sajta.</message>
 	<message key="admin.languages.download.cannotModifyRegistry">Ne mogu da dodam novu lokalizaciju u lokalni registry fajl, obično "registry/locales.xml".</message>
 	<message key="admin.auth.ojs">OJS korisnička baza podataka</message>

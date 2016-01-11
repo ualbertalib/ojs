@@ -4,7 +4,8 @@
 <!--
   * locale/no_NO/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -661,8 +662,8 @@ Lenke: {$url}
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Ny melding fra {$siteTitle}</subject>
-		<body>Du har en ny melding fra {$siteTitle}:
+		<subject>Ny melding fra {$journalName}</subject>
+		<body>Du har en ny melding fra {$journalName}:
 --
 {$notificationContents}
 
@@ -674,8 +675,8 @@ Om du ikke lenger ønsker å motte slike meldinger per e-post, gå til  {$unsubs
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Velkommen til e-postlisten til {$siteTitle}!</subject>
-		<body>Du har bedt om å få meldinger fra {$siteTitle}.
+		<subject>Velkommen til e-postlisten til {$journalName}!</subject>
+		<body>Du har bedt om å få meldinger fra {$journalName}.
 
 Vennligst klikke på denne lenken for å bekrefte ditt ønske og legge din e-postadresse til e-postlisten: {$confirmLink}
 

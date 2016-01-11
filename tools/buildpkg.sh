@@ -1,21 +1,24 @@
 #!/bin/bash
 
 #
-# buildpkg.sh
+# tools/buildpkg.sh
 #
-# Copyright (c) 2003-2013 John Willinsky
+# Copyright (c) 2013-2015 Simon Fraser University Library
+# Copyright (c) 2003-2015 John Willinsky
 # Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 #
 # Script to create an OJS package for distribution.
 #
-# Usage: buildpkg.sh <version> [<tag>] [<patch_dir>]
-#
+# Usage: buildpkg.sh <version> <tag-branch> <patch_dir>
+#  <version>: The version of OJS to release (e.g. 2.4.5 or 2.4.5-1)
+#  <tag-branch>: The tag or branch to use to build the package
+#  <patch-dir>: A directory containg .tar.gz files of previous releases to create patches from
 #
 
 GITREP=git://github.com/pkp/ojs.git
 
-if [ -z "$1" ]; then
-	echo "Usage: $0 <version> [<tag>-<branch>] [<patch_dir>]";
+if [ -z "$3" ]; then
+	echo "Usage: $0 <version> <tag>-<branch> <patch_dir>";
 	exit 1;
 fi
 
@@ -30,26 +33,35 @@ EXCLUDE="dbscripts/xml/data/locale/en_US/sample.xml		\
 dbscripts/xml/data/sample.xml					\
 docs/dev							\
 locale/te_ST							\
+plugins/importexport/duracloud/lib/DuraCloud-PHP/.git		\
 tests								\
 tools/buildpkg.sh						\
 tools/genLocaleReport.sh					\
 tools/genTestLocale.php						\
+tools/startSubmodulesTRAVIS.sh					\
 tools/test							\
 lib/pkp/tests							\
 .git								\
-lib/pkp/.git"
+.travis.yml							\
+lib/pkp/.git							\
+lib/pkp/tools/travis						\
+lib/pkp/tools/mergePullRequest.sh				\
+lib/password_compat/.git					\
+lib/pkp/lib/swordappv2/.git					\
+lib/pkp/lib/swordappv2/test					\
+plugins/generic/pdfJsViewer/.git"
 
 
 cd $TMPDIR
 
 echo -n "Cloning $GITREP and checking out tag $TAG ... "
-git clone -q -n $GITREP $BUILD || exit 1
+git clone -b $TAG --depth 1 -q -n $GITREP $BUILD || exit 1
 cd $BUILD
 git checkout -q $TAG || exit 1
 echo "Done"
 
-echo -n "Checking out corresponding submodule ... "
-git submodule -q update --init >/dev/null || exit 1
+echo -n "Checking out submodules ... "
+git submodule -q update --init --recursive >/dev/null || exit 1
 echo "Done"
 
 echo -n "Preparing package ... "
@@ -67,7 +79,7 @@ echo "Done"
 if [ ! -z "$PATCHDIR" ]; then
 	echo "Creating patches in $BUILD.patch ..."
 	[ -e "../${BUILD}.patch" ] || mkdir "../$BUILD.patch"
-	for FILE in $PATCHDIR/*; do
+	for FILE in $PATCHDIR/*.tar.gz; do
 		OLDBUILD=$(basename $FILE)
 		OLDVERSION=${OLDBUILD/$PREFIX-/}
 		OLDVERSION=${OLDVERSION/.tar.gz/}
@@ -80,10 +92,5 @@ if [ ! -z "$PATCHDIR" ]; then
 fi
 
 cd ..
-
-echo -n "Building doxygen documentation... "
-doxygen docs/dev/ojs2.doxygen && cd docs/dev/doxygen && tar czf ../../../${BUILD}-doxygen.tar.gz html && cd ../../..
-
-echo "Done"
 
 rm -r $TMPDIR

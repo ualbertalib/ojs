@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/xmlGalley/ArticleXMLGalleyDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleXMLGalleyDAO
@@ -48,6 +49,7 @@ class ArticleXMLGalleyDAO extends ArticleGalleyDAO {
 				g.style_file_id,
 				g.seq,
 				g.locale,
+				g.remote_url,
 				a.file_name,
 				a.original_file_name,
 				a.file_stage,
@@ -86,7 +88,7 @@ class ArticleXMLGalleyDAO extends ArticleGalleyDAO {
 			$galley =&  $galleys[$key];
 
 			// if the galley is an XML galley, append XML-derived galleys
-			if ($galley->getFileType() == "text/xml") {
+			if ($galley->getFileType() == "text/xml" || $galley->getFileType() == "application/xml") {
 
 				// get derived galleys from DB for this article
 				$result =& $this->retrieve(

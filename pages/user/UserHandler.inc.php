@@ -3,7 +3,8 @@
 /**
  * @file pages/user/UserHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserHandler
@@ -73,6 +74,9 @@ class UserHandler extends Handler {
 
 			$templateMgr->assign_by_ref('userJournals', $userJournals);
 			$templateMgr->assign('showAllJournals', 1);
+
+			$allJournals =& $journalDao->getJournals();
+			$templateMgr->assign_by_ref('allJournals', $allJournals->toArray());
 
 		} else { // Currently within a journal's context.
 			$journalId = $journal->getId();
@@ -511,6 +515,7 @@ class UserHandler extends Handler {
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$user =& $userDao->getUser($userId);
 
+		$this->setupTemplate($request, false);
 		$templateMgr->assign_by_ref('user', $user);
 		$templateMgr->display('user/publicProfile.tpl');
 	}
@@ -600,7 +605,7 @@ class UserHandler extends Handler {
 
 	/**
 	 * Pay for a subscription purchase.
- 	 * @param $args array
+	 * @param $args array
 	 * @param $request PKPRequest
 	 */
 	function payPurchaseSubscription($args, &$request) {

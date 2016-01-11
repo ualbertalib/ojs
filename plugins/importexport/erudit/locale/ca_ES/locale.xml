@@ -1,15 +1,18 @@
-﻿<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd"> <!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+<!--
   * locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Credits: http://pkp.sfu.ca/wiki/index.php?title=OJS:_Catalan_%28ca_ES%29
   *
-  * $Id$
+  * Localization strings for the ca_ES (Català) locale.
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="ca_ES" full_name="Català">
 	<message key="plugins.importexport.erudit.displayName">Connector d'exportació per a articles d'Erudit</message>
 	<message key="plugins.importexport.erudit.description">Exporta els articles utilitzant la DTD de la versió anglesa d'Erudit.</message>
 
@@ -29,4 +32,4 @@
 	<message key="plugins.importexport.erudit.export.error.galleyNotFound">No hi ha galerades que coincideixin amb l'etiqueta de galerades indicada "{$galleyLabel}".</message>
 
 	<message key="plugins.importexport.erudit.unavailable">No disponible</message>
-</locale> 
+</locale>

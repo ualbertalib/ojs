@@ -1,7 +1,8 @@
 {**
  * @file plugins/importexport/medra/templates/articles.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Select articles for export.
@@ -27,7 +28,8 @@
 
 <div id="articles">
 	<p>{translate key="plugins.importexport.medra.workOrProduct"}</p>
-	<form action="{plugin_url path="exportArticles"}" method="post" id="articlesForm">
+	<form action="{plugin_url path="process"}" method="post" id="articlesForm">
+		<input type="hidden" name="target" value="article" />
 		<table width="100%" class="listing">
 			<tr>
 				<td colspan="5" class="headseparator">&nbsp;</td>
@@ -60,10 +62,10 @@
 					<td>{$article->getAuthorString()|escape}</td>
 					<td align="right"><nobr>
 						{if $hasCredentials}
-							<a href="{plugin_url path="registerArticle"|to_array:$article->getId() params=$testMode}" title="{$updateOrRegisterDescription}" class="action">{$updateOrRegister}</a>
-							{if $article->getData('medra::registeredDoi')}<a href="{plugin_url path="resetArticle"|to_array:$article->getId() params=$testMode}" title="{translate key="plugins.importexport.medra.resetDescription"}" class="action">{translate key="plugins.importexport.medra.reset"}</a>{/if}
+							<a href="{plugin_url path="process" articleId=$article->getId() params=$testMode target="article" register=true}" title="{$updateOrRegisterDescription}" class="action">{$updateOrRegister}</a>
+							{if $article->getData('medra::registeredDoi')}<a href="{plugin_url path="process" articleId=$article->getId() params=$testMode target="article" reset=true}" title="{translate key="plugins.importexport.medra.resetDescription"}" class="action">{translate key="plugins.importexport.medra.reset"}</a>{/if}
 						{/if}
-						<a href="{plugin_url path="exportArticle"|to_array:$article->getId() params=$testMode}" title="{translate key="plugins.importexport.common.exportDescription"}" class="action">{translate key="common.export"}</a>
+						<a href="{plugin_url path="process" articleId=$article->getId() params=$testMode target="article" export=true}" title="{translate key="plugins.importexport.common.exportDescription"}" class="action">{translate key="common.export"}</a>
 					</nobr></td>
 				</tr>
 				<tr>

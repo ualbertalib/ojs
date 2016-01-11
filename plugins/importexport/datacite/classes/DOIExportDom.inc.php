@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/.../classes/DOIExportDom.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DOIExportDom
@@ -19,6 +20,9 @@ define('DOI_EXPORT_FILETYPE_PDF', 'PDF');
 define('DOI_EXPORT_FILETYPE_HTML', 'HTML');
 define('DOI_EXPORT_FILETYPE_XML', 'XML');
 define('DOI_EXPORT_FILETYPE_PS', 'PostScript');
+define('DOI_EXPORT_XMLNS_XSI' , 'http://www.w3.org/2001/XMLSchema-instance');
+define('DOI_EXPORT_XMLNS_JATS', 'http://www.ncbi.nlm.nih.gov/JATS1');
+define('DOI_EXPORT_XMLNS_AI', 'http://www.crossref.org/AccessIndicators.xsd');
 
 class DOIExportDom {
 
@@ -30,7 +34,7 @@ class DOIExportDom {
 
 	/**
 	 * Retrieve export error details.
-     * @return array
+	 * @return array
 	 */
 	function getErrors() {
 		return $this->_errors;
@@ -183,6 +187,14 @@ class DOIExportDom {
 	}
 
 	/**
+	 * Return the XML schema version.
+	 * @return string
+	 */
+	function getXmlSchemaVersion() {
+		return '';
+	}
+
+	/**
 	 * Return the XML schema location.
 	 * @return string
 	 */
@@ -205,7 +217,12 @@ class DOIExportDom {
 
 		// Add root-level attributes.
 		XMLCustomWriter::setAttribute($rootElement, 'xmlns', $this->getNamespace());
-		XMLCustomWriter::setAttribute($rootElement, 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+		XMLCustomWriter::setAttribute($rootElement, 'xmlns:xsi', DOI_EXPORT_XMLNS_XSI);
+		if ($this->getXMLSchemaVersion() != '') {
+			XMLCustomWriter::setAttribute($rootElement, 'version', $this->getXMLSchemaVersion());
+		}
+		XMLCustomWriter::setAttribute($rootElement, 'xmlns:jats', DOI_EXPORT_XMLNS_JATS);
+		XMLCustomWriter::setAttribute($rootElement, 'xmlns:ai', DOI_EXPORT_XMLNS_AI);
 		XMLCustomWriter::setAttribute($rootElement, 'xsi:schemaLocation', $this->getXmlSchemaLocation());
 
 		return $rootElement;
@@ -225,7 +242,7 @@ class DOIExportDom {
 	 */
 	function &createElementWithText($name, $value, $attributes = array()) {
 		$element =& XMLCustomWriter::createElement($this->getDoc(), $name);
-		$elementContent =& XMLCustomWriter::createTextNode($this->getDoc(), $value);
+		$elementContent =& XMLCustomWriter::createTextNode($this->getDoc(), String::html2text($value));
 		XMLCustomWriter::appendChild($element, $elementContent);
 		foreach($attributes as $attributeName => $attributeValue) {
 			XMLCustomWriter::setAttribute($element, $attributeName, $attributeValue);
@@ -244,8 +261,8 @@ class DOIExportDom {
 	function &retrievePublicationObjects(&$object) {
 		// Initialize local variables.
 		$nullVar = null;
- 		$journal =& $this->getJournal();
- 		$cache =& $this->getCache();
+		$journal =& $this->getJournal();
+		$cache =& $this->getCache();
 
 		// Assign the object itself.
 		$publicationObjects = array();
@@ -305,18 +322,24 @@ class DOIExportDom {
 	 * @return array
 	 */
 	function &retrieveArticlesByIssue(&$issue) {
+		$articlesByIssue = array();
 		$cache =& $this->getCache();
 		$issueId = $issue->getId();
 		if (!$cache->isCached('articlesByIssue', $issueId)) {
 			$articleDao =& DAORegistry::getDAO('PublishedArticleDAO'); /* @var $articleDao PublishedArticleDAO */
 			$articles =& $articleDao->getPublishedArticles($issueId);
-			foreach ($articles as $article) {
-				$cache->add($article, $nullVar);
-				unset($article);
+			if (!empty($articles)) {
+				foreach ($articles as $article) {
+					$cache->add($article, $nullVar);
+					unset($article);
+				}
+				$cache->markComplete('articlesByIssue', $issueId);
+				$articlesByIssue = $cache->get('articlesByIssue', $issueId);
 			}
-			$cache->markComplete('articlesByIssue', $issueId);
+		} else {
+			$articlesByIssue = $cache->get('articlesByIssue', $issueId);
 		}
-		return $cache->get('articlesByIssue', $issueId);
+		return $articlesByIssue;
 	}
 
 	/**
@@ -326,18 +349,24 @@ class DOIExportDom {
 	 * @return array
 	 */
 	function &retrieveGalleysByArticle(&$article) {
+		$galleysByArticle = array();
 		$cache =& $this->getCache();
 		$articleId = $article->getId();
 		if (!$cache->isCached('galleysByArticle', $articleId)) {
 			$galleyDao =& DAORegistry::getDAO('ArticleGalleyDAO'); /* @var $galleyDao ArticleGalleyDAO */
 			$galleys =& $galleyDao->getGalleysByArticle($articleId);
-			foreach($galleys as $galley) {
-				$cache->add($galley, $article);
-				unset($galley);
+			if (!empty($galleys)) {
+				foreach($galleys as $galley) {
+					$cache->add($galley, $article);
+					unset($galley);
+				}
+				$cache->markComplete('galleysByArticle', $articleId);
+				$galleysByArticle = $cache->get('galleysByArticle', $articleId);
 			}
-			$cache->markComplete('galleysByArticle', $articleId);
+		} else {
+			$galleysByArticle = $cache->get('galleysByArticle', $articleId);
 		}
-		return $cache->get('galleysByArticle', $articleId);
+		return $galleysByArticle;
 	}
 
 	/**

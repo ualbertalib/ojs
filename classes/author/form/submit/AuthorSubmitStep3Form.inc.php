@@ -3,7 +3,8 @@
 /**
  * @file classes/author/form/submit/AuthorSubmitStep3Form.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class AuthorSubmitStep3Form
@@ -28,13 +29,18 @@ class AuthorSubmitStep3Form extends AuthorSubmitForm {
 		$this->addCheck(new FormValidatorArray($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', array('firstName', 'lastName')));
 		$this->addCheck(new FormValidatorArrayCustom($this, 'authors', 'required', 'author.submit.form.authorRequiredFields', create_function('$email, $regExp', 'return String::regexp_match($regExp, $email);'), array(ValidatorEmail::getRegexp()), false, array('email')));
 		$this->addCheck(new FormValidatorArrayCustom($this, 'authors', 'required', 'user.profile.form.urlInvalid', create_function('$url, $regExp', 'return empty($url) ? true : String::regexp_match($regExp, $url);'), array(ValidatorUrl::getRegexp()), false, array('url')));
+
+		// Add ORCiD validation
+		import('lib.pkp.classes.validation.ValidatorORCID');
+		$this->addCheck(new FormValidatorArrayCustom($this, 'authors', 'required', 'user.profile.form.orcidInvalid', create_function('$orcid', '$validator = new ValidatorORCID(); return empty($orcid) ? true : $validator->isValid($orcid);'), array(), false, array('orcid')));
+
 		$this->addCheck(new FormValidatorLocale($this, 'title', 'required', 'author.submit.form.titleRequired', $this->getRequiredLocale()));
 
 		$sectionDao =& DAORegistry::getDAO('SectionDAO');
 		$section = $sectionDao->getSection($article->getSectionId());
 		$abstractWordCount = $section->getAbstractWordCount();
 		if (isset($abstractWordCount) && $abstractWordCount > 0) {
-			$this->addCheck(new FormValidatorCustom($this, 'abstract', 'required', 'author.submit.form.wordCountAlert', create_function('$abstract, $wordCount', 'foreach ($abstract as $localizedAbstract) {return count(explode(" ",$localizedAbstract)) < $wordCount; }'), array($abstractWordCount)));
+			$this->addCheck(new FormValidatorCustom($this, 'abstract', 'required', 'author.submit.form.wordCountAlert', create_function('$abstract, $wordCount', 'foreach ($abstract as $localizedAbstract) {return count(explode(" ",strip_tags($localizedAbstract))) < $wordCount; }'), array($abstractWordCount)));
 		}
 
 	}
@@ -76,6 +82,7 @@ class AuthorSubmitStep3Form extends AuthorSubmitForm {
 						'affiliation' => $authors[$i]->getAffiliation(null),
 						'country' => $authors[$i]->getCountry(),
 						'email' => $authors[$i]->getEmail(),
+						'orcid' => $authors[$i]->getData('orcid'),
 						'url' => $authors[$i]->getUrl(),
 						'competingInterests' => $authors[$i]->getCompetingInterests(null),
 						'biography' => $authors[$i]->getBiography(null)
@@ -129,7 +136,9 @@ class AuthorSubmitStep3Form extends AuthorSubmitForm {
 	 * @return array
 	 */
 	function getLocaleFieldNames() {
-		return array('title', 'abstract', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 'coverageSample', 'type', 'sponsor');
+		return array_merge(parent::getLocaleFieldNames(), 
+							array('title', 'abstract', 'subjectClass', 'subject', 'coverageGeo', 'coverageChron', 
+								'coverageSample', 'type', 'sponsor'));
 	}
 
 	/**
@@ -202,6 +211,7 @@ class AuthorSubmitStep3Form extends AuthorSubmitForm {
 				$author->setAffiliation($authors[$i]['affiliation'], null);
 				$author->setCountry($authors[$i]['country']);
 				$author->setEmail($authors[$i]['email']);
+				$author->setData('orcid', $authors[$i]['orcid']);
 				$author->setUrl($authors[$i]['url']);
 				if (array_key_exists('competingInterests', $authors[$i])) {
 					$author->setCompetingInterests($authors[$i]['competingInterests'], null);
@@ -211,7 +221,7 @@ class AuthorSubmitStep3Form extends AuthorSubmitForm {
 				$author->setSequence($authors[$i]['seq']);
 
 				HookRegistry::call('Author::Form::Submit::AuthorSubmitStep3Form::Execute', array(&$author, &$authors[$i]));
-				
+
 				if ($isExistingAuthor) {
 					$authorDao->updateAuthor($author);
 				} else {

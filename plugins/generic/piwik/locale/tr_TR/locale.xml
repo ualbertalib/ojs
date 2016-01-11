@@ -4,13 +4,14 @@
 <!--
   * plugins/generic/piwik/locale/tr_TR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Piwik plugin localization strings
   -->
  
-<locale name="tr_TR" full_name="Türkiye Türkçesi">
+<locale name="tr_TR" full_name="Türkçe">
 	<message key="plugins.generic.piwik.displayName">Piwik Eklentisi</message>
 	<message key="plugins.generic.piwik.description"><![CDATA[Integrate OJS with Piwik, a free and open source web site traffic analysis application. Requires that Piwik is already installed. Please see the <a href="http://piwik.org/" title="piwik site">Piwik site</a> for more information.]]></message>
 	<message key="plugins.generic.piwik.manager.settings">Ayarlar</message>

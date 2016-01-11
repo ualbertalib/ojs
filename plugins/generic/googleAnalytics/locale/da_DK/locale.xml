@@ -4,14 +4,15 @@
 <!--
   * plugins/generic/googleAnalytics/locale/da_DK/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Google Analytics plugin localization strings for the da_DK (Dutch) locale.
+  * Google Analytics plugin localization strings for the da_DK (Dansk) locale.
   *
   -->
  
-<locale name="da_DK" full_name="Dutch">
+<locale name="da_DK" full_name="Dansk">
 
 	<!-- Google Analytics -->
 	<message key="plugins.generic.googleAnalytics.displayName">Google Analytics Plugin</message>
@@ -31,4 +32,5 @@
 	<message key="plugins.generic.googleAnalytics.authorAccount">Google Analytics-kontonummer</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount.description">Hvis du vil spore antallet af læsere for en udgiven artikel ved hjælp af Google Analytics, skal du indtaste et kontonummer her (fx UA-xxxxxx-x).</message>
 	<message key="plugins.generic.googleAnalytics.authorAccountInvalid">Et eller flere af de Google Analytics-kontonumre, der er indtastet for indleveringsforfattere, er ikke gyldige.</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.analytics">New tracking code for Universal Analytics (analytics.js)</message>
 </locale>

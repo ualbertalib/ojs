@@ -1,10 +1,11 @@
 {**
  * plugins/themes/custom/settingsForm.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
- * Google Analytics plugin settings
+ * Custom Theme plugin settings
  *
  *}
 {strip}
@@ -49,6 +50,13 @@
 		<td class="value">
 			<input name="customThemeForegroundColour" type="text" id="customThemeForegroundColour" size="7" maxlength="7" value="{$customThemeForegroundColour|escape}" {if $customThemeForegroundColour}style="background-color: {$customThemeForegroundColour|escape};" {/if}/>
 			<span onclick="openPicker('customThemeForegroundColour')" class="picker_buttons">{translate key="plugins.theme.custom.pickColour"}</span>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td class="label">{fieldLabel name="customThemePerJournal" key="plugins.theme.custom.perJournal"}</td>
+		<td class="value">
+			<input name="customThemePerJournal" type="checkbox" id="customThemePerJournal" value="on" {if ($customThemePerJournal || $disablePluginPath)}checked="checked" {/if}{if $disablePluginPath}disabled="disabled" {/if}/>
+			{if $disablePluginPath}<span class="instruct">{translate key="plugins.theme.custom.notWritablePlugin" stylesheetFileLocation=$stylesheetFilePluginLocation}</span>{/if}
 		</td>
 	</tr>
 </table>

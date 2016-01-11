@@ -1,7 +1,8 @@
 {**
  * plugins/generic/webFeed/templates/rss.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * RSS feed template
@@ -12,7 +13,8 @@
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns="http://purl.org/rss/1.0/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:prism="http://prismstandard.org/namespaces/1.2/basic/">
+	xmlns:prism="http://prismstandard.org/namespaces/1.2/basic/"
+	xmlns:cc="http://web.resource.org/cc/">
 
 	<channel rdf:about="{$journal->getUrl()|escape}">
 		{* required elements *}
@@ -81,11 +83,35 @@
 				<dc:creator>{$author->getFullName()|strip|escape:"html"}</dc:creator>
 			{/foreach}
 
+			<dc:rights>
+				{translate|escape key="submission.copyrightStatement" copyrightYear=$article->getCopyrightYear() copyrightHolder=$article->getLocalizedCopyrightHolder()}
+				{$article->getLicenseURL()|escape}
+			</dc:rights>
+			{if ($article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_OPEN || ($article->getAccessStatus() == $smarty.const.ARTICLE_ACCESS_ISSUE_DEFAULT && $issue->getAccessStatus() == $smarty.const.ISSUE_ACCESS_OPEN)) && $article->isCCLicense()}
+				<cc:license rdf:resource="{$article->getLicenseURL()|escape}" />
+			{else}
+				<cc:license></cc:license>
+			{/if}
+
 			{if $article->getDatePublished()}
 				<dc:date>{$article->getDatePublished()|date_format:"%Y-%m-%d"}</dc:date>
 				<prism:publicationDate>{$article->getDatePublished()|date_format:"%Y-%m-%d"}</prism:publicationDate>
 			{/if}
-			<prism:volume>{$issue->getVolume()|escape}</prism:volume>
+			{if $issue->getVolume()}<prism:volume>{$issue->getVolume()|escape}</prism:volume>{/if}
+			{if $issue->getNumber()}<prism:number>{$issue->getNumber()|escape}</prism:number>{/if}
+
+			{if $article->getPages()}
+				{if $article->getStartingPage()}
+					<prism:startingPage>{$article->getStartingPage()|escape}</prism:startingPage>
+				{/if}
+				{if $article->getEndingPage()}
+					<prism:endingPage>{$article->getEndingPage()|escape}</prism:endingPage>
+				{/if}
+			{/if}
+
+			{if $article->getPubId('doi')}
+				<prism:doi>{$article->getPubId('doi')|escape}</prism:doi>
+			{/if}
 		</item>
 	{/foreach}{* articles *}
 {/foreach}{* sections *}

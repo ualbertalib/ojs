@@ -1,7 +1,8 @@
 {**
  * templates/author/submit/step5.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Step 5 of author article submission.
@@ -35,7 +36,7 @@
 <tr valign="top">
 	<td>{$file->getFileId()}</td>
 	<td><a class="file" href="{url op="download" path=$articleId|to_array:$file->getFileId()}">{$file->getOriginalFileName()|escape}</a></td>
-	<td>{if ($file->getType() == 'supp')}{translate key="article.suppFile"}{else}{translate key="author.submit.submissionFile"}{/if}</td>
+	<td>{if ($file->getFileStage() == ARTICLE_FILE_SUPP)}{translate key="article.suppFile"}{else}{translate key="author.submit.submissionFile"}{/if}</td>
 	<td>{$file->getNiceFileSize()}</td>
 	<td>{$file->getDateUploaded()|date_format:$dateFormatTrunc}</td>
 </tr>
@@ -50,20 +51,20 @@
 
 {if $authorFees}
 	{include file="author/submit/authorFees.tpl" showPayLinks=1}
+	{if $manualPayment}
+		<h3>{translate key="payment.alreadyPaid"}</h3>
+		<table class="data" width="100%">
+			<tr valign="top">
+			<td width="5%" align="left"><input type="checkbox" name="paymentSent" value="1" {if $paymentSent}checked="checked"{/if} /></td>
+			<td width="95%">{translate key="payment.paymentSent"}</td>
+			</tr>
+			<tr>
+			<td />
+			<td>{translate key="payment.alreadyPaidMessage"}</td>
+			<tr>
+		</table>
+	{/if}
 	{if $currentJournal->getLocalizedSetting('waiverPolicy') != ''}
-		{if $manualPayment}
-			<h3>{translate key="payment.alreadyPaid"}</h3>
-			<table class="data" width="100%">
-				<tr valign="top">
-				<td width="5%" align="left"><input type="checkbox" name="paymentSent" value="1" {if $paymentSent}checked="checked"{/if} /></td>
-				<td width="95%">{translate key="payment.paymentSent"}</td>
-				</tr>
-				<tr>
-				<td />
-				<td>{translate key="payment.alreadyPaidMessage"}</td>
-				<tr>
-			</table>
-		{/if}
 		<h3>{translate key="author.submit.requestWaiver"}</h3>
 		<table class="data" width="100%">
 			<tr valign="top">

@@ -1,7 +1,8 @@
 {**
  * plugins/importexport/quickSubmit/index.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Template for one-page submission form
@@ -158,6 +159,27 @@ function updateAbstractRequired() {
 		{/if}{* if count($sectionOptions) == 2 *}
 	</div> <!-- /section -->
 
+{if count($supportedSubmissionLocaleNames) == 1}
+	{* There is only one supported submission locale; choose it invisibly *}
+	{foreach from=$supportedSubmissionLocaleNames item=localeName key=locale}
+		<input type="hidden" name="locale" value="{$locale|escape}" />
+	{/foreach}
+{else}
+	{* There are several submission locales available; allow choice *}
+	<div id="submissionLocale">
+
+	<h4>{translate key="author.submit.submissionLocale"}</h4>
+	<p>{translate key="author.submit.submissionLocaleDescription"}</p>
+
+	<table class="data" width="100%">
+		<tr valign="top">
+			<td width="30%" class="label">{fieldLabel name="locale" required="true" key="article.language"}</td>
+			<td width="70%" class="value"><select name="locale" id="locale" size="1" class="selectMenu">{html_options options=$supportedSubmissionLocaleNames selected=$locale}</select></td>
+		</tr>
+	</table>
+	</div>{* submissionLocale *}
+{/if}{* count($supportedSubmissionLocaleNames) == 1 *}
+
 	<div id="submissionFile">
 		<h4>{translate key="author.submit.submissionFile"}</h4>
 		<table class="data" width="100%">
@@ -229,6 +251,10 @@ function updateAbstractRequired() {
 			<tr valign="top">
 				<td width="30%" class="label">{fieldLabel name="authors-$authorIndex-email" required="true" key="user.email"}</td>
 				<td width="70%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][email]" id="authors-{$authorIndex|escape}-email" value="{$author.email|escape}" size="30" maxlength="90" /></td>
+			</tr>
+			<tr valign="top">
+				<td width="20%" class="label">{fieldLabel name="authors-$authorIndex-orcid" key="user.orcid"}</td>
+				<td width="80%" class="value"><input type="text" class="textField" name="authors[{$authorIndex|escape}][orcid]" id="authors-{$authorIndex|escape}-orcid" value="{$author.orcid|escape}" size="30" maxlength="90" /><br />{translate key="user.orcid.description"}</td>
 			</tr>
 			<tr valign="top">
 				<td class="label">{fieldLabel name="authors-$authorIndex-url" key="user.url"}</td>
@@ -309,6 +335,10 @@ function updateAbstractRequired() {
 				<td width="70%" class="value"><input type="text" class="textField" name="authors[0][email]" id="authors-0-email" size="30" maxlength="90" /></td>
 			</tr>
 			<tr valign="top">
+				<td width="20%" class="label">{fieldLabel name="authors-0-orcid" key="user.orcid"}</td>
+				<td width="80%" class="value"><input type="text" class="textField" name="authors[0][orcid]" id="authors-0-orcid" size="30" maxlength="90" /><br />{translate key="user.orcid.description"}</td>
+			</tr>
+			<tr valign="top">
 				<td width="30%" class="label">{fieldLabel name="authors-0-url" key="user.url"}</td>
 				<td width="70%" class="value"><input type="text" class="textField" name="authors[0][url]" id="authors-0-url" size="30" maxlength="255" /></td>
 			</tr>
@@ -335,7 +365,7 @@ function updateAbstractRequired() {
 
 		<tr valign="top">
 			<td width="30%" class="label">{fieldLabel name="title" required="true" key="article.title"}</td>
-			<td width="70%" class="value"><input type="text" class="textField" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="60" maxlength="255" /></td>
+			<td width="70%" class="value"><input type="text" class="textField" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="60" /></td>
 		</tr>
 
 		<tr valign="top">

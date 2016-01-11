@@ -4,14 +4,15 @@
 <!--
   * plugins/auth/ldap/locale/zh_CN/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * LDAP authentication plugin localization strings for the en_US (U.S. English) locale.
   *
   -->
  
-<locale name="zh_CN" full_name="China">
+<locale name="zh_CN" full_name="简体中文">
 	<message key="plugins.auth.ldap.displayName">LDAP</message>
 	<message key="plugins.auth.ldap.description">此插件允许对外部LDAP数据源认证和用户帐户的同步。</message>
 	
@@ -22,7 +23,7 @@
 	<message key="plugins.auth.ldap.settings.port.description">可选。默认为389（LDAP）或636（SSL上的LDAP）</message>
 	<message key="plugins.auth.ldap.settings.basedn">基本DN</message>
 	<message key="plugins.auth.ldap.settings.basedn.description">E.g., "ou=people,dc=example,dc=com"</message>
-	<message key="plugins.auth.ldap.settings.managerdn">经理的DN</message>
+	<message key="plugins.auth.ldap.settings.managerdn">管理员 DN</message>
 	<message key="plugins.auth.ldap.settings.managerdn.description">E.g., "cn=Manager,dc=example,dc=com"</message>
 	<message key="plugins.auth.ldap.settings.managerpwd">管理员密码</message>
 	<message key="plugins.auth.ldap.settings.managerpwd.description">管理者DN和密码，如果用户只需要配置/密码同步或用户创建选项被启用。如果将用于LDAP的身份验证，然后仅仅这些选项可以省略。</message>

@@ -1,16 +1,17 @@
-﻿<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd"> <!--
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+<!--
   * locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
-  *
-  * $Id$
+  * Localization strings for the ca_ES (Català) locale.
   -->
  
-<locale name="en_US" full_name="U.S. English">
-	<message key="plugins.importexport.METSExport.displayName">Connector d'exportació METS XML</message>
+<locale name="ca_ES" full_name="Català">
+	<message key="plugins.importexport.METSExport.displayName">Mòdul d'exportació METS XML</message>
 	<message key="plugins.importexport.METSExport.description">Exporta les revistes en METS XML.</message>
 	<message key="plugins.importexport.METSExport.settings">Configuració</message>
 	<message key="plugins.importexport.METSExport.export">Exporta les dades</message>
@@ -23,4 +24,4 @@
 	<message key="plugins.importexport.METSExport.settings.organization">METS: atribut d'organització de l'element agent</message>
 	<message key="plugins.importexport.METSExport.settings.preservationLevel">Nivell de conservació PREMIS</message>
 	<message key="plugins.importexport.METSExport.settings.exportSuppFiles">Exporta els fitxers addicionals</message>
-</locale> 
+</locale>

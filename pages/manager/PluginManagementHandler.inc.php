@@ -3,7 +3,8 @@
 /**
  * @file pages/manager/PluginManagementHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginManagementHandler
@@ -37,7 +38,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @param $request PKPRequest
 	 */
 	function managePlugins($args, &$request) {
-		$this->validate();
+		$this->validate($request);
 		$path = isset($args[0])?$args[0]:null;
 		$category = isset($args[1])?$args[1]:null;
 		$plugin = isset($args[2])?$args[2]:null;
@@ -69,11 +70,25 @@ class PluginManagementHandler extends ManagerHandler {
 	}
 
 	/**
+	 * The site setting option 'preventManagerPluginManagement' must not be set for
+	 * journal managers to be able to manage plugins.
+	 * @param $request PKPRequest
+	 */
+	function validate($request) {
+		parent::validate();
+		if (!Validation::isSiteAdmin()) {
+			$site =& $request->getSite();
+			$preventManagerPluginManagement = $site->getSetting('preventManagerPluginManagement');
+			if ($preventManagerPluginManagement) $request->redirect(null, 'manager', 'plugins');
+		}
+	}
+
+	/**
 	 * Show plugin installation form.
 	 * @param $request PKPRequest
 	 */
 	function _showInstallForm($request) {
-		$this->validate();
+		$this->validate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -93,7 +108,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @param $plugin string
 	 */
 	function _showUpgradeForm($request, $category, $plugin) {
-		$this->validate();
+		$this->validate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -113,7 +128,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @param $plugin string
 	 */
 	function _showDeleteForm($request, $category, $plugin) {
-		$this->validate();
+		$this->validate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -136,7 +151,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @param $plugin string the name of the uploaded plugin (upgrade only)
 	 */
 	function _uploadPlugin($request, $function, $category = null, $plugin = null) {
-		$this->validate();
+		$this->validate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -209,7 +224,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @return boolean
 	 */
 	function _installPlugin($request, $path, &$templateMgr) {
-		$this->validate();
+		$this->validate($request);
 		$versionFile = $path . VERSION_FILE;
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('pageHierarchy', $this->_setBreadcrumbs($request, true));
@@ -222,24 +237,11 @@ class PluginManagementHandler extends ManagerHandler {
 		$installedPlugin = $versionDao->getCurrentVersion($pluginVersion->getProductType(), $pluginVersion->getProduct(), true);
 
 		if(!$installedPlugin) {
-			$pluginLibDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'pkp' . DIRECTORY_SEPARATOR . strtr($pluginVersion->getProductType(), '.', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $pluginVersion->getProduct();
 			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . strtr($pluginVersion->getProductType(), '.', DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $pluginVersion->getProduct();
 
 			// Copy the plug-in from the temporary folder to the
 			// target folder.
-			// Start with the library part (if any).
-			$libPath = $path . DIRECTORY_SEPARATOR . 'lib';
 			$fileManager = new FileManager();
-			if (is_dir($libPath)) {
-				if(!$fileManager->copyDir($libPath, $pluginLibDest)) {
-					$templateMgr->assign('message', 'manager.plugins.copyError');
-					return false;
-				}
-				// Remove the library part of the temporary folder.
-				$fileManager->rmtree($libPath);
-			}
-
-			// Continue with the application-specific part (mandatory).
 			if(!$fileManager->copyDir($path, $pluginDest)) {
 				$templateMgr->assign('message', 'manager.plugins.copyError');
 				return false;
@@ -257,7 +259,6 @@ class PluginManagementHandler extends ManagerHandler {
 			$installer->setCurrentVersion($pluginVersion);
 			if (!$installer->execute()) {
 				// Roll back the copy
-				if (is_dir($pluginLibDest)) $fileManager->rmtree($pluginLibDest);
 				if (is_dir($pluginDest)) $fileManager->rmtree($pluginDest);
 				$templateMgr->assign('message', array('manager.plugins.installFailed', $installer->getErrorString()));
 				return false;
@@ -291,7 +292,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @return boolean
 	 */
 	function _upgradePlugin($request, $path, &$templateMgr, $category, $plugin) {
-		$this->validate();
+		$this->validate($request);
 		$versionFile = $path . VERSION_FILE;
 		$templateMgr->assign('error', true);
 		$templateMgr->assign('pageHierarchy', $this->_setBreadcrumbs($request, true, $category));
@@ -323,33 +324,19 @@ class PluginManagementHandler extends ManagerHandler {
 			return false;
 		} else {
 			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $plugin;
-			$pluginLibDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'pkp' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $plugin;
 
 			// Delete existing files.
 			$fileManager = new FileManager();
 			if (is_dir($pluginDest)) $fileManager->rmtree($pluginDest);
-			if (is_dir($pluginLibDest)) $fileManager->rmtree($pluginLibDest);
 
 			// Check whether deleting has worked.
-			if(is_dir($pluginDest) || is_dir($pluginLibDest)) {
+			if(is_dir($pluginDest)) {
 				$templateMgr->assign('message', 'manager.plugins.deleteError');
 				return false;
 			}
 
 			// Copy the plug-in from the temporary folder to the
 			// target folder.
-			// Start with the library part (if any).
-			$libPath = $path . DIRECTORY_SEPARATOR . 'lib';
-			if (is_dir($libPath)) {
-				if(!$fileManager->copyDir($libPath, $pluginLibDest)) {
-					$templateMgr->assign('message', 'manager.plugins.copyError');
-					return false;
-				}
-				// Remove the library part of the temporary folder.
-				$fileManager->rmtree($libPath);
-			}
-
-			// Continue with the application-specific part (mandatory).
 			if(!$fileManager->copyDir($path, $pluginDest)) {
 				$templateMgr->assign('message', 'manager.plugins.copyError');
 				return false;
@@ -390,7 +377,7 @@ class PluginManagementHandler extends ManagerHandler {
 	 * @param $plugin string
 	 */
 	function _deletePlugin($request, $category, $plugin) {
-		$this->validate();
+		$this->validate($request);
 		$templateMgr =& TemplateManager::getManager();
 		$this->setupTemplate(true);
 
@@ -403,17 +390,15 @@ class PluginManagementHandler extends ManagerHandler {
 
 		if ($installedPlugin) {
 			$pluginDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $plugin;
-			$pluginLibDest = Core::getBaseDir() . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'pkp' . DIRECTORY_SEPARATOR . 'plugins' . DIRECTORY_SEPARATOR . $category . DIRECTORY_SEPARATOR . $plugin;
 
 			//make sure plugin type is valid and then delete the files
 			if (in_array($category, PluginRegistry::getCategories())) {
 				// Delete the plugin from the file system.
 				$fileManager = new FileManager();
 				$fileManager->rmtree($pluginDest);
-				$fileManager->rmtree($pluginLibDest);
 			}
 
-			if(is_dir($pluginDest) || is_dir($pluginLibDest)) {
+			if(is_dir($pluginDest)) {
 				$templateMgr->assign('error', true);
 				$templateMgr->assign('message', 'manager.plugins.deleteError');
 			} else {

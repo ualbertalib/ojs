@@ -3,7 +3,8 @@
 /**
  * @file classes/sword/OJSSwordDeposit.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OJSSwordDeposit
@@ -12,9 +13,9 @@
  * @brief Class providing a SWORD deposit wrapper for OJS articles
  */
 
-require_once('./lib/pkp/lib/swordapp/swordappclient.php');
-require_once('./lib/pkp/lib/swordapp/swordappentry.php');
-require_once('./lib/pkp/lib/swordapp/packager_mets_swap.php');
+require_once('./lib/pkp/lib/swordappv2/swordappclient.php');
+require_once('./lib/pkp/lib/swordappv2/swordappentry.php');
+require_once('./lib/pkp/lib/swordappv2/packager_mets_swap.php');
 
 class OJSSwordDeposit {
 	/** @var $package SWORD deposit METS package */
@@ -56,6 +57,12 @@ class OJSSwordDeposit {
 
 		$sectionDao =& DAORegistry::getDAO('SectionDAO');
 		$this->section =& $sectionDao->getSection($article->getSectionId());
+
+		$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
+		$publishedArticle = $publishedArticleDao->getPublishedArticleByArticleId($article->getId());
+
+		$issueDao =& DAORegistry::getDAO('IssueDAO');
+		if ($publishedArticle) $this->issue =& $issueDao->getIssueById($publishedArticle->getIssueId());
 
 		$this->article =& $article;
 	}

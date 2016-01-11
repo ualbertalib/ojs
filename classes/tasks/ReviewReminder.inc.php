@@ -3,7 +3,8 @@
 /**
  * @file classes/tasks/ReviewReminder.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewReminder
@@ -20,7 +21,14 @@ class ReviewReminder extends ScheduledTask {
 	 * Constructor.
 	 */
 	function ReviewReminder() {
-		$this->ScheduledTask();
+		parent::ScheduledTask();
+	}
+
+	/**
+	 * @see ScheduledTask::getName()
+	 */
+	function getName() {
+		return __('admin.scheduledTask.reviewReminder');
 	}
 
 	function sendReminder ($reviewAssignment, $article, $journal) {
@@ -35,9 +43,9 @@ class ReviewReminder extends ScheduledTask {
 
 		$reviewerAccessKeysEnabled = $journal->getSetting('reviewerAccessKeysEnabled');
 
-		$email = new ArticleMailTemplate($article, $reviewerAccessKeysEnabled?'REVIEW_REMIND_AUTO_ONECLICK':'REVIEW_REMIND_AUTO', $journal->getPrimaryLocale(), false, $journal);
+		$email = new ArticleMailTemplate($article, $reviewerAccessKeysEnabled?'REVIEW_REMIND_AUTO_ONECLICK':'REVIEW_REMIND_AUTO', $journal->getPrimaryLocale(), false, $journal, false, true);
 		$email->setJournal($journal);
-		$email->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+		$email->setReplyTo(null);
 		$email->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
 		$email->setSubject($email->getSubject($journal->getPrimaryLocale()));
 		$email->setBody($email->getBody($journal->getPrimaryLocale()));
@@ -84,7 +92,10 @@ class ReviewReminder extends ScheduledTask {
 
 	}
 
-	function execute() {
+	/**
+	 * @see ScheduledTask::executeActions()
+	 */
+	function executeActions() {
 		$article = null;
 		$journal = null;
 
@@ -98,6 +109,9 @@ class ReviewReminder extends ScheduledTask {
 			if ($article == null || $article->getId() != $reviewAssignment->getSubmissionId()) {
 				unset($article);
 				$article =& $articleDao->getArticle($reviewAssignment->getSubmissionId());
+				// Avoid review assignments without article in database anymore.
+				if (!$article) continue;
+
 				if ($journal == null || $journal->getId() != $article->getJournalId()) {
 					unset($journal);
 					$journal =& $journalDao->getById($article->getJournalId());
@@ -133,6 +147,8 @@ class ReviewReminder extends ScheduledTask {
 
 			if ($shouldRemind) $this->sendReminder ($reviewAssignment, $article, $journal);
 		}
+
+		return true;
 	}
 }
 

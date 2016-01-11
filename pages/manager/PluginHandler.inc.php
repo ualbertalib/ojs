@@ -3,7 +3,8 @@
 /**
  * @file pages/manager/PluginHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginHandler
@@ -66,6 +67,10 @@ class PluginHandler extends ManagerHandler {
 		$templateMgr->assign('isSiteAdmin', Validation::isSiteAdmin());
 		$templateMgr->assign('helpTopicId', 'journal.managementPages.plugins');
 
+		$site =& $request->getSite();
+		$preventManagerPluginManagement = $site->getSetting('preventManagerPluginManagement');
+		$templateMgr->assign('preventManagerPluginManagement', !Validation::isSiteAdmin() && $preventManagerPluginManagement);
+
 		$templateMgr->display('manager/plugins/plugins.tpl');
 	}
 
@@ -84,7 +89,15 @@ class PluginHandler extends ManagerHandler {
 
 		$plugins =& PluginRegistry::loadCategory($category);
 		$message = $messageParams = null;
-		if (!isset($plugins[$plugin]) || !$plugins[$plugin]->manage($verb, $args, $message, $messageParams, $request)) {
+		$pluginObject = null;
+		if (isset($plugins[$plugin])) $pluginObject = $plugins[$plugin];
+
+		if (is_null($pluginObject)) {
+			$request->redirect(null, null, 'plugins', array($category));
+		}
+
+		if (!$pluginObject->manage($verb, $args, $message, $messageParams, $request)) {
+			HookRegistry::call('PluginHandler::plugin', array($verb, $args, $message, $messageParams, $pluginObject));
 			if ($message) {
 				$user =& $request->getUser();
 				import('classes.notification.NotificationManager');

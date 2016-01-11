@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/externalFeed/ExternalFeedPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ExternalFeedPlugin
@@ -172,7 +173,10 @@ class ExternalFeedPlugin extends GenericPlugin {
 		$journalId = $journal?$journal->getId():0;
 
 		if ($this->getEnabled()) {
-			$requestedPage = Request::getRequestedPage();
+			// Only pages requests interest us here
+			$request =& Registry::get('request');
+			if (!is_a($request->getRouter(), 'PKPPageRouter')) return false;
+			$requestedPage = $request->getRequestedPage();
 
 			if (empty($requestedPage) || $requestedPage == 'index') {
 				$externalFeedDao =& DAORegistry::getDAO('ExternalFeedDAO');
@@ -249,19 +253,19 @@ class ExternalFeedPlugin extends GenericPlugin {
 		if ($this->getEnabled()) {
 			$smarty =& $params[1];
 			$output =& $params[2];
-			$output .= '<li>&#187; <a href="' . $this->smartyPluginUrl(array('op'=>'plugin', 'path'=>'feeds'), $smarty) . '">' . TemplateManager::smartyTranslate(array('key'=>'plugins.generic.externalFeed.manager.feeds'), $smarty) . '</a></li>';
+			$output .= '<li><a href="' . $this->smartyPluginUrl(array('op'=>'plugin', 'path'=>'feeds'), $smarty) . '">' . TemplateManager::smartyTranslate(array('key'=>'plugins.generic.externalFeed.manager.feeds'), $smarty) . '</a></li>';
 		}
 		return false;
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Result status message
 	 * @param $messageParams array Parameters for the message key
- 	 * @return boolean
- 	 */
+	 * @return boolean
+	 */
 	function manage($verb, $args, &$message, &$messageParams) {
 		if (!parent::manage($verb, $args, $message, $messageParams)) return false;
 

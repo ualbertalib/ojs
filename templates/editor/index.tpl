@@ -1,7 +1,8 @@
 {**
  * templates/editor/index.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Editor index.
@@ -15,11 +16,19 @@
 <div id="articleSubmissions">
 <h3>{translate key="article.submissions"}</h3>
 
-<ul class="plain">
-	<li>&#187; <a href="{url op="submissions" path="submissionsUnassigned"}">{translate key="common.queue.short.submissionsUnassigned"}</a>&nbsp;({if $submissionsCount[0]}{$submissionsCount[0]}{else}0{/if})</li>
-	<li>&#187; <a href="{url op="submissions" path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
-	<li>&#187; <a href="{url op="submissions" path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a>&nbsp;({if $submissionsCount[2]}{$submissionsCount[2]}{else}0{/if})</li>
-	<li>&#187; <a href="{url op="submissions" path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>
+<ul>
+	<li><a href="{url op="submissions" path="submissionsUnassigned"}">{translate key="common.queue.short.submissionsUnassigned"}</a>&nbsp;({if $submissionsCount[0]}{$submissionsCount[0]}{else}0{/if})</li>
+{**
+* Custom Code By Jeremy for JPPS
+*
+*}
+{if $currentJournal->getJournalInitials() == 'JPPS'}
+
+	<li>&#187; <a href="{url op="submissions" path="submissionsInReview"}">Under Review</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
+{else}
+<li><a href="{url op="submissions" path="submissionsInReview"}">{translate key="common.queue.short.submissionsInReview"}</a>&nbsp;({if $submissionsCount[1]}{$submissionsCount[1]}{else}0{/if})</li>
+	<li><a href="{url op="submissions" path="submissionsInEditing"}">{translate key="common.queue.short.submissionsInEditing"}</a>&nbsp;({if $submissionsCount[2]}{$submissionsCount[2]}{else}0{/if})</li>
+	<li><a href="{url op="submissions" path="submissionsArchives"}">{translate key="common.queue.short.submissionsArchives"}</a></li>
 	{call_hook name="Templates::Editor::Index::Submissions"}
 </ul>
 </div>
@@ -113,7 +122,17 @@ function sortSearch(heading, direction) {
 				{print_issue_id articleId=$submission->getId()}
 			{elseif $status == STATUS_DECLINED}
 				{translate key="submissions.declined"}&nbsp;&nbsp;<a href="{url op="deleteSubmission" path=$articleId}" onclick="return confirm('{translate|escape:"jsparam" key="editor.submissionArchive.confirmDelete"}')" class="action">{translate key="common.delete"}</a>
-			{elseif $status==STATUS_QUEUED_UNASSIGNED}{translate key="submissions.queuedUnassigned"}
+			{elseif $status==STATUS_QUEUED_UNASSIGNED}
+{**
+    * Custom Code By Jeremy for JPPS
+    *}
+    {if $currentJournal->getJournalInitials() == 'JPPS'}
+ 	Under Review
+    {else} 
+    {translate key="submissions.queuedUnassigned"}
+    {/if}
+
+
 			{elseif $status==STATUS_QUEUED_EDITING}{translate key="submissions.queuedEditing"}
 			{elseif $status==STATUS_QUEUED_REVIEW}{translate key="submissions.queuedReview"}
 			{else}{* SUBMISSION_QUEUED -- between cracks? *}
@@ -148,11 +167,11 @@ function sortSearch(heading, direction) {
 <div id="issues">
 <h3>{translate key="editor.navigation.issues"}</h3>
 
-<ul class="plain">
-	<li>&#187; <a href="{url op="createIssue"}">{translate key="editor.navigation.createIssue"}</a></li>
-	<li>&#187; <a href="{url op="notifyUsers"}">{translate key="editor.notifyUsers"}</a></li>
-	<li>&#187; <a href="{url op="futureIssues"}">{translate key="editor.navigation.futureIssues"}</a></li>
-	<li>&#187; <a href="{url op="backIssues"}">{translate key="editor.navigation.issueArchive"}</a></li>
+<ul>
+	<li><a href="{url op="createIssue"}">{translate key="editor.navigation.createIssue"}</a></li>
+	<li><a href="{url op="notifyUsers"}">{translate key="editor.notifyUsers"}</a></li>
+	<li><a href="{url op="futureIssues"}">{translate key="editor.navigation.futureIssues"}</a></li>
+	<li><a href="{url op="backIssues"}">{translate key="editor.navigation.issueArchive"}</a></li>
 	{call_hook name="Templates::Editor::Index::Issues"}
 </ul>
 </div>

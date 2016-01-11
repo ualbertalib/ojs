@@ -1,7 +1,8 @@
 {**
  * plugins/generic/webFeed/templates/atom.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Atom feed template
@@ -49,11 +50,7 @@
 		{assign var="description" value=$journal->getLocalizedSetting('searchDescription')}
 	{/if}
 
-	{if $journal->getLocalizedSetting('copyrightNotice')}
-		<rights>{$journal->getLocalizedSetting('copyrightNotice')|strip|escape:"html"}</rights>
-	{/if}
-
-	<subtitle>{$description|strip|escape:"html"}</subtitle>
+	<subtitle type="html">{$description|strip|escape:"html"}</subtitle>
 
 	{foreach name=sections from=$publishedArticles item=section key=sectionId}
 		{foreach from=$section.articles item=article}
@@ -89,7 +86,7 @@
 				{/if}
 
 				{* <source/> *}
-				{* <rights/> *}
+				<rights>{translate|escape key="submission.copyrightStatement" copyrightYear=$article->getCopyrightYear() copyrightHolder=$article->getLocalizedCopyrightHolder()}</rights>
 			</entry>
 		{/foreach}{* articles *}
 	{/foreach}{* sections *}

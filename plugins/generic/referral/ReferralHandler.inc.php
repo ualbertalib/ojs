@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/referral/ReferralHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReferralHandler
@@ -21,7 +22,7 @@ class ReferralHandler extends Handler {
 	function ReferralHandler() {
 		parent::Handler();
 	}
-	
+
 	function setupTemplate() {
 		parent::setupTemplate();
 		$templateMgr =& TemplateManager::getManager();
@@ -92,7 +93,7 @@ class ReferralHandler extends Handler {
 
 			$referralForm->display();
 		}
-	}	
+	}
 
 	function deleteReferral($args) {
 		$referralId = (int) array_shift($args);

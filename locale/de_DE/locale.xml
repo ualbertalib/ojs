@@ -2,12 +2,13 @@
 <!DOCTYPE locale SYSTEM "../../lib/pkp/dtd/locale.dtd">
 
 <!--
-  * lcoale/de_DE/locale.xml
+  * locale/de_DE/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
-  *
   * Localization strings for the de_DE (Deutsch (Deutschland)) locale.
+  * Please contact Marco Tullney, marco.tullney@fu-berlin.de, with any questions regarding this translation.
   -->
 
 <locale name="de_DE" full_name="Deutsch (Deutschland)">
@@ -27,6 +28,7 @@
 	<!-- review froms start -->
 
 	<!-- common -->
+	<message key="common.journal">Zeitschrift</message>
 
 	<!-- Journal Management -->
 
@@ -38,6 +40,27 @@
 	<message key="submission.reviewForm">Begutachtungsformular</message>
 	<message key="submission.reviewFormResponse">Antwort zum Begutachtungsformular</message>
 
+	<!-- Permissions -->
+	<message key="submission.permissions">Rechte</message>
+	<message key="submission.license">Lizenz</message>
+	<message key="submission.copyright">Copyright</message>
+	<message key="submission.copyrightHolder">Copyright-Inhaber/in</message>
+	<message key="submission.copyrightYear">Copyright-Jahr</message>
+	<message key="submission.copyrightStatement">Copyright (c) {$copyrightYear} {$copyrightHolder}</message>
+	<message key="submission.licenseURLValid">Bitte geben Sie einen gültigen URL (außerhalb der Zeitschrift) an (inklusive http://).</message>
+	<message key="submission.licenseURL">Lizenz-URL</message>
+	<message key="submission.license.cc.by-nc-nd4">CC Namensnennung - Nicht kommerziell - Keine Bearbeitungen 4.0</message>
+	<message key="submission.license.cc.by-nc4">CC Namensnennung - Nicht kommerziell 4.0</message>
+	<message key="submission.license.cc.by-nc-sa4">CC Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0</message>
+	<message key="submission.license.cc.by-nd4">CC Namensnennung - Keine Bearbeitungen 4.0</message>
+	<message key="submission.license.cc.by4">CC Namensnennung 4.0</message>
+	<message key="submission.license.cc.by-sa4">CC Namensnennung - Weitergabe unter gleichen Bedingungen 4.0</message>
+	<message key="submission.license.cc.by-nc-nd4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />Dieses Werk steht unter der a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Lizenz Creative Commons Namensnennung - Nicht-kommerziell - Keine Bearbeitungen 4.0 International</a>.]]></message>
+	<message key="submission.license.cc.by-nc4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />Dieses Werk steht unter der <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Lizenz Creative Commons Namensnennung - Nicht-kommerziell 4.0 International</a>.]]></message>
+	<message key="submission.license.cc.by-nc-sa4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Dieses Werk steht unter der <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Lizenz Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 4.0 International</a>.]]></message>
+	<message key="submission.license.cc.by-nd4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />Dieses Werk steht unter der <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Lizenz Creative Commons Namensnennung - Keine Bearbeitungen 4.0 International</a>.]]></message>
+	<message key="submission.license.cc.by4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />Dieses Werk steht unter der <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Lizenz Creative Commons Namensnennung 4.0 International</a>.]]></message>
+	<message key="submission.license.cc.by-sa4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative-Commons-Lizenz" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />Dieses Werk steht unter der <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Lizenz Creative Commons Namensnennung - Weitergabe unter gleichen Bedingungen 4.0 International</a>.]]></message>
 
 	<message key="reviewer.article.enterReviewForm">Klicken Sie auf das Symbol, um das Begutachtungsformular auszufüllen.</message>
 	<message key="reviewer.article.reviewFormResponse.form.responseRequired">Bitte füllen Sie die benötigten Felder aus.</message>
@@ -199,6 +222,7 @@
 	<message key="journal.issn">ISSN</message>
 
 	<!-- Benutzer/in -->
+	<message key="user.profile.profileImage">Profilbild</message>
 	<message key="user.showAllJournals">Alle Zeitschriften anzeigen</message>
 	<message key="user.registerForOtherJournals">Für andere Zeitschriften registrieren</message>
 	<message key="user.myJournals">Meine Zeitschriften</message>
@@ -209,6 +233,9 @@
 	<message key="user.noRoles.submitArticleRegClosed">Einen Vorschlag einreichen: Registrierung als Autor/in ist momentan ausgeschaltet.</message>
 	<message key="user.noRoles.regReviewer">Als Gutachter/in registrieren</message>
 	<message key="user.noRoles.regReviewerClosed">Als Gutachter/in registrieren: Die Registrierung als Gutachter/in ist momentan ausgeschaltet..</message>
+<message key="user.orcid">ORCID-iD</message>
+	<message key="user.orcid.description"><![CDATA[ORCID-iDs können nur durch <a href="http://orcid.org/" target="_blank">die ORCID-Registrierung</a> vergeben werden. Sie müssen deren Vorgabe zum Schreiben von ORCID-iDs beachten und den vollen URI (eg. <em>http://orcid.org/0000-0002-1825-0097</em>) verwenden.]]></message>
+	<message key="user.profile.form.orcidInvalid">Die angegebene ORCID-iD ist ungültig.</message>
 
 	<!-- Funktionen -->
 	<message key="user.role.manager">Zeitschriftenverwalter/in</message>
@@ -333,19 +360,19 @@
 
 	<!-- Verwaltung der Website -->
 
-	<message key="admin.settings.oaiRegistrationDescription"><![CDATA[Um den Inhalt aller von dieser Website angebotenen Zeitschriften bei einem allgemein verbreiteten System von Forschungsdatenbanken zu indizieren, <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">registrieren Sie</a> die URL Ihrer Website beim Metadaten-Harvester des Public Knowledge Project <a href="http://pkp.sfu.ca/harvester/" target="_blank"></a>. Der Harvester sammelt die Metadaten jedes indizierten Artikels dieser Zeitschrift und macht somit eine umfassende und genaue Suche auf allen Forschungs-Webseiten, die sich an dem Projekt <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank"> Open Archives Initiative Protocol for Metadata Harvesting</a> beteiligen.
+	<message key="admin.settings.oaiRegistrationDescription"><![CDATA[Um den Inhalt aller von dieser Website angebotenen Zeitschriften bei einem allgemein verbreiteten System von Forschungsdatenbanken zu indizieren, <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">registrieren Sie</a> die URL Ihrer Website beim Metadaten-Harvester des Public Knowledge Project <a href="http://pkp.sfu.ca/harvester/" target="_blank"></a>. Der Harvester sammelt die Metadaten jedes indizierten Artikels dieser Zeitschrift und ermöglicht somit eine umfassende und genaue Suche auf allen Forschungs-Webseiten, die sich an dem Projekt <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank"> Open Archives Initiative Protocol for Metadata Harvesting</a> beteiligen.
 <br /><br />
 <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">Klicken Sie hier</a> und geben Sie <span class="highlight">{$siteUrl}</span> unter <strong>URL</strong> und <span class="highlight">{$oaiUrl}</span> unter <strong>OAI Base URL</strong> ein.
 <br /><br />
-Bitte beachten Sie, dass die OAI-Schnittstelle für diese Website in der OJS-Systemkonfiguration deaktiviert werden kann. Zukünftige Versionen von OJS werden es ermöglichen, die Aktivierung der OAI-Schnittstelle für jede einzelne Zeitschrift einer Website zu regeln.]]></message>
+Bitte beachten Sie, dass die OAI-Schnittstelle für diese Website in der OJS-Systemkonfiguration deaktiviert werden kann. Zukünftige Versionen von OJS werden es ermöglichen, die OAI-Schnittstelle für jede Zeitschrift einer Website gesondert zu aktivieren oder zu deaktivieren.]]></message>
 
 
 
 	<!-- Sprachen -->
-	<message key="admin.languages.downloadUnavailable"><![CDATA[<p>Momentan ist das Herunterladen von Sprachpaketen vom Public Knowledge Project Server nicht möglich, weil:</p>
+	<message key="admin.languages.downloadUnavailable"><![CDATA[<p>Momentan ist das Herunterladen von Sprachpaketen vom Server des Public Knowledge Project nicht möglich, weil:</p>
 	<ul>
-		<li>Ihr Server den Dienst GNU "tar" entweder nicht besitzt oder seine Ausführung nicht erlaubt.</li>
-		<li>OJS kann deshalb die Registrierungsdatei für Regionaleinstellungen (üblicherweise "registry/locales.xml") nicht verändern.</li>
+		<li>Ihr Server den Dienst GNU "tar" entweder nicht besitzt oder seine Ausführung nicht erlaubt</li>
+		<li>OJS die Registrierungsdatei für Regionaleinstellungen (üblicherweise "registry/locales.xml") nicht verändern kann.</li>
 	</ul>
 <p>Sprachpakete können manuell von der <a href="http://pkp.sfu.ca">PKP-Webseite</a> heruntergeladen werden.</p>]]></message>
 
@@ -399,12 +426,13 @@ Bitte beachten Sie, dass die OAI-Schnittstelle für diese Website in der OJS-Sys
 	Gutachter/innen die Bitte um Begutachtung, indem sie den eingereichten Beitrag an die E-Mail anhängen. Gutachter/innen mailen den Redakteur/innen ihr Einverständnis (oder einen abschlägigen Bescheid), außerdem das Gutachten und ihre Empfehlung. Redakteur/innen können das Einverständnis der Gutachter/innen (oder deren abschlägigen Bescheid) sowie das Gutachten und die Empfehlung auf der "In Begutachtung"-Seite des Beitrags einsehen, um den Begutachtungsprozess zu verfolgen.</message>
 
 
-	<message key="manager.setup.lockssDescription"><![CDATA[OJS unterstützt <a href="http://lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe &ndash; viele Kopien sichern das Material) und gewährleistet so eine sichere und dauerhafte Archivierung der Zeitschrift. LOCKSS ist ein von der Stanforder Universitätsbibliothek entwickeltes offenes Programm, das Bibliotheken ermöglicht, ausgewählte Online-Zeitschriften dadurch zu sichern, dass sie registrierte Zeitschriften-Webseiten regelmäßig auf neue Inhalte prüfen und diese archivieren. Jedes Archiv wird fortlaufend mit anderen Bibliotheksarchiven verglichen, und falls Inhalte verloren gegangen oder beschädigt sind, werden diese anderen Archive oder die Zeitschriften genutzt, um sie wiederherzustellen.
-<br /><br />
-LOCKSS muss erst dann eingerichtet werden, wenn die Zeitschrift vollständig in Betrieb genommen wurde. Dann führen Sie bitte die folgenden beiden Schritte aus:]]></message>
+	<message key="manager.setup.preservationDescription"><![CDATA[Open Journal Systems unterstützt das System <a href="http://www.lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe) um sichere und dauerhafte Archivierung Ihrer Zeitschrift zu gewährleisten. Ihnen stehen mehrere Möglichkeiten zur Verfügung, Ihre Zeitschrift in ein LOCKSS-Netzwerk aufzunehmen:]]></message>
 
+	<message key="manager.setup.lockssDescription"><![CDATA[<strong>Andere LOCKSS-Netzwerke</strong>
+<br /><br />
+Wenn Sie denken, dass Sie Zugriff auf eines oder mehrere der <a href="http://www.lockss.org/community/networks/" target="_blank">hier gelisteten</a> LOCKSS-Netzwerke haben, kontaktieren Sie bitte die/den entsprechende/n LOCKSS-Netzwerk-Administrator/in, um sich um Aufnahme zu bewerben. Dazu können Sie das Formular unten ausfüllen, um in diese Netzwerke aufgenommen zu werden. <em>Es werden keine Inhalte archiviert werden, bevor Sie das entsprechende Netzwerk benachrichtigt haben.</em>]]></message>
 	<!-- 3. Einrichtungsschritt -->
-	<message key="manager.setup.authorCopyrightNotice.sample"><![CDATA[<h3>Empfohlene Creative-Commons-Lizenz</h3>
+	<message key="manager.setup.authorCopyrightNotice.sample"><![CDATA[<h3>Beispiele für die Anzeige von Creative-Commons-Lizenzen in den Copyright-Vermerken</h3>
 <h4>1. Empfohlene Copyright-Regelungen für Zeitschriften mit Open Access</h4>
 Autor/innen, die in dieser Zeitschrift publizieren möchten, stimmen den folgenden Bedingungen zu:
 <ol type="a">
@@ -413,16 +441,16 @@ Autor/innen, die in dieser Zeitschrift publizieren möchten, stimmen den folgend
 	<li>Die Autor/innen werden dazu ermutigt, ihre Arbeit parallel zur Einreichung bei dieser Zeitschrift online zu veröffentlichen (z.B. auf den Homepages von Institutionen oder auf ihrer eigenen Homepage), weil so produktive Austauschprozesse wie auch eine frühe und erweiterte Bezugnahme auf das veröffentlichte Werk gefördert werden (siehe <a target="_new" href="http://opcit.eprints.org/oacitation-biblio.html">The Effect of Open Access</a>).</li>
 </ol>
 
-<h4>Empfohlene Copyright-Regelungen für Zeitschriften mit verzögertem Open Access</h4>
+<h4>2. Empfohlene Copyright-Regelungen für Zeitschriften mit verzögertem Open Access</h4>
 Autor/innen, die in dieser Zeitschrift publizieren möchten, stimmen den folgenden Bedingungen zu:
 <ol type="a">
-	<li>Die Autor/innen behalten das Copyright und erlauben der Zeitschrift die Erstveröffentlichung, womit die Arbeit [ZEITSPANNE FESTLEGEN] nach der Veröffentlichung zugleich unter einer <a target="_new" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Namensnennung Lizenz</a> lizensiert wird, die es anderen erlaubt, die Arbeit unter Nennung der Autor/innenschaft und der Erstpublikation in dieser Zeitschrift zu verwenden.</li>
+	<li>Die Autor/innen behalten das Copyright und erlauben der Zeitschrift die Erstveröffentlichung, womit die Arbeit [ZEITSPANNE FESTLEGEN] nach der Veröffentlichung zugleich unter einer <a target="_new" href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Namensnennung Lizenz</a> lizenziert wird, die es anderen erlaubt, die Arbeit unter Nennung der Autor/innenschaft und der Erstpublikation in dieser Zeitschrift zu verwenden.</li>
 	<li>Die Autor/innen können zusätzliche Verträge für die nicht-exklusive Verbreitung der in der Zeitschrift veröffentlichten Version ihrer Arbeit unter Nennung der Erstpublikation in dieser Zeitschrift eingehen (z.B. sie in Sammelpublikation oder einem Buch veröffentlichen).</li>
 	<li>Die Autor/innen werden dazu ermutigt, ihre Arbeit parallel zur Einreichung bei dieser Zeitschrift online zu veröffentlichen (z.B. auf den Homepages von Institutionen oder auf ihrer eigenen Homepage), weil so produktive Austauschprozesse wie auch eine frühe und erweiterte Bezugnahme auf das veröffentlichte Werk gefördert werden (siehe <a target="_new" href="http://opcit.eprints.org/oacitation-biblio.html">The Effect of Open Access</a>).</li>
 </ol>]]></message>
 	<message key="manager.setup.subjectClassificationDescription"><![CDATA[[Die Zeitschrift verwendet ein online verfügbares Klassifikationssystem.<br />
 Titel des Klassifikationssystems]]></message>
-	<message key="manager.setup.registerJournalForIndexingDescription"><![CDATA[Damit der Inhalt dieser Zeitschrift in einem weltweiten System von Forschungsdatenbanken indiziert wird, lesen Sie bitte die <a href="http://www.oaister.org/dataproviders.html" target="_blank">Schritte, um Daten zu liefern</a> und registrieren Sie Ihre Zeitschrift bei der offiziellen <a href="http://www.openarchives.org/data/registerasprovider.html" target="_blank">Open-Archives-Registrierung</a>. Zum Registrieren benötigen Sie die Basis-URL für Ihr Repositorium: <span class="highlight">{$oaiUrl}</span>. Danach können Sie Ihre Zeitschrift bei der <a href="http://gita.grainger.uiuc.edu/registry/" target="_blank">UIUC OAI registry</a> und bei <a href="http://www.oaister.org/" target="_blank">OAIster</a> registrieren.
+	<message key="manager.setup.registerJournalForIndexingDescription"><![CDATA[Damit der Inhalt dieser Zeitschrift in einem weltweiten System von Forschungsdatenbanken indiziert wird, lesen Sie bitte die <a href="http://www.oclc.org/oaister/contribute.en.html" target="_blank">Schritte, um Daten zu liefern</a> und registrieren Sie Ihre Zeitschrift bei der offiziellen <a href="http://www.openarchives.org/data/registerasprovider.html" target="_blank">Open-Archives-Registrierung</a>. Zum Registrieren benötigen Sie die Basis-URL für Ihr Repositorium: <span class="highlight">{$oaiUrl}</span>. Danach können Sie Ihre Zeitschrift bei der <a href="http://gita.grainger.uiuc.edu/registry/" target="_blank">UIUC OAI registry</a> und bei <a href="http://www.oclc.org/oaister" target="_blank">OAIster</a> registrieren.
 <br /><br />
 Beachten Sie bitte, dass Ihre Zeitschrift bereits automatisch indiziert wird, wenn Ihr/e Website-Administrator/in die gesamte Installation bereits bei diesen Diensten registriert hat. In diesem Fall müssen Sie Ihre Zeitschrift nicht gesondert registrieren.]]></message>
 	<message key="manager.setup.citations">Den Zitationsauszeichnungsassistenten aktivieren.</message>
@@ -561,11 +589,11 @@ Die Bewertung erfolgt auf einer Skala von 1-5 (Ausgezeichnet).<br />
 	<!-- Im Begutachtungsverfahren -->
 	<message key="reviewer.article.fileToBeReviewed">Zu begutachtende Datei</message>
 	<message key="reviewer.article.notifyTheEditor">Redakteur/in benachrichtigen</message>
-	<message key="reviewer.article.canDoReview">Übernimmt die Begutachtung</message>
-	<message key="reviewer.article.cannotDoReview">Übernimmt die Begutachtung nicht</message>
+	<message key="reviewer.article.canDoReview">Gutachten wird angefertigt</message>
+	<message key="reviewer.article.cannotDoReview">Gutachten wird nicht angefertigt</message>
 	<message key="reviewer.article.restrictedFileAccess">Der Beitrag wird erst zur Verfügung gestellt, wenn die Gutachterin/der Gutachter der Begutachtung zustimmt.</message>
 	<message key="reviewer.article.submissionEditor">Zuständige/r Redakteur/in</message>
-	<message key="reviewer.article.reviewerCommentsDescription">Begutachtungskommentare hier eingeben oder einkopieren</message>
+	<message key="reviewer.article.reviewerCommentsDescription">Begutachtungskommentare hier eingeben oder hineinkopieren</message>
 	<message key="reviewer.article.editorToEnter">Von der Redakteurin/dem Redakteur einzutragen</message>
 	<message key="reviewer.article.sendReminder">Erinnerung senden</message>
 	<message key="reviewer.article.automatic">(Auto)</message>
@@ -573,8 +601,8 @@ Die Bewertung erfolgt auf einer Skala von 1-5 (Ausgezeichnet).<br />
 	<message key="reviewer.article.submitReview">Gutachten bei der Redaktion einreichen</message>
 	<message key="reviewer.article.reviewerComments">Kommentare</message>
 	<message key="reviewer.article.uploadedFile">Hochgeladene Dateien</message>
-	<message key="reviewer.article.reviewersAnnotatedVersion">Von der Gutachterin/dem Gutachter hochgeladene Version </message>
-	<message key="reviewer.article.reviewersAnnotatedVersionDescription">(Falls Sie die Datei für die Redakteurin/den Redakteur kommentieren wollen, speichern Sie sie auf Ihrer Festplatte und verwenden Sie Hochladen.)</message>
+	<message key="reviewer.article.reviewersAnnotatedVersion">Von der Gutachterin/dem Gutachter hochgeladene Version</message>
+	<message key="reviewer.article.reviewersAnnotatedVersionDescription">(Falls Sie die Datei für die Redakteurin/den Redakteur kommentieren wollen, speichern Sie sie auf Ihrer Festplatte und verwenden Sie Durchsuchen/Hochladen.)</message>
 	<message key="reviewer.article.schedule.request">Anfrage der Redakteurin/des Redakteurs</message>
 	<message key="reviewer.article.schedule.response">Ihre Antwort</message>
 	<message key="reviewer.article.schedule.submitted">Gutachten eingereicht</message>
@@ -590,12 +618,12 @@ Die Bewertung erfolgt auf einer Skala von 1-5 (Ausgezeichnet).<br />
 	<message key="reviewer.article.reviewSchedule">Zeitplan der Begutachtung</message>
 	<message key="reviewer.article.reviewSteps">Begutachtungsschritte</message>
 	<message key="reviewer.article.reviewerGuidelines">Richtlinien für die Gutachter/innen</message>
+	<message key="reviewer.article.reviewGuidelinesDescription"><![CDATA[Die Begutachtungsrichtlinien geben den Gutachter/innen Kriterien an die Hand, mit deren Hilfe sie bewerten können, ob eine Einreichung für die Veröffentlichung in der Zeitschrift geeignet ist; sie können auch zusätzliche Instruktionen enthalten, die für eine effektive und hilfreiche Begutachtung nützlich sind. Für die Einreichung des Gutachtens stehen den Gutachter/innen zwei offene Textfelder zur Verfügung, eines "für die Autor/innen und die Redakteur/innen", ein zweites "für die Redakteur/innen". Alternativ können Zeitschriftenverwalter/innen ein Formular für die Begutachtung erstellen. Redakteur/innen haben immer die Option, die Gutachten in ihre Korrespondenz mit den Autor/innen aufzunehmen.]]></message>
 	<message key="reviewer.article.notifyEditorA">Die Redakteurin/den Redakteur</message>
 	<message key="reviewer.article.notifyEditorB">des Beitrags benachrichtigen, ob Sie die Begutachtung übernehmen wollen.</message>
 	<message key="reviewer.article.consultGuidelines">Falls Sie die Begutachtung vornehmen wollen, beachten Sie bitte die nachfolgenden Richtlinien für Gutachter/innen.</message>
-	<message key="reviewer.article.downloadSubmission">Zum Herunterladen und Begutachten der Beitragsdateien (auf dem Bildschirm oder als Ausdruck) die Dateinamen anklicken.</message>
-	<message key="reviewer.article.reviewGuidelinesDescription">Die Begutachtungsrichtlinien geben den Gutachter/innen Kriterien an die Hand, mit deren Hilfe sie bewerten können, ob eine Einreichung für die Veröffentlichung in der Zeitschrift geeignet ist; sie können auch zusätzliche Instruktionen enthalten, die für eine effektive und hilfreiche Begutachtung nützlich sind. Für die Einreichung des Gutachtens stehen den Gutachter/innen zwei offene Textfelder zur Verfügung, eines "für die Autor/innen und die Redakteur/innen", ein zweites "für die Redakteur/innen". Alternativ können Zeitschriftenverwalter/innen ein Formular für die Begutachtung erstellen. Redakteur/innen haben immer die Option, in ihrer Kommunikation mit den Autor/innen Gutachten hinzuzufügen.</message>
-	<message key="reviewer.article.enterCompetingInterests"><![CDATA[Erklären Sie, ob Sie bezüglich dieser Forschung einen Interessenskonflikt haben (Siehe <a target="_new" class="action" href="{$competingInterestGuidelinesUrl}">Richtlinien für Interessenkonflikte</a>).]]></message>
+	<message key="reviewer.article.downloadSubmission">Klicken Sie auf die Dateinamen, um die zur Einreichung gehörenden Dateien herunterzuladen und zu begutachten (auf dem Bildschirm oder im Ausdruck).</message>
+	<message key="reviewer.article.enterCompetingInterests"><![CDATA[Erklären Sie, ob Sie bezüglich dieser Forschung einen Interessenkonflikt haben (Siehe <a target="_new" class="action" href="{$competingInterestGuidelinesUrl}">Richtlinien für Interessenkonflikte</a>).]]></message>
 	<message key="reviewer.competingInterests">Interessenkonflikte</message>
 	<message key="reviewer.article.enterReviewA">Bitte klicken Sie auf das Symbol, um Ihr Gutachten zu diesem Beitrag einzugeben.</message>
 	<message key="reviewer.article.uploadFile">Zusätzlich können Sie Dateien für die Redakteurin/den Redakteur und/oder die Autorin/den Autor hochladen.</message>
@@ -605,7 +633,7 @@ Die Bewertung erfolgt auf einer Skala von 1-5 (Ausgezeichnet).<br />
 	<message key="reviewer.article.ensuringBlindReview">Eine anonyme Begutachtung sicherstellen</message>
 
 	<!-- Im Lektorat -->	
-	<message key="copyeditor.article.fileToCopyedit">Datei zum Lektorieren</message>
+	<message key="copyeditor.article.fileToCopyedit">Datei zum Lektorat</message>
 	<message key="copyeditor.article.copyeditorFile">Datei der Lektorin/des Lektors</message>
 	<message key="copyeditor.article.uploadedFile">Hochgeladene Datei</message>
 	<message key="copyeditor.article.copyeditorFinalFile">Datei der Lektorin/des Lektors</message>
@@ -703,6 +731,8 @@ Die Bewertung erfolgt auf einer Skala von 1-5 (Ausgezeichnet).<br />
 Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. Eine Bestätigung geht an diese E-Mail-Adresse.]]></message>
 
 	<!-- Registrierung -->
+	<message key="user.register.emailValidation">Validierung der E-Mail-Adresse erforderlich</message>
+	<message key="user.register.emailValidationDescription">Sie müssen Ihre E-Mail-Adresse bestätigen, bevor Sie fortfahren können. Bitte prüfen Sie Ihren E-Mail-Eingang für weitere Hinweise. Nachdem Sie Ihren Account validiert haben, können Sie sich einloggen..</message>
 	<message key="user.register.selectJournal">Wählen Sie die Zeitschrift aus, für die Sie sich registrieren wollen</message>
 	<message key="user.register.noJournals">Auf dieser Seite gibt es keine Zeitschriften, bei denen Sie sich eintragen könnten.</message>
 	<message key="user.register.privacyStatement">Schutz persönlicher Daten</message>
@@ -767,7 +797,7 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 	<message key="search.allJournals">allen Zeitschriften</message>
 	<message key="search.authorIndex">Autor/innenverzeichnis durchblättern</message>
 	<message key="search.authorDetails">Nähere Angaben zu den Autor/innen</message>
-	<message key="search.syntaxInstructions"><![CDATA[Suchhinweise: <ul>
+	<message key="search.syntaxInstructions"><![CDATA[<h4>Suchhinweise: </h4><ul>
 <li>Groß- und Kleinschreibung der Suchbegriffe werden nicht unterschieden.</li>
 <li>Häufig vorkommende Worte werden ignoriert</li>
 <li>Standardmäßig werden nur die Artikel aufgelistet, die <em>alle</em> Suchbegriffe enthalten (implizites <em>UND</em>).</li>
@@ -781,7 +811,7 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 	<!-- Einschubseite für PDFs -->
 	<message key="article.pdf.title">Portable Document Format (PDF)</message>
 	<message key="article.pdf.download">Diese PDF-Datei herunterladen</message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p>Die PDF-Datei, die Sie ausgewählt haben, sollte hier geöffnet werden, wenn für Ihren Webbrowser ein PDF-Lese-Plug-In installiert ist (zum Beispiel eine aktuelle Version des <a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader</a>).</p> <p>Falls Sie mehr Informationen über das Drucken, Speichern und Arbeiten von und mit PDF-Dateien erhalten möchten, bietet Highwire Press hilfreiche <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions about PDFs</a>.</p> <p>Alternativ können Sie die PDF-Datei direkt auf Ihren Computer laden, von wo aus sie in einem PDF-Leseprogramm geöffnet werden kann. Um die PDF-Datei herunterzuladen, klicken Sie auf den Download-Link unten.</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p>Die PDF-Datei, die Sie ausgewählt haben, sollte hier geöffnet werden, wenn für Ihren Webbrowser ein PDF-Lese-Plug-In installiert ist (zum Beispiel eine aktuelle Version des <a href="https://get.adobe.com/reader/">Adobe Acrobat Reader</a>).</p> <p>Falls Sie mehr Informationen über das Drucken, Speichern und Arbeiten von und mit PDF-Dateien erhalten möchten, bietet Highwire Press hilfreiche <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions about PDFs</a>.</p> <p>Alternativ können Sie die PDF-Datei direkt auf Ihren Computer laden, von wo aus sie in einem PDF-Leseprogramm geöffnet werden kann. Um die PDF-Datei herunterzuladen, klicken Sie auf den Download-Link unten.</p>]]></message>
 
 
 	<!-- Einschubseite für Fahnen, die weder PDF noch HTML sind -->
@@ -848,12 +878,16 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 	<message key="about.subscriptionTypes.duration">Dauer</message>
 	<message key="about.subscriptionTypes.cost">Kosten</message>
 	<message key="about.availableSubscriptionTypes">Typen von Abonnements</message>
+	<message key="about.purchaseIssue">Kauf einer Ausgabe</message>
+	<message key="about.purchaseArticle">Kauf eines Artikels</message>
+	<message key="about.purchaseIssueDescription">Leserinnen und Leser ohne Abonnement können einzelne Ausgaben erwerben. Die folgenden Zahlungsmöglichkeiten und Kosten können gewählt werden.</message>
+	<message key="about.purchaseArticleDescription">Leserinnen und Leser ohne Abonnement können einzelne Artikel erwerben. Die folgenden Zahlungsmöglichkeiten und Kosten können gewählt werden.</message>
 	<message key="about.memberships">Mitgliedschaften</message>
 	<message key="about.journalSponsorship">Unterstützung</message>
 	<message key="about.aboutThisPublishingSystem">Über dieses Publikationssystem</message>
 	<message key="about.aboutThisPublishingSystem.altText">Redaktions- und Veröffentlichungsprozess mit OJS</message>
-	<message key="about.aboutOJSJournal"><![CDATA[Diese Zeitschrift verwendet Open Journal Systems {$ojsVersion}, eine Open-Source-Zeitschriften- und Publikationsmanagement-Software. Sie wird unter der GNU General Public Licence entwickelt, dokumentiert und kostenlos vertrieben durch das <a href="http://pkp.sfu.ca/">Public Knowledge Project</a>.]]></message>
-	<message key="about.aboutOJSSite"><![CDATA[Diese Website verwendet Open Journal Systems {$ojsVersion}, eine Open-Source-Zeitschriften- und Publikationsmanagement-Software. Sie wird unter der GNU General Public Licence entwickelt, dokumentiert und kostenlos vertrieben durch das <a href="http://pkp.sfu.ca/">Public Knowledge Project</a>.]]></message>
+	<message key="about.aboutOJSJournal"><![CDATA[Diese Zeitschrift verwendet Open Journal Systems {$ojsVersion}, eine Open-Source-Zeitschriften- und Publikationsmanagement-Software. Sie wird unter der GNU General Public License entwickelt, dokumentiert und kostenlos vertrieben durch das <a href="http://pkp.sfu.ca/">Public Knowledge Project</a>.]]></message>
+	<message key="about.aboutOJSSite"><![CDATA[Diese Website verwendet Open Journal Systems {$ojsVersion}, eine Open-Source-Zeitschriften- und Publikationsmanagement-Software. Sie wird unter der GNU General Public License entwickelt, dokumentiert und kostenlos vertrieben durch das <a href="http://pkp.sfu.ca/">Public Knowledge Project</a>.]]></message>
 
 	<!-- Mitteilungen -->
 
@@ -947,7 +981,7 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 	<message key="installer.ojsUpgrade">Aktualisierung von OJS</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>OJS-Version {$version}</h4>
 
-<p>Danke für das Herunterladen von Open Journal Systems <strong>des Public Knowledge Projects (PKP)</strong>. Bevor Sie fortfahren, lesen Sie bitte die zum Programm gehörende <a href="{$baseUrl}/docs/README">README</a>-Datei. Näheres über das Public Knowledge Project und seine Programmentwicklungen finden Sie auf der <a href="http://pkp.sfu.ca/" target="_blank">Webseite des PKP</a>. Wenn Sie Programmfehler melden wollen oder technische Fragen zu Open Journal Systems haben, gehen Sie bitte zum <a href="http://pkp.sfu.ca/support/forum">Support Forum</a> von PKP oder besuchen Sie unseren <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">Webservice für die Anzeige von Programmfehlern</a>. Wenn Sie im Support Forum keine geeignete Hilfestellung finden, können Sie uns auch unter <a href="mailto:pkp.contact@gmail.com"></a> per E-Mail kontaktieren.</p>
+<p>Danke für das Herunterladen von Open Journal Systems <strong>des Public Knowledge Projects (PKP)</strong>. Bevor Sie fortfahren, lesen Sie bitte die zum Programm gehörende <a href="{$baseUrl}/docs/README">README</a>-Datei. Näheres über das Public Knowledge Project und seine Programmentwicklungen finden Sie auf der <a href="http://pkp.sfu.ca/" target="_blank">Webseite des PKP</a>. Wenn Sie Programmfehler melden wollen oder technische Fragen zu Open Journal Systems haben, gehen Sie bitte zum <a href="http://forum.pkp.sfu.ca">Support Forum</a> von PKP oder besuchen Sie unseren <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">Webservice für die Anzeige von Programmfehlern</a>. Wenn Sie im Support Forum keine geeignete Hilfestellung finden, können Sie uns auch unter <a href="mailto:pkp.contact@gmail.com"></a> per E-Mail kontaktieren.</p>
 
 <h4>Aktualisierungen</h4>
 
@@ -957,9 +991,9 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 
 <ul>
 	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpRequiredVersion} (einschließlich PHP 5.x); Sie nutzen momentan PHP {$phpVersion}{$wrongPhpText}</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (einschließlich MySQL 4.x) oder <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (einschließlich PostgreSQL 8.x)</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 4.1 oder <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (einschließlich PostgreSQL 8.x)</li>
 	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x oder >= 2.0.4x oder Microsoft IIS 6</li>
-	<li>Betriebssystem: Jedes Betriebssystem, das die obigen Programme unterstützt, darunter <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
+	<li>Betriebssystem: Jedes Betriebssystem, das die obigen Programme unterstützt, darunter <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
 </ul>
 
 <p>Die Ressourcen von PKP sind begrenzt; nicht alle Kombinationen von Plattformen und Programmversionen können getestet werden. Eine Funktionsgarantie kann daher nicht gegeben werden. </p>
@@ -985,12 +1019,12 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 <p>2. Ein Verzeichnis für die Ablage hochgeladener Dateien muss angelegt und beschreibbar gemacht werden (siehe "Datei-Einstellungen" unten).</p>]]></message>
 	<message key="installer.upgradeInstructions"><![CDATA[<h4>OJS-Version{$version}</h4>
 
-<p>Danke für das Herunterladen von Open Journal Systems <strong>des Public Knowledge Project</strong>. Bevor Sie fortfahren, lesen Sie bitte die zum Programm gehörenden Dateien <a href="{$baseUrl}/docs/README">README</a> und <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a>. Näheres über das Public Knowledge Project und seine Programmentwicklungen finden Sie auf der <a href="http://pkp.sfu.ca/" target="_blank">Webseite des PKP</a>. Wenn Sie Programmfehler melden wollen oder technische Fragen zu Open Journal Systems haben, gehen Sie bitte zum <a href="http://pkp.sfu.ca/support/forum">Support Forum</a> von PKP oder besuchen Sie unseren <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">Webservice für die Anzeige von Programmfehlern</a>. Wenn Sie im Support Forum keine geeignete Hilfestellung finden, können Sie uns auch unter <a href="mailto:pkp.contact@gmail.com"></a> per E-Mail kontaktieren.</p>
+<p>Danke für das Herunterladen von Open Journal Systems <strong>des Public Knowledge Project</strong>. Bevor Sie fortfahren, lesen Sie bitte die zum Programm gehörenden Dateien <a href="{$baseUrl}/docs/README">README</a> und <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a>. Näheres über das Public Knowledge Project und seine Programmentwicklungen finden Sie auf der <a href="http://pkp.sfu.ca/" target="_blank">Webseite des PKP</a>. Wenn Sie Programmfehler melden wollen oder technische Fragen zu Open Journal Systems haben, gehen Sie bitte zum <a href="http://forum.pkp.sfu.ca">Support Forum</a> von PKP oder besuchen Sie unseren <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">Webservice für die Anzeige von Programmfehlern</a>. Wenn Sie im Support Forum keine geeignete Hilfestellung finden, können Sie uns auch unter <a href="mailto:pkp.contact@gmail.com"></a> per E-Mail kontaktieren.</p>
 <p>Wir <strong>empfehlen dringend</strong>, dass Sie ein Backup Ihrer Datenbank, Dateiverzeichnisse und OJS-Installation machen, bevor Sie fortfahren.</p>
 <p>Falls Sie in einem <a href="http://www.php.net/features.safe-mode" target="_blank">PHP-Safe Mode</a> arbeiten, stellen Sie bitte sicher, dass die max_execution_time-Richtlinie in Ihrer php.ini-Konfigurationsdatei auf einen hohen Grenzwert eingestellt ist. Sollte dieses (oder irgendein anderes) Zeitlimit (z.B. die "Timeout"-Regelung von Apache) erreicht werden und der Upgrade-Prozess unterbrochen werden, müssen Sie manuell eingreifen.</p>]]></message>
 	<message key="installer.localeSettingsInstructions"><![CDATA[Zur durchgängigen Unterstützung von Unicode (UTF-8) verwenden Sie stets UTF-8 als Zeichensatz. Beachten Sie, dass MySQL >= 4.1.1 oder PostgreSQL >= 7.1-Datenbankserver erforderlich sind. Beachten Sie bitte außerdem, dass die Unterstützung von Unicode PHP >= 4.3.0 kompiliert mit der Bibliothek <a href="http://www.php.net/mbstring" target="_blank">mbstring</a> verlangt (in den meisten neueren PHP-Installationen standardmäßig aktiviert). Falls Ihr Server diese Anforderungen nicht erfüllt, können Schwierigkeiten mit erweiterten Schriftsätzen auftreten.
-	<br /><br />
-	Ihr Server unterstützt derzeit : <strong>{$supportsMBString}</strong>]]></message>
+<br /><br />
+Ihr Server unterstützt derzeit : <strong>{$supportsMBString}</strong>]]></message>
 	<message key="installer.allowFileUploads"><![CDATA[Ihr Server erlaubt momentan Dateiuploads: <strong>{$allowFileUploads}</strong>]]></message>
 	<message key="installer.maxFileUploadSize"><![CDATA[Ihr Server erlaubt beim Upload momentan eine maximale Dateigröße von: <strong>{$maxFileUploadSize}</strong>]]></message>
 	<message key="installer.localeInstructions">Die Hauptsprache dieses Systems. Falls Sie an hier nicht aufgeführten Sprachen interessiert sind, sehen Sie bitte in der OJS-Dokumentation nach.</message>
@@ -1010,10 +1044,10 @@ Tragen Sie zur Wiederherstellung des Passwortes unten Ihre E-Mail-Adresse ein. E
 	<li>Treten Sie unseren <a href="http://pkp.sfu.ca/informed" target="_new">Diskussionslisten</a> für OJS, OCS, den Harvester, Lemon8-XML, OMP oder allen genannten Themen bei.</li>
 	<li>Abonnieren Sie den <a href="http://pkp.sfu.ca/blog/feed" target="_new">RSS-Feed</a> des <a href="http://pkp.sfu.ca/blog" target="_new">PKP-Blogs</a>.</li>
 </ol>
-<p>Wenn Sie Fragen oder Kommentare haben, besuchen Sie bitte das <a href="http://pkp.sfu.ca/support/forum" target="_new">Support-Forum</a>.</p>]]></message>
+<p>Wenn Sie Fragen oder Kommentare haben, besuchen Sie bitte das <a href="http://forum.pkp.sfu.ca" target="_new">Support-Forum</a>.</p>]]></message>
 	<message key="installer.upgradeComplete"><![CDATA[<p>Die Aktualisierung von OJS auf Version {$version} wurde erfolgreich abgeschlossen.</p>
 <p>Bitte vergessen Sie nicht, die "installed"-Einstellung in Ihrer config.inc.php-Konfigurationsdatei wieder zurück auf <em>On</em> zu setzen.</p>
-<p>Wenn Sie sich noch nicht registriert haben und in Zukunft Neuigkeiten und Hinweise auf Aktualisierungen erhalten möchten, <strong>registrieren Sie sich bitte auf <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Wenn Sie Fragen oder Kommentare haben, besuchen Sie bitte das <a href="http://pkp.sfu.ca/support/forum" target="_new">Support-Forum</a>.</p>]]></message>
+<p>Wenn Sie sich noch nicht registriert haben und in Zukunft Neuigkeiten und Hinweise auf Aktualisierungen erhalten möchten, <strong>registrieren Sie sich bitte auf <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Wenn Sie Fragen oder Kommentare haben, besuchen Sie bitte das <a href="http://forum.pkp.sfu.ca" target="_new">Support-Forum</a>.</p>]]></message>
 
 	<!-- Warnungen zum Upgrade -->
 	<message key="site.upgradeAvailable.admin"><![CDATA[Eine neue Version von OJS ist verfügbar! Sie benutzen momentan OJS {$currentVersion}. Die aktuelleste Version ist OJS {$latestVersion}. Bitte gehen Sie zu <a href="http://pkp.sfu.ca/ojs_download" target="_new">dieser Seite</a>, um die aktuelle Version herunterzuladen und um Informationen zum Upgrade einzusehen.]]></message>
@@ -1129,11 +1163,11 @@ Die Prüfung kann bei Such-URLs, die Formularausfüllung verlangen, fehlschlagen
 	<message key="notification.type.editorDecisionComment">Ein Kommentar zur Entscheidung des Redakteur/der Redaktuerin über "{$title}" wurde hinterlassen.</message>
 	<message key="notification.type.galleyModified">Für "{$title}" wurde eine Korrekturfahne geändert.</message>
 	<message key="notification.type.issuePublished">Eine Ausgabe wurde veröffentlicht.</message>
-	<message key="notification.type.layoutComment">Zum Layout von "{$title}'s" wurde ein Kommentar hinterlassen.</message>
-	<message key="notification.type.metadataModified">Die Metdadaten von "{$title}'s" wurden verändert.</message>
+	<message key="notification.type.layoutComment">Zum Layout von "{$title}" wurde ein Kommentar hinterlassen.</message>
+	<message key="notification.type.metadataModified">Die Metadaten von "{$title}" wurden verändert.</message>
 	<message key="notification.type.newAnnouncement">Eine neue Ankündigung wurde erstellt.</message>
 	<message key="notification.type.proofreadComment">Ein/e Korrekturlektor/in hat einen Kommentar zu "{$title}" hinterlassen.</message>
-	<message key="notification.type.reviewerComment">Ein/e Gutachter/in hat "{$title} kommentiert.</message>
+	<message key="notification.type.reviewerComment">Ein/e Gutachter/in hat "{$title}" kommentiert.</message>
 	<message key="notification.type.reviewerFormComment">Für "{$title}" wurde ein Begutachtungsformular eingereicht.</message>
 	<message key="notification.type.reviewing">Begutachtungsereignisse</message>
 	<message key="notification.type.site">Site-Ereignisse</message>

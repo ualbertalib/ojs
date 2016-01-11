@@ -1,7 +1,8 @@
 {**
  * plugins/citationFormats/refWorks/citation.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Article reading tools -- Capture Citation
@@ -18,7 +19,8 @@
 	number = {{/literal}{$issue->getNumber()|escape}{literal}},{/literal}{/if}{literal}
 	year = {{/literal}{if $article->getDatePublished()}{$article->getDatePublished()|date_format:'%Y'}{elseif $issue->getDatePublished()}{$issue->getDatePublished()|date_format:'%Y'}{else}{$issue->getYear()|escape}{/if}{literal}},
 {/literal}{assign var=issn value=$journal->getSetting('issn')|escape}{if $issn}{literal}	issn = {{/literal}{$issn|escape}{literal}},{/literal}{/if}
-
+{if $article->getPubId('doi')}	doi = {ldelim}{$article->getPubId('doi')|escape}{rdelim},
+{/if}
 {literal}	url = {{/literal}{$articleUrl}{literal}}
 }{/literal}</textarea>
 	<br />

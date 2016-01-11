@@ -3,7 +3,8 @@
 <!--
   * registry/journalSettings.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Default journal settings.
@@ -51,6 +52,10 @@
 		<value>{translate key="default.journalSettings.copyeditInstructions"}</value>
 	</setting>
 	<setting type="string" locale="0">
+		<name>emailHeader</name>
+		<value>{translate key="default.journalSettings.emailHeader"}</value>
+	</setting>
+	<setting type="string" locale="0">
 		<name>emailSignature</name>
 		<value>{translate key="default.journalSettings.emailSignature"}</value>
 	</setting>
@@ -77,14 +82,6 @@
 	<setting type="string" locale="1">
 		<name>lockssLicense</name>
 		<value>{translate key="default.journalSettings.lockssLicense"}</value>
-	</setting>
-	<setting type="object" locale="0">
-		<name>supportedLocales</name>
-		<value>
-			<array>
-				<element>{$primaryLocale}</element>
-			</array>
-		</value>
 	</setting>
 	<setting type="object" locale="0">
 		<name>supportedFormLocales</name>
@@ -265,7 +262,7 @@
 		<name>donationFeeDescription</name>
 		<value>{translate key="default.journalSettings.donationFeeDescription"}</value>
 	</setting>
-	<setting type="bool" locale="1">
+	<setting type="bool" locale="0">
 		<name>metaCitations</name>
 		<value>1</value>
 	</setting>

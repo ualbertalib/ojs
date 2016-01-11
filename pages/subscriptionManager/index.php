@@ -3,15 +3,16 @@
 /**
  * @defgroup pages_subscriptionManager
  */
- 
+
 /**
  * @file pages/subscriptionManager/index.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup pages_subscriptionManager
- * @brief Handle requests for journal management functions. 
+ * @brief Handle requests for journal management functions.
  *
  */
 
@@ -25,6 +26,7 @@ switch ($op) {
 	case 'createSubscription':
 	case 'selectSubscriber':
 	case 'updateSubscription':
+	case 'resetDateReminded':
 	case 'subscriptionTypes':
 	case 'moveSubscriptionType':
 	case 'deleteSubscriptionType':
@@ -42,6 +44,7 @@ switch ($op) {
 	case 'payMethodSettings':
 	case 'savePayMethodSettings':
 	case 'suggestUsername':
+	case 'userProfile':
 		define('HANDLER_CLASS', 'SubscriptionManagerHandler');
 		import('pages.subscriptionManager.SubscriptionManagerHandler');
 		break;

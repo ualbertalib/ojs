@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/phpMyVisites/PhpMyVisitesPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PhpMyVisitesPlugin
@@ -136,10 +137,10 @@ class PhpMyVisitesPlugin extends GenericPlugin {
 		return false;
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Result status message
 	 * @param $messageParams array Parameters for the message key
 	 * @return boolean

@@ -4,14 +4,15 @@
 <!--
   * plugins/generic/referral/locale/fa_IR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the fa_IR locale.
   *
   -->
  
-<locale name="fa_IR" full_name="Persian">
+<locale name="fa_IR" full_name="فارسی">
 	<message key="plugins.generic.referral.name">پلاگین ارجاع</message>
 	<message key="plugins.generic.referral.description">پلاگین ارجاع برای ردگیری ارجاعات به مقالات میباشد. وقتی که یک خواننده از طریق لینکی از خارج به یک مقاله میرسند، این پلاگین نویسنده را قادر میسازد تا لیستی قابل انتشاری از این ارجاعات را داشته باشد و مرتبا آنها را بروز رسانی کند.</message>
 	

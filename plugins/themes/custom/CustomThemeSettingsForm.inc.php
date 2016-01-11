@@ -3,7 +3,8 @@
 /**
  * @file plugins/themes/custom/CustomThemeSettingsForm.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CustomThemeSettingsForm
@@ -34,14 +35,28 @@ class CustomThemeSettingsForm extends Form {
 		parent::Form($plugin->getTemplatePath() . 'settingsForm.tpl');
 	}
 
+	/**
+	 * Display the form
+	 */
 	function display() {
 		$templateMgr =& TemplateManager::getManager();
 		$additionalHeadData = $templateMgr->get_template_vars('additionalHeadData');
 		$additionalHeadData .= '<script type="text/javascript" src="' . Request::getBaseUrl() . '/plugins/themes/custom/picker.js"></script>' . "\n";
 		$templateMgr->addStyleSheet(Request::getBaseUrl() . '/plugins/themes/custom/picker.css');
 		$templateMgr->assign('additionalHeadData', $additionalHeadData);
-		$stylesheetFileLocation = $this->plugin->getPluginPath() . '/' . $this->plugin->getStylesheetFilename();
-		$templateMgr->assign('canSave', is_writable($stylesheetFileLocation));
+		$stylesheetFilePluginLocation = $this->plugin->getPluginPath() . '/' . $this->plugin->getStylesheetFilename();
+		if (!$this->_canUsePluginPath() || $this->plugin->getSetting($this->journalId, 'customThemePerJournal')) {
+			if (!$this->_canUsePluginPath()) {
+				$templateMgr->assign('disablePluginPath', true);
+				$templateMgr->assign('stylesheetFilePluginLocation', $stylesheetFilePluginLocation);
+			}
+			import('classes.file.PublicFileManager');
+			$fileManager = new PublicFileManager();
+			$stylesheetFileLocation = $fileManager->getJournalFilesPath($this->journalId) . '/' . $this->plugin->getStylesheetFilename();
+		} else {
+			$stylesheetFileLocation = $stylesheetFilePluginLocation;
+		}
+		$templateMgr->assign('canSave', $this->_is_writable($stylesheetFileLocation));
 		$templateMgr->assign('stylesheetFileLocation', $stylesheetFileLocation);
 
 		return parent::display();
@@ -58,7 +73,8 @@ class CustomThemeSettingsForm extends Form {
 			'customThemeHeaderColour' => $plugin->getSetting($journalId, 'customThemeHeaderColour'),
 			'customThemeLinkColour' => $plugin->getSetting($journalId, 'customThemeLinkColour'),
 			'customThemeBackgroundColour' => $plugin->getSetting($journalId, 'customThemeBackgroundColour'),
-			'customThemeForegroundColour' => $plugin->getSetting($journalId, 'customThemeForegroundColour')
+			'customThemeForegroundColour' => $plugin->getSetting($journalId, 'customThemeForegroundColour'),
+			'customThemePerJournal' => $plugin->getSetting($journalId, 'customThemePerJournal'),
 		);
 	}
 
@@ -66,7 +82,7 @@ class CustomThemeSettingsForm extends Form {
 	 * Assign form data to user-submitted data.
 	 */
 	function readInputData() {
-		$this->readUserVars(array('customThemeHeaderColour', 'customThemeLinkColour', 'customThemeBackgroundColour', 'customThemeForegroundColour'));
+		$this->readUserVars(array('customThemeHeaderColour', 'customThemeLinkColour', 'customThemeBackgroundColour', 'customThemeForegroundColour', 'customThemePerJournal'));
 	}
 
 	/**
@@ -106,9 +122,38 @@ class CustomThemeSettingsForm extends Form {
 		$css .= "body {color: $customThemeForegroundColour;}\n";
 		$css .= "input.defaultButton {color: $customThemeForegroundColour;}\n";
 
-		import('lib.pkp.classes.file.FileManager');
-		$fileManager = new FileManager();
-		$fileManager->writeFile(dirname(__FILE__) . '/custom.css', $css);
+		import('classes.file.PublicFileManager');
+		$fileManager = new PublicFileManager();
+		$customThemePerJournal = $this->getData('customThemePerJournal');
+		if (!$customThemePerJournal && !$this->_canUsePluginPath()) {
+			$customThemePerJournal = true;
+		}
+		$plugin->updateSetting($journalId, 'customThemePerJournal', $customThemePerJournal, 'bool');
+		if ($customThemePerJournal) {
+			$fileManager->writeJournalFile($journalId, $this->plugin->getStylesheetFilename(), $css);
+		} else {
+			$fileManager->writeFile(dirname(__FILE__) . '/' . $this->plugin->getStylesheetFilename(), $css);
+		}
+	}
+	
+	/**
+	 * Evaluate whether the plugin path is writable and available for use
+	 */
+	function _canUsePluginPath() {
+		return is_writable($this->plugin->getPluginPath() . '/' . $this->plugin->getStylesheetFilename());
+	}
+	
+	/**
+	 * Evaluate whether a path is writable
+	 * Check if the filename provided (or the parent directory, if the filename does not exist) can be written
+	 */
+	function _is_writable($filename) {
+		if (is_writable($filename)) {
+			return true;
+		} elseif (!file_exists($filename) && is_writable(dirname($filename))) {
+			return true;
+		}
+		return false;
 	}
 }
 

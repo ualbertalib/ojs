@@ -3,7 +3,8 @@
 /**
  * @file classes/article/PublishedArticleDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PublishedArticleDAO
@@ -51,7 +52,8 @@ class PublishedArticleDAO extends DAO {
 		}
 		return $this->articlesInSectionsCache;
 	}
- 	/**
+
+	/**
 	 * Constructor.
 	 */
 	function PublishedArticleDAO() {
@@ -164,7 +166,7 @@ class PublishedArticleDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
-			WHERE 	i.published = 1
+			WHERE	i.published = 1
 				' . ($journalId !== null?'AND a.journal_id = ?':'') . '
 				AND a.status <> ' . STATUS_ARCHIVED . '
 			ORDER BY date_published '. ($reverse?'DESC':'ASC'),
@@ -235,7 +237,7 @@ class PublishedArticleDAO extends DAO {
 		while (!$result->EOF) {
 			$row =& $result->GetRowAssoc(false);
 			$publishedArticle =& $this->_returnPublishedArticleFromRow($row);
-			if ($publishedArticle->getSectionId() != $currSectionId) {
+			if ($publishedArticle->getSectionId() != $currSectionId && !isset($publishedArticles[$publishedArticle->getSectionId()])) {
 				$currSectionId = $publishedArticle->getSectionId();
 				$publishedArticles[$currSectionId] = array(
 					'articles'=> array(),
@@ -334,7 +336,6 @@ class PublishedArticleDAO extends DAO {
 		$publishedArticle->setIssueId($row['issue_id']);
 		$publishedArticle->setDatePublished($this->datetimeFromDB($row['date_published']));
 		$publishedArticle->setSeq($row['seq']);
-		$publishedArticle->setViews($row['views']);
 		$publishedArticle->setAccessStatus($row['access_status']);
 
 		if (!$simple) $publishedArticle->setSuppFiles($this->suppFileDao->getSuppFilesByArticle($row['article_id']));
@@ -469,9 +470,9 @@ class PublishedArticleDAO extends DAO {
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?) ';
 		if (is_null($settingValue)) {
 			$sql .= 'LEFT JOIN article_settings ast ON a.article_id = ast.article_id AND ast.setting_name = ?
-				WHERE	(ast.setting_value IS NULL OR ast.setting_value = "")';
+				WHERE	(ast.setting_value IS NULL OR ast.setting_value = \'\')';
 		} else {
-			$params[] = $settingValue;
+			$params[] = (string) $settingValue; // Bug #8853
 			$sql .= 'INNER JOIN article_settings ast ON a.article_id = ast.article_id
 				WHERE	ast.setting_name = ? AND ast.setting_value = ?';
 		}
@@ -510,8 +511,8 @@ class PublishedArticleDAO extends DAO {
 	 * Retrieve "article_id"s for published articles for a journal, sorted
 	 * alphabetically.
 	 * Note that if journalId is null, alphabetized article IDs for all
-	 * journals are returned.
-	 * @param $journalId int optional
+	 * enabled journals are returned.
+	 * @param $journalId int Optional journal ID to use in restricting results
 	 * @param $useCache boolean optional
 	 * @return Array
 	 */
@@ -530,6 +531,7 @@ class PublishedArticleDAO extends DAO {
 			FROM	published_articles pa,
 				issues i,
 				articles a
+				JOIN journals j ON (a.journal_id = j.journal_id)
 				LEFT JOIN sections s ON s.section_id = a.section_id
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ? AND atl.locale = ?)
 				LEFT JOIN article_settings atpl ON (a.article_id = atpl.article_id AND atpl.setting_name = ? AND atpl.locale = a.locale)
@@ -537,7 +539,7 @@ class PublishedArticleDAO extends DAO {
 				AND i.issue_id = pa.issue_id
 				AND i.published = 1
 				AND s.section_id IS NOT NULL' .
-				(isset($journalId)?' AND a.journal_id = ?':'') . ' ORDER BY article_title',
+				(isset($journalId)?' AND a.journal_id = ?':' AND j.enabled = 1') . ' ORDER BY article_title',
 			$params
 		);
 
@@ -565,7 +567,14 @@ class PublishedArticleDAO extends DAO {
 		$articleIds = array();
 		$functionName = $useCache?'retrieveCached':'retrieve';
 		$result =& $this->$functionName(
-			'SELECT a.article_id AS pub_id FROM published_articles pa, articles a LEFT JOIN sections s ON s.section_id = a.section_id WHERE pa.article_id = a.article_id' . (isset($journalId)?' AND a.journal_id = ?':'') . ' ORDER BY pa.date_published DESC',
+			'SELECT	a.article_id AS pub_id
+			FROM	published_articles pa
+				JOIN articles a ON a.article_id = pa.article_id
+				JOIN sections s ON s.section_id = a.section_id
+				JOIN issues i ON pa.issue_id = i.issue_id
+			WHERE	i.published = 1
+				' . (isset($journalId)?' AND a.journal_id = ?':'') . '
+			ORDER BY pa.date_published DESC',
 			isset($journalId)?(int) $journalId:false
 		);
 
@@ -618,7 +627,6 @@ class PublishedArticleDAO extends DAO {
 		$publishedArticle->setIssueId($row['issue_id']);
 		$publishedArticle->setDatePublished($this->datetimeFromDB($row['date_published']));
 		$publishedArticle->setSeq($row['seq']);
-		$publishedArticle->setViews($row['views']);
 		$publishedArticle->setAccessStatus($row['access_status']);
 
 		$publishedArticle->setGalleys($this->galleyDao->getGalleysByArticle($row['article_id']));
@@ -788,56 +796,6 @@ class PublishedArticleDAO extends DAO {
 		unset($result);
 
 		$this->flushCache();
-	}
-
-	/**
-	 * Retrieve all authors from published articles
-	 * @param $issueId int
-	 * @return $authors array Author Objects
-	 */
-	function getPublishedArticleAuthors($issueId) {
-		$primaryLocale = AppLocale::getPrimaryLocale();
-		$locale = AppLocale::getLocale();
-
-		$authors = array();
-		$result =& $this->retrieve(
-			'SELECT	aa.*,
-				aspl.setting_value AS affiliation_pl,
-				asl.setting_value AS affiliation_l
-			FROM	authors aa
-				LEFT JOIN published_articles pa ON (pa.article_id = aa.submission_id)
-				LEFT JOIN author_settings aspl ON (aspl.author_id = aa.author_id AND aspl.setting_name = ? AND aspl.locale = ?)
-				LEFT JOIN author_settings asl ON (asl.author_id = aa.author_id AND asl.setting_name = ? AND asl.locale = ?)
-			WHERE	pa.issue_id = ? ORDER BY pa.issue_id',
-			array(
-				'affiliation', $primaryLocale,
-				'affiliation', $locale,
-				(int) $issueId
-			)
-		);
-
-		while (!$result->EOF) {
-			$row = $result->GetRowAssoc(false);
-			$author = new Author();
-			$author->setId($row['author_id']);
-			$author->setSubmissionId($row['article_id']);
-			$author->setFirstName($row['first_name']);
-			$author->setMiddleName($row['middle_name']);
-			$author->setLastName($row['last_name']);
-			$author->setAffiliation($row['affiliation_pl'], $primaryLocale);
-			$author->setAffiliation($row['affiliation_l'], $locale);
-			$author->setEmail($row['email']);
-			$author->setBiography($row['biography']);
-			$author->setPrimaryContact($row['primary_contact']);
-			$author->setSequence($row['seq']);
-			$authors[] = $author;
-			$result->moveNext();
-		}
-
-		$result->Close();
-		unset($result);
-
-		return $authors;
 	}
 
 	/**

@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/datacite/DataciteExportPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class DataciteExportPlugin
@@ -226,7 +227,6 @@ class DataciteExportPlugin extends DOIExportPlugin {
 		curl_setopt($curlCh, CURLOPT_USERPWD, "$username:$password");
 
 		// Set up SSL.
-		curl_setopt($curlCh, CURLOPT_SSLVERSION, 3);
 		curl_setopt($curlCh, CURLOPT_SSL_VERIFYPEER, false);
 
 		// Transmit meta-data.
@@ -297,6 +297,16 @@ class DataciteExportPlugin extends DOIExportPlugin {
 		} else {
 			return parent::getObjectNotFoundErrorKey($exportType);
 		}
+	}
+
+	/**
+	 * @see AcronPlugin::parseCronTab()
+	 */
+	function callbackParseCronTab($hookName, $args) {
+		$taskFilesPath =& $args[0];
+		$taskFilesPath[] = $this->getPluginPath() . DIRECTORY_SEPARATOR . 'scheduledTasks.xml';
+
+		return false;
 	}
 
 
@@ -373,19 +383,19 @@ class DataciteExportPlugin extends DOIExportPlugin {
 		$url = null;
 		switch (true) {
 			case is_a($object, 'Issue'):
-				$url = $router->url($request, null, 'issue', 'view', $object->getBestIssueId($journal));
+				$url = $router->url($request, $journal->getPath(), 'issue', 'view', $object->getBestIssueId($journal));
 				break;
 
 			case is_a($object, 'PublishedArticle'):
-				$url = $router->url($request, null, 'article', 'view', $object->getBestArticleId($journal));
+				$url = $router->url($request, $journal->getPath(), 'article', 'view', $object->getBestArticleId($journal));
 				break;
 
 			case is_a($object, 'ArticleGalley'):
-				$url = $router->url($request, null, 'article', 'view', array($article->getBestArticleId($journal), $object->getBestGalleyId($journal)));
+				$url = $router->url($request, $journal->getPath(), 'article', 'view', array($article->getBestArticleId($journal), $object->getBestGalleyId($journal)));
 				break;
 
 			case is_a($object, 'SuppFile'):
-				$url = $router->url($request, null, 'article', 'downloadSuppFile', array($article->getBestArticleId($journal), $object->getBestSuppFileId($journal)));
+				$url = $router->url($request, $journal->getPath(), 'article', 'downloadSuppFile', array($article->getBestArticleId($journal), $object->getBestSuppFileId($journal)));
 				break;
 		}
 

@@ -4,14 +4,15 @@
 <!--
   * plugins/citationFormats/apa/locale/no_NO/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for this citation plugin in no_NO.
   *
   -->
  
-<locale name="no_NO" full_name="Norwegian">
+<locale name="no_NO" full_name="Norsk">
 	<message key="plugins.citationFormats.apa.displayName">Programutvidelse for APA referanseformat</message>
 	<message key="plugins.citationFormats.apa.citationFormatName">APA</message>
 	<message key="plugins.citationFormats.apa.description">Denne programutvidelsen implementerer referanseformatet fra APA.</message>

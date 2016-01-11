@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/native/NativeImportDom.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class NativeImportDom
@@ -69,10 +70,6 @@ class NativeImportDom {
 			// There were errors. Delete all the issues we've
 			// successfully created.
 			NativeImportDom::cleanupFailure ($dependentItems);
-			$issueDao =& DAORegistry::getDAO('IssueDAO');
-			foreach ($issues as $issue) {
-				$issueDao->deleteIssue($issue);
-			}
 			return false;
 		}
 		return true;
@@ -143,6 +140,12 @@ class NativeImportDom {
 		/* --- Set attributes: Identification type, published, current, public ID --- */
 
 		switch(($value = $issueNode->getAttribute('identification'))) {
+			case 'num_vol_year_title':
+				$issue->setShowVolume(1);
+				$issue->setShowNumber(1);
+				$issue->setShowYear(1);
+				$issue->setShowTitle(1);
+				break;
 			case 'num_vol_year':
 				$issue->setShowVolume(1);
 				$issue->setShowNumber(1);
@@ -154,6 +157,12 @@ class NativeImportDom {
 				$issue->setShowNumber(0);
 				$issue->setShowYear(1);
 				$issue->setShowTitle(0);
+				break;
+			case 'num_year_title':
+				$issue->setShowVolume(0);
+				$issue->setShowNumber(1);
+				$issue->setShowYear(1);
+				$issue->setShowTitle(1);
 				break;
 			case 'vol':
 				$issue->setShowVolume(1);
@@ -792,6 +801,7 @@ class NativeImportDom {
 		if (!NativeImportDom::handlePubIds($articleNode, $article, $journal, $issue, $article, $errors)) $hasErrors = true;
 
 		$articleDao->insertArticle($article);
+
 		$dependentItems[] = array('article', $article);
 
 		/* --- Handle authors --- */
@@ -802,7 +812,7 @@ class NativeImportDom {
 			}
 		}
 		if ($hasErrors) return false;
-
+		
 		// Create submission mangement records
 		$signoffDao =& DAORegistry::getDAO('SignoffDAO');
 
@@ -860,11 +870,31 @@ class NativeImportDom {
 		$node = $articleNode->getChildByName('open_access');
 		$publishedArticle->setAccessStatus($node?ARTICLE_ACCESS_OPEN:ARTICLE_ACCESS_ISSUE_DEFAULT);
 		$publishedArticle->setSeq(REALLY_BIG_NUMBER);
-		$publishedArticle->setViews(0);
 
 		$publishedArticle->setPublishedArticleId($publishedArticleDao->insertPublishedArticle($publishedArticle));
 
 		$publishedArticleDao->resequencePublishedArticles($section->getId(), $issue->getId());
+
+		// Setup default copyright/license metadata after status is set and authors are attached.
+		// This handles the case where the XML is not providing it
+		$article->initializePermissions();
+
+		// Get XML-specified overrides for permissions data
+		if ($permissionsNode = $articleNode->getChildByName('permissions')) {
+			if ($node = $permissionsNode->getChildByName('copyright_year')) {
+				$article->setCopyrightYear($node->getValue());
+			}
+			for ($index=0; ($node = $permissionsNode->getChildByName('copyright_holder', $index)); $index++) {
+				$locale = $node->getAttribute('locale');
+				$article->setCopyrightHolder($node->getValue(), $locale);
+			}
+			if ($node = $permissionsNode->getChildByName('license_url')) {
+				$article->setLicenseURL($node->getValue());
+			}
+		}
+
+		// Save permissions data
+		$articleDao->updateLocaleFields($article);
 
 		/* --- Galleys (html or otherwise handled simultaneously) --- */
 		import('classes.file.ArticleFileManager');
@@ -1042,6 +1072,11 @@ class NativeImportDom {
 				$errors[] = array('plugins.importexport.native.import.error.couldNotWriteFile', array('originalName' => $originalName));
 				return false;
 			}
+		}
+		if (($remote = $node->getChildByName('remote'))) {
+			$url = $remote->getAttribute('src');
+			$galley->setRemoteURL($url);
+			$fileId = 0;
 		}
 		if (!isset($fileId)) {
 			$errors[] = array('plugins.importexport.native.import.error.galleyFileMissing', array('articleTitle' => $article->getLocalizedTitle(), 'sectionTitle' => $section->getLocalizedTitle(), 'issueTitle' => $issue->getIssueIdentification()));
@@ -1312,8 +1347,13 @@ class NativeImportDom {
 				return false;
 			}
 		}
+		if (($remote = $fileNode->getChildByName('remote'))) {
+			$url = $remote->getAttribute('src');
+			$suppFile->setRemoteURL($url);
+			$fileId = 0;
+		}
 
-		if (!$fileId) {
+		if (!isset($fileId)) {
 			$errors[] = array('plugins.importexport.native.import.error.suppFileMissing', array('articleTitle' => $article->getLocalizedTitle(), 'sectionTitle' => $section->getLocalizedTitle(), 'issueTitle' => $issue->getIssueIdentification()));
 			return false;
 		}

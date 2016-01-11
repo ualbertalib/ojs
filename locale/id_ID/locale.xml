@@ -4,7 +4,8 @@
 <!--
   * locale/id_ID/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -392,7 +393,7 @@ Perhatikan bahwa OAI antarmuka dapat dinonaktifkan dengan mengedit konfigurasi s
 	<message key="manager.setup.reviewProcessEmailDescription">Editor mengirimkan permintaan kepada Reviewer untuk mereview naskah yang dilampirkan di email. Reviewer mengirimkan editor persetujuan atau penolakan, seperti halnya review dan rekomendasi di halaman review naskah, untuk mencatat proses review.</message>
 
 
-	<message key="manager.setup.lockssDescription"><![CDATA[OJS support <a href="http://lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe). Sebuah sistem untuk mengarsipkan jurnal secara permanen dan aman. LOCKSS adalah perangkat lunak open source yang dikembangkan di Library of Stanford University yang memungkinkan perpustakaan untuk menjaga website jurnal yang dipilih dengan mengumpulkan backup data secara teratur dari website jurnal yang terdaftar untuk konten yang baru diterbitkan dan mengarsipkannya. Tiap arsip divalidasi secara terus menerus terhadap library caches yang lain, dan jika konten ditemukan dalam keadaan rusak atau hilang, caches atau jurnal yang lain digunakan untuk menyimpan ulang.
+	<message key="manager.setup.lockssDescription"><![CDATA[OJS support <a href="http://www.lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe). Sebuah sistem untuk mengarsipkan jurnal secara permanen dan aman. LOCKSS adalah perangkat lunak open source yang dikembangkan di Library of Stanford University yang memungkinkan perpustakaan untuk menjaga website jurnal yang dipilih dengan mengumpulkan backup data secara teratur dari website jurnal yang terdaftar untuk konten yang baru diterbitkan dan mengarsipkannya. Tiap arsip divalidasi secara terus menerus terhadap library caches yang lain, dan jika konten ditemukan dalam keadaan rusak atau hilang, caches atau jurnal yang lain digunakan untuk menyimpan ulang.
 <br /><br />
 LOCKSS dapat digunakan setelah penerbitan berlangsung sepenuhnya, dengan mengikuti dua langkah berikut:]]></message>
 	
@@ -414,7 +415,7 @@ Penulis yang menerbitkan dengan jurnal ini setuju pada persyaratan berikut ini:<
 </ol>]]></message>
 	<message key="manager.setup.subjectClassificationDescription"><![CDATA[[Jurnal akan menggunakan sistem klasifikasi subjek yang tersedia di web.<br />
 Judul Sistem Klasifikasi]]></message>
-	<message key="manager.setup.registerJournalForIndexingDescription"><![CDATA[Untuk mengindeks konten jurnal kedalam sistem terdistribusi global dari database riset, baca <a href="http://www.oaister.org/dataproviders.html" target="_blank">langkah-langkah untuk menjadi kontributor data</a> dan daftarkan jurnal Anda di<a href="http://www.openarchives.org/data/registerasprovider.html" target="_blank">Pendaftaran Open Archives</a>.  Untuk mendaftar, Anda akan membutuhkan URL untuk repositori:<span class="highlight">{$oaiUrl}</span>. Setelah itu, Anda dapat mendaftarkan jurnal Anda di <a href="http://gita.grainger.uiuc.edu/registry/" target="_blank">UIUC OAI registry</a>dan<a href="http://www.oaister.org/" target="_blank">OAIster</a>.
+	<message key="manager.setup.registerJournalForIndexingDescription"><![CDATA[Untuk mengindeks konten jurnal kedalam sistem terdistribusi global dari database riset, baca <a href="http://www.oclc.org/oaister/contribute.en.html" target="_blank">langkah-langkah untuk menjadi kontributor data</a> dan daftarkan jurnal Anda di<a href="http://www.openarchives.org/data/registerasprovider.html" target="_blank">Pendaftaran Open Archives</a>.  Untuk mendaftar, Anda akan membutuhkan URL untuk repositori:<span class="highlight">{$oaiUrl}</span>. Setelah itu, Anda dapat mendaftarkan jurnal Anda di <a href="http://gita.grainger.uiuc.edu/registry/" target="_blank">UIUC OAI registry</a>dan<a href="http://www.oclc.org/oaister" target="_blank">OAIster</a>.
 <br /><br />Perhatikan jika Administrator Situs Anda sudah mendaftarkan situs ini pada layanan ini, jurnal Anda akan diindeks secara otomatis dan Anda tidak perlu mendaftarkan lagi.]]></message>
 	<message key="manager.setup.citations">Memungkinkan Bantuan Koreksi sitiran</message>
 
@@ -730,7 +731,7 @@ Aktif berarti berapa jumlah review yang sedang dipertimbangkan atau sedang berla
 	<message key="search.allJournals">Semua Jurnal</message>
 	<message key="search.authorIndex">Menelusuri Indeks Penulis</message>
 	<message key="search.authorDetails">Rincian Penulis</message>
-	<message key="search.syntaxInstructions"><![CDATA[Tip Pencarian: <ul>
+	<message key="search.syntaxInstructions"><![CDATA[<h4>Tip Pencarian: </h4><ul>
 <li>Istilah pencarian tidak mempedulikan besar-kecilnya huruf</li>
 <li>Kata-kata umum diabaikan</li>
 <li>Secara default hanya artikel yang berisi semua istilah query akan muncul (contoh: <em>dan</em>)</li>
@@ -745,7 +746,7 @@ Aktif berarti berapa jumlah review yang sedang dipertimbangkan atau sedang berla
 	<!-- Interstitial page for PDFs -->
 	<message key="article.pdf.title">Portable Document Format (PDF)</message>
 	<message key="article.pdf.download">Unduh file PDF  ini</message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p>File PDF yang Anda pilih harus dimuat di sini jika perambah web mempunyai plugin PDF reader diinstall (sebagai contoh: versi sekarang dari <a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader</a>).</p> <p>Alternatif lain, Anda juga bisa mengunduh file PDF langsung ke komputer Anda, dan bisa dibuka dengan menggunakan PDF reader. Untuk mengunduh PDF, klik tautan Unduh di bawah ini</p> <p>Jika ada membutuhkan informasi lebih lanjut tentang cara mencetak, simpan dan bekerja dengan PDF, menyediakan Highwire Press bantuan <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Pertanyaan yang sering diajuka mengenai PDF</a>.</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p>File PDF yang Anda pilih harus dimuat di sini jika perambah web mempunyai plugin PDF reader diinstall (sebagai contoh: versi sekarang dari <a href="https://get.adobe.com/reader/">Adobe Acrobat Reader</a>).</p> <p>Alternatif lain, Anda juga bisa mengunduh file PDF langsung ke komputer Anda, dan bisa dibuka dengan menggunakan PDF reader. Untuk mengunduh PDF, klik tautan Unduh di bawah ini</p> <p>Jika ada membutuhkan informasi lebih lanjut tentang cara mencetak, simpan dan bekerja dengan PDF, menyediakan Highwire Press bantuan <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Pertanyaan yang sering diajuka mengenai PDF</a>.</p>]]></message>
 
 	
 	<!-- Interstitial page for non-PDF non-HTML galleys -->
@@ -872,7 +873,7 @@ Aktif berarti berapa jumlah review yang sedang dipertimbangkan atau sedang berla
 	<message key="installer.ojsUpgrade">Updgrade OJS</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>Versi OJS {$version}</h4>
 
-<p>Terima kasih telah mengunduh <strong>Open Journal Systems</strong>. Sebelum melanjutkan, silahkan membaca <a href="{$baseUrl}/docs/README">README</a>. Berkas disertakan dalam perangkat lunak ini. Untuk informasi lebih lanjut tentang Public Knowledge Project dan perangkat lunak ini, silahkan kunjungi <a href="http://pkp.sfu.ca/" target="_blank">web site PKP</a>. Jika Anda memiliki laporan bug atau butuh dukungan teknis mengenai OJS, lihat <a href="http://pkp.sfu.ca/support/forum" target="_blank">forum dukungan</a> atau kunjungi PKP online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">Laporkan bug sistem</a>.Selain itu Anda dapat mengontak tim pengembang OJS melalui <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>Terima kasih telah mengunduh <strong>Open Journal Systems</strong>. Sebelum melanjutkan, silahkan membaca <a href="{$baseUrl}/docs/README">README</a>. Berkas disertakan dalam perangkat lunak ini. Untuk informasi lebih lanjut tentang Public Knowledge Project dan perangkat lunak ini, silahkan kunjungi <a href="http://pkp.sfu.ca/" target="_blank">web site PKP</a>. Jika Anda memiliki laporan bug atau butuh dukungan teknis mengenai OJS, lihat <a href="http://forum.pkp.sfu.ca" target="_blank">forum dukungan</a> atau kunjungi PKP online <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">Laporkan bug sistem</a>.Selain itu Anda dapat mengontak tim pengembang OJS melalui <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
 <h4>Upgrade</h4>
 
 <p>Jika Anda ingin mengupgrade instalasi yang sudah ada OJS 1.x, <a href="{$upgradeUrl}">klik disini</a> untuk proses.</p>
@@ -881,9 +882,9 @@ Aktif berarti berapa jumlah review yang sedang dipertimbangkan atau sedang berla
 
 <ul>
 	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpRequiredVersion} (termasuk PHP 5.x); saat ini Anda menggunakan PHP {$phpVersion}{$wrongPhpText}</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (termasuk MySQL 4.x) atau <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (termasuk PostgreSQL 8.x)</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 4.1 atau <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (termasuk PostgreSQL 8.x)</li>
 	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x atau >= 2.0.4x atau Microsoft IIS 6</li>
-	<li>Sistem operasi: Semua sistem operasi support OJS, termasuk <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
+	<li>Sistem operasi: Semua sistem operasi support OJS, termasuk <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
 </ul>
 
 <p>Upgrade OJS dapat dilakukan setelah instalasi dengan mengedit file <tt>config.inc.php</tt> di direktori OJS, atau menggunakan antarmuka Administrasi Situs.</p>
@@ -911,7 +912,7 @@ Aktif berarti berapa jumlah review yang sedang dipertimbangkan atau sedang berla
 <p>Pilih <strong>Install Manual</strong> untuk menampilkan pernyataan SQL yang diperlukan untuk membuat skema database OJS dan data awal sehingga instalasi database dapat dilakukan secara manual. Opsi ini berguna ketika terdapat debug saat instalasi, terutama karena platform yang tidak support. Perhatikan bahwa opsi instalasi ini tidak membuat database atau tabel secara otomatis, meskipun file konfigurasi masih akan ditulis dengan pengaturan database yang tersedia.</p>]]></message>
 	<message key="installer.upgradeInstructions"><![CDATA[<h4>Versi OJS {$version}</h4>
 	
-<p>Terima kasih telah mengunduh <strong>Open Journal Systems</strong>. Sebelum melanjutkan, silahkan membaca <a href="{$baseUrl}/docs/README">README</a>. Berkas disertakan dalam perangkat lunak ini. Untuk informasi lebih lanjut tentang Public Knowledge Project dan perangkat lunak ini, silahkan kunjungi <a href="http://pkp.sfu.ca/" target="_blank">web site PKP</a>. Jika Anda memiliki laporan bug atau butuh dukungan teknis mengenai OJS, lihat <a href="http://pkp.sfu.ca/support/forum" target="_blank">forum dukungan</a> atau kunjungi PKP online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">Laporkan bug sistem</a>.Selain itu Anda dapat mengontak tim pengembang OJS melalui <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>Terima kasih telah mengunduh <strong>Open Journal Systems</strong>. Sebelum melanjutkan, silahkan membaca <a href="{$baseUrl}/docs/README">README</a>. Berkas disertakan dalam perangkat lunak ini. Untuk informasi lebih lanjut tentang Public Knowledge Project dan perangkat lunak ini, silahkan kunjungi <a href="http://pkp.sfu.ca/" target="_blank">web site PKP</a>. Jika Anda memiliki laporan bug atau butuh dukungan teknis mengenai OJS, lihat <a href="http://forum.pkp.sfu.ca" target="_blank">forum dukungan</a> atau kunjungi PKP online <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">Laporkan bug sistem</a>.Selain itu Anda dapat mengontak tim pengembang OJS melalui <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
 <p><strong>Sangat disarankan agar</strong> Anda memback up database Anda, direktori berkas, dan direktori instalasi OJS sebelum melanjutkan.</p>
 <p>Jika Anda sudah menjalankan <a href="http://www.php.net/features.safe-mode" target="_blank">PHP Safe Mode</a>, pastikan perintah waktu eksekusi maksimal di berkas konfigurasi php.ini diatur hingga batas tinggi. Jika batas ini atau batas lain (contoh: perintah Apache's "Timeout") telah tercapai dan proses upgrade terganggu, interfensi manual akan dibutuhkan.</p>]]></message>
 	<message key="installer.localeSettingsInstructions"><![CDATA[Untuk melengkapi dukungan Unicode (UTF-8), pilih UTF-8 untuk semua pengaturan karakter set. Perhatikan bahwa dukungan ini membutuhkan server database MySQL >= 4.1.1 atau PostgreSQL >= 7.1. Perhatikan juga bahwa dukungan Unicode penuh membutuhkan PHP >= 4.3.0 dengan dukungan untuk <a href="http://www.php.net/mbstring" target="_blank">mbstring</a> (secara default tersedia pada instalasi PHP terbaru). Anda mungkin akan menemui masalah saat menggunakan rangkaian karakter ini jika server Anda tidak memenuhi persyaratan.

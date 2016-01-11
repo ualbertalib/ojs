@@ -4,14 +4,15 @@
 <!--
   * plugins/importexport/pubmed/locale/zh_CN/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the zh_CN (简体中文) locale.
   *
   -->
  
-<locale name="zh_CN" full_name="China P.R">
+<locale name="zh_CN" full_name="简体中文">
 	<message key="plugins.importexport.pubmed.displayName">PubMed XML导出插件</message>
 	<message key="plugins.importexport.pubmed.description">导出基于PubmedXML格式的文章的元数据，以便于在Medline索引.</message>
 	
@@ -21,10 +22,9 @@
 	<message key="plugins.importexport.pubmed.export.articles">导出文章</message>
 	<message key="plugins.importexport.pubmed.export.selectArticle">选择一篇文章导出</message>
 	
-	<message key="plugins.importexport.pubmed.cliUsage"><![CDATA[使用方法: 
+	<message key="plugins.importexport.pubmed.cliUsage">使用方法: 
 {$scriptName} {$pluginName} [xmlFileName] [journal_path] articles [articleId1] [articleId2] ...
-{$scriptName} {$pluginName} [xmlFileName] [journal_path] issue [issueId]
-]]></message>
+{$scriptName} {$pluginName} [xmlFileName] [journal_path] issue [issueId]</message>
 	<message key="plugins.importexport.pubmed.cliError">错误:</message>
 
 	<message key="plugins.importexport.pubmed.export.error.issueNotFound">指定刊期ID不存在：{$issueId}.</message>

@@ -4,14 +4,15 @@
 <!--
   * plugins/generic/customBlockManager/locale/fa_IR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the fa_IR locale.
   *
   -->
  
-<locale name="fa_IR" full_name="Persian">
+<locale name="fa_IR" full_name="فارسی">
 	<message key="plugins.generic.customBlockManager.displayName">اداره بلوک آزاد</message>
 	<message key="plugin.generic.customBlockManager.introduction"><![CDATA[از این پلاگین برای ایجاد یا خذف بلوک آزاد میتوانید استفاده کنید.
 پس از ایجاد محتوای آنرا در صفحه 

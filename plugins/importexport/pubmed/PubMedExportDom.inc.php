@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/pubmed/PubMedExportDom.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PubMedExportDom
@@ -23,10 +24,10 @@ class PubMedExportDom {
 	 * Build article XML using DOM elements
 	 * @param $args Parameters to the plugin
 	 *
-	 * The DOM for this XML was developed according to the NLM 
-	 * Standard Publisher Data Format: 
+	 * The DOM for this XML was developed according to the NLM
+	 * Standard Publisher Data Format:
 	 * http://www.ncbi.nlm.nih.gov/entrez/query/static/spec.html
-	 */ 
+	 */
 
 	function &generatePubMedDom() {
 		// create the output XML document in DOM with a root node
@@ -57,7 +58,7 @@ class PubMedExportDom {
 		$publisherInstitution = $journal->getSetting('publisherInstitution');
 		$publisherNode = XMLCustomWriter::createChildWithText($doc, $journalNode, 'PublisherName', $publisherInstitution);
 
-		XMLCustomWriter::createChildWithText($doc, $journalNode, 'JournalTitle', $journal->getLocalizedTitle());
+		XMLCustomWriter::createChildWithText($doc, $journalNode, 'JournalTitle', $journal->getTitle($journal->getPrimaryLocale()));
 
 		// check various ISSN fields to create the ISSN tag
 		if ($journal->getSetting('printIssn') != '') $ISSN = $journal->getSetting('printIssn');
@@ -82,14 +83,11 @@ class PubMedExportDom {
 //		XMLCustomWriter::createChildWithText($doc, $root, 'Replaces', '');
 
 		/* --- ArticleTitle / VernacularTitle --- */
-		// there is some ambiguity between whether to use 
-		// article->getlanguage or journal->getlocale
 		// PubMed requires english titles for ArticleTitle
-		$language = $article->getLanguage();
-		if ($language == 'en' || $language == '' ) {
-			XMLCustomWriter::createChildWithText($doc, $root, 'ArticleTitle', $article->getLocalizedTitle());
+		if ($article->getLocale() == 'en_US') {
+			XMLCustomWriter::createChildWithText($doc, $root, 'ArticleTitle', $article->getTitle($article->getLocale()));
 		} else {
-			XMLCustomWriter::createChildWithText($doc, $root, 'VernacularTitle', $article->getLocalizedTitle());
+			XMLCustomWriter::createChildWithText($doc, $root, 'VernacularTitle', $article->getTitle($article->getLocale()));
 		}
 
 		/* --- FirstPage / LastPage --- */
@@ -98,17 +96,20 @@ class PubMedExportDom {
 		// use the "e-location ID" as the "page numbers" in PubMed
 		$pages = $article->getPages();
 		if (preg_match("/([0-9]+)\s*-\s*([0-9]+)/i", $pages, $matches)) {
-			// simple pagination (eg. "pp. 3- 		8")
-			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $matches[1]);			
-			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $matches[2]);
-		}elseif (preg_match("/(e[0-9]+)/i", $pages, $matches)) {
-			// elocation-id (eg. "e12")
+			// simple pagination (eg. "pp. 3-8")
 			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $matches[1]);
-			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $matches[1]);	
+			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $matches[2]);
+		} elseif (preg_match("/(e[0-9]+)\s*-\s*(e[0-9]+)/i", $pages, $matches)) { // e9 - e14, treated as page ranges
+			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $matches[1]);
+			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $matches[2]);
+		} elseif (preg_match("/(e[0-9]+)/i", $pages, $matches)) {
+			// single elocation-id (eg. "e12")
+			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $matches[1]);
+			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $matches[1]);
 		} else {
 			// we need to insert something, so use the best ID possible
-			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $article->getBestArticleId($journal));			
-			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $article->getBestArticleId($journal));			
+			XMLCustomWriter::createChildWithText($doc, $root, 'FirstPage', $article->getBestArticleId($journal));
+			XMLCustomWriter::createChildWithText($doc, $root, 'LastPage', $article->getBestArticleId($journal));
 		}
 
 		/* --- DOI --- */
@@ -116,7 +117,7 @@ class PubMedExportDom {
 			$doiNode =& XMLCustomWriter::createChildWithText($doc, $root, 'ELocationID', $doi, false);
 			XMLCustomWriter::setAttribute($doiNode, 'EIdType', 'doi');
 		}
-		
+
 		/* --- Language --- */
 		XMLCustomWriter::createChildWithText($doc, $root, 'Language', strtoupper($article->getLanguage()), false);
 
@@ -126,7 +127,7 @@ class PubMedExportDom {
 
 		$authorIndex = 0;
 		foreach ($article->getAuthors() as $author) {
-			$authorNode =& PubMedExportDom::generateAuthorDom($doc, $author, $authorIndex++);
+			$authorNode =& PubMedExportDom::generateAuthorDom($doc, $author, $article, $authorIndex++);
 			XMLCustomWriter::appendChild($authorListNode, $authorNode);
 		}
 
@@ -177,8 +178,21 @@ class PubMedExportDom {
 		}
 
 		/* --- Abstract --- */
-		if ($article->getLocalizedAbstract()) {
-			$abstractNode = XMLCustomWriter::createChildWithText($doc, $root, 'Abstract', strip_tags($article->getLocalizedAbstract()), false);
+		if ($article->getAbstract($article->getLocale())) {
+			$abstractNode = XMLCustomWriter::createChildWithText($doc, $root, 'Abstract', strip_tags($article->getAbstract($article->getLocale())), false);
+		}
+
+		if ($subject = $article->getSubject($article->getLocale())) {
+			$objectListNode = XMLCustomWriter::createElement($doc, 'ObjectList');
+			XMLCustomWriter::appendChild($root, $objectListNode);
+			foreach (explode(';', $subject) as $keyword) {
+				$objectNode = XMLCustomWriter::createElement($doc, 'Object');
+				$objectNode->setAttribute('Type', 'keyword');
+				$paramNode =& XMLCustomWriter::createChildWithText($doc, $objectNode, 'Param', $keyword);
+				$paramNode->setAttribute('Name', 'value');
+				XMLCustomWriter::appendChild($objectListNode, $objectNode);
+				unset($keywordNode, $paramNode);
+			}
 		}
 
 		return $root;
@@ -188,9 +202,10 @@ class PubMedExportDom {
 	 * Generate the Author node DOM for the specified author.
 	 * @param $doc DOMDocument
 	 * @param $author PKPAuthor
+	 * @param $article Article
 	 * @param $authorIndex 0-based index of current author
 	 */
-	function &generateAuthorDom(&$doc, &$author, $authorIndex) {
+	function &generateAuthorDom(&$doc, &$author, &$article, $authorIndex) {
 		$root =& XMLCustomWriter::createElement($doc, 'Author');
 
 		XMLCustomWriter::createChildWithText($doc, $root, 'FirstName', ucfirst($author->getFirstName()));
@@ -199,7 +214,7 @@ class PubMedExportDom {
 
 		if ($authorIndex == 0) {
 			// See http://pkp.sfu.ca/bugzilla/show_bug.cgi?id=7774
-			XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', $author->getLocalizedAffiliation() . '. ' . $author->getEmail(), false);
+			XMLCustomWriter::createChildWithText($doc, $root, 'Affiliation', $author->getAffiliation($article->getLocale()) . '. ' . $author->getEmail(), false);
 		}
 
 		return $root;

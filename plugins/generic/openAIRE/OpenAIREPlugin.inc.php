@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/openAIRE/OpenAIREPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OpenAIREPlugin
@@ -188,7 +189,6 @@ class OpenAIREPlugin extends GenericPlugin {
 
 		$records = array();
 		if (isset($set) && $set == 'ec_fundedresources') {
-			$journalId = $journalOAI->journalId;
 			$openAIREDao =& DAORegistry::getDAO('OpenAIREDAO');
 			$openAIREDao->setOAI($journalOAI);
 			if ($hookName == 'JournalOAI::records') {
@@ -196,7 +196,8 @@ class OpenAIREPlugin extends GenericPlugin {
 			} else if ($hookName == 'JournalOAI::identifiers') {
 				$funcName = '_returnIdentifierFromRow';
 			}
-			$records = $openAIREDao->getOpenAIRERecordsOrIdentifiers($journalId, $from, $until, $offset, $limit, $total, $funcName);
+			$journalId = $journalOAI->journalId;
+			$records = $openAIREDao->getOpenAIRERecordsOrIdentifiers(array($journalId, null), $from, $until, $offset, $limit, $total, $funcName);
 			return true;
 		}
 		return false;
@@ -216,7 +217,7 @@ class OpenAIREPlugin extends GenericPlugin {
 		return false;
 	}
 
- 	/**
+	/**
 	 * Change Dc11 Description to consider the OpenAIRE elements
 	 */
 	function changeDc11Desctiption($hookName, $params) {

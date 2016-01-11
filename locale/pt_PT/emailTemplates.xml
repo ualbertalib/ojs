@@ -4,7 +4,8 @@
 <!--
   * locale/pt_PT/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -14,24 +15,20 @@
 <email_texts locale="pt_PT">
 	<email_text key="PASSWORD_RESET_CONFIRM">
 		<subject>Confirmar actualização de senha</subject>
-		<body>{$userFullName},
-
-Recebemos um pedido para actualizar a sua senha de acesso à revista {$siteTitle}.
+		<body>Recebemos um pedido para recuperar a sua senha de acesso à revista {$siteTitle}.
 
 Caso não tenha apresentado este pedido, ignore este email e a sua senha não será alterada.
 
 Se desejar actualizar a sua senha, clique no link a seguir.
 
-Actualizar senha: {$url}
+Recuperar senha: {$url}
 
 {$principalContactSignature}</body>
 		<description>Mensagem enviada a utilizador registado quando o mesmo solicita actualização da senha, quando esqueceu a senha ou encontra problemas para aceder ao sistema. O link contido permite ao utilizador concluir a actualização da senha de acesso.</description>
 	</email_text>
 	<email_text key="PASSWORD_RESET">
 		<subject>Senha actualizada</subject>
-		<body>{$userFullName},
-
-A sua senha de acesso ao site {$siteTitle} foi actualizada com sucesso. Guarde o login (nome de utilizador) e a senha, uma vez que serão necessários para todas as actividades relacionadas com este portal.
+		<body>A sua senha de acesso ao site {$siteTitle} foi actualizada com sucesso. Guarde os dados de login (nome de utilizador e a senha), uma vez que serão necessários para todas as interacções relacionadas com este portal.
 
 O seu nome de utilizador: {$username}
 A sua nova senha: {$password}
@@ -53,12 +50,12 @@ Agradecendo desde já a atenção dispensada,
 		<description>Mensagem enviada aos utilizadores recém-registados no sistema, para acolhê-los e proporcionar um registo pessoal do nome de utilizador e da senha.</description>
 	</email_text>
 	<email_text key="PUBLISH_NOTIFY">
-		<subject>{$journalName} publica nova edição</subject>
-		<body>Caros leitores,
+		<subject>Publicação de nova Edição</subject>
+		<body>Caros leitores:
 
-A revista {$journalName} acaba de publicar o seu último número, disponível em {$journalUrl}. Convidamos a navegar no sumário da revista para aceder aos artigos e outros itens do seu proveito.
+{$journalName} acaba de publicar o seu último número, disponível em {$journalUrl}. Convidamos a navegar no sumário da revista para aceder aos artigos e outros itens do seu interesse.
 
-Agradecemos o seu constante interesse no nosso trabalho,
+Agradecemos o seu interesse na nossa revista,
 {$editorialContactSignature}</body>
 		<description>Mensagem enviada a leitores registados através da notificação do link de notificação de utilizadores na página do Editor, convidando os leitores a aceder ao sistema web da revista para ler a edição mais recente, através do URL fornecido.</description>
 	</email_text>
@@ -83,10 +80,10 @@ Em caso de dúvidas, entre em contacto através deste e-mail.
 		<description>Mensagem notifica o leitor registado que o Editor criou a sua Subscrição. Proporciona todas as informações necessárias para acesso ao conteúdo.</description>
 	</email_text>
 	<email_text key="OPEN_ACCESS_NOTIFY">
-		<subject>Nova edição de Acesso Livre da revista {$journalName}</subject>
-		<body>Caros leitores,
+		<subject>Nova edição de Acesso Livre</subject>
+		<body>Caros leitores:
 
-A {$journalName} acaba de tornar disponível para Acesso Livre mais uma edição. Convidamos a examinar o Sumário nesta mensagem e então aceder à revista ({$journalUrl}), para ler os artigos e outros itens de seu proveito.
+{$journalName} acaba de tornar disponível para Acesso Livre mais uma edição. Convidamos a examinar o Sumário nesta mensagem e então aceder à revista ({$journalUrl}), para ler os artigos e outros itens do seu interesse.
 
 Agradecemos o constante interesse e apoio à revista,
 {$editorialContactSignature}</body>
@@ -231,22 +228,22 @@ Agradecemos a sua contribuição, a qual é fundamental para garantir a qualidad
 	</email_text>
 	<email_text key="EDITOR_ASSIGN">
 		<subject>Tarefa editorial</subject>
-		<body>{$editorialContactName},
+		<body>{$editorialContactName}:
 
-A submissão "{$articleTitle}" a {$journalName} foi-lhe designada para acompanhamento durante o processo editorial, como parte das suas funções como Editor de Secção.
+A submissão "{$articleTitle}" à {$journalName} foi-lhe designada para acompanhamento durante o processo editorial, como parte das suas funções como Editor de Secção.
 
-URL da Submissão: {$submissionEditingUrl}
+URL da Submissão: {$submissionUrl}
 Nome de utilizador: {$editorUsername}
 
 Agradecendo desde já a sua atenção,
 {$editorialContactSignature}</body>
-		<description>Mensagem notifica o Editor de Secção que uma nova tarefa de acompanhamento de submissão lhe foi designada pelo Editor-Gestor. Oferece informações sobre a submissão e como aceder ao sistema.</description>
+		<description>Mensagem notifica o Editor de Secção que uma nova tarefa de acompanhamento de submissão lhe foi designada pelo Director. Oferece informações sobre a submissão e como aceder ao sistema.</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST">
-		<subject>A revista {$journalName} solicita revisão de artigo</subject>
-		<body>{$reviewerName},
+		<subject>Pedido de revisão de artigo</subject>
+		<body>{$reviewerName}:
 
-Acreditamos que o seu conhecimento será fundamental para realizar a revisão do manuscrito "{$articleTitle}" submetido a {$journalName}. Informações sobre a submissão encontram-se nesta mensagem, e espero que considere assumir esta importante responsabilidade.
+Acreditamos que o seu conhecimento será fundamental para realizar a revisão do manuscrito "{$articleTitle}" submetido à {$journalName}. Informações sobre a submissão encontram-se nesta mensagem, e espero que considere assumir esta importante responsabilidade.
 
 Aceda ao sistema até {$weekLaterDate} para confirmar a sua disponibilidade ou não para realizar a revisão, bem como aceder aos dados completos da submissão e registar a sua revisão e recomendações, através do URL {$journalUrl}.
 
@@ -273,18 +270,14 @@ Resumo
 		<description>Mensagem do Editor de Secção para solicitar ao Revisor que indique disponibilidade ou não para realizar uma revisão. Oferece informações sobre a submissão, como título e resumo, além da data para a conclusão dos trabalhos e como aceder ao documento. Esta mensagem é usada quando se utiliza o Processo Padrão de Revisão, definido no Passo 2 de Configuração da Revista. (Caso contrário veja REVIEW_REQ_MULTI_ATTACHED e REVIEW_REQUEST_ATTACHED.)</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ONECLICK">
-		<subject>A revista {$journalName} solicita revisão de artigo</subject>
-		<body>{$reviewerName},
+		<subject>Pedido de revisão de artigo</subject>
+		<body>{$reviewerName}:
 
-Acreditamos que o seu conhecimento será fundamental para realizar a revisão do manuscrito "{$articleTitle}" submetido a {$journalName}. Informações sobre a submissão encontram-se abaixo, e espero que considere assumir esta importante responsabilidade.
+Acreditamos que o seu conhecimento será fundamental para realizar a revisão do manuscrito "{$articleTitle}" submetido à {$journalName}. Informações sobre a submissão encontram-se abaixo, e espero que considere assumir esta importante responsabilidade.
 
-Aceda ao sistema até {$weekLaterDate} para confirmar a sua disponibilidade ou não para realizar a revisão, bem como aceder aos dados completos da submissão e registar a sua revisão e recomendações, através do URL {$journalUrl}.
+Aceda ao sistema até {$weekLaterDate} para confirmar a sua disponibilidade ou não para realizar a revisão, bem como aceder aos dados completos da submissão e registar a sua revisão e recomendações.
 
 O prazo para a entrega da revisão é {$reviewDueDate}.
-
-Caso não possua o seu nome de utilizador e senha de acesso para aceder ao sistema, use o link a seguir para que o sistema crie uma nova senha que lhe será enviada via email, junto com os seus dados de acesso.
-
-Criar nova senha: {$passwordResetUrl}
 
 URL da Submissão: {$submissionReviewUrl}
 
@@ -298,19 +291,17 @@ Dados da submissão
 Título
 "{$articleTitle}"
 
+{$abstractTermIfEnabled}
+
 Resumo
 {$articleAbstract}</body>
 		<description>Mensagem do Editor de Secção para solicitar ao Revisor que indique disponibilidade ou não para realizar uma revisão. Oferece informações sobre a submissão, como título e resumo, além da data para a conclusão dos trabalhos e como aceder ao documento. Esta mensagem é usada quando se utiliza o Processo Padrão de Revisão, definido no Passo 2 de Configuração da Revista e a opção de acesso one-click está activada (Caso contrário veja REVIEW_REQ_MULTI_ATTACHED e REVIEW_REQUEST_ATTACHED).</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_ATTACHED">
-		<subject>A revista {$journalName} solicita revisão de artigo</subject>
-		<body>{$reviewerName},
+		<subject>Pedido de revisão de artigo</subject>
+		<body>{$reviewerName}:
 
-Acreditamos que o seu conhecimento será de grande valia para realizar a revisão do manuscrito "{$articleTitle}" submetido a {$journalName}.
-
-As Directrizes para Revisão encontram-se no final desta mensagem, e o manuscrito está em anexo.
-
-O prazo para entrega da revisão e as suas recomendações, enviadas para este email, é {$reviewDueDate}.
+Acreditamos que o seu conhecimento será de grande valia para realizar a revisão do manuscrito "{$articleTitle}" submetido. As Directrizes para Revisão encontram-se no final desta mensagem, e o manuscrito está em anexo. O prazo para entrega da revisão e as suas recomendações, enviadas para este email, é {$reviewDueDate}.
 
 Espero que considere assumir esta importante responsabilidade.
 
@@ -319,7 +310,6 @@ Responda a esta mensagem até {$weekLaterDate} para informar se estará disponí
 Agradecemos desde já a sua atenção.
 
 {$editorialContactSignature}
-
 
 Directrizes para Revisão
 
@@ -406,10 +396,6 @@ Aguardando o seu contacto,
 
 Esta mensagem é apenas um lembrete relativamente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}. Esperamos receber a revisão até {$reviewDueDate}, e aguardamos o recebimento assim que for possível.
 
-Caso não possua o nome de utilizador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus dados de acesso.
-
-Criar nova senha: {$passwordResetUrl}.
-
 URL da Submissão: {$submissionReviewUrl}
 
 Confirme a sua disponibilidade para concluir a revisão, contribuição vital para a qualidade desta publicação.
@@ -444,17 +430,13 @@ Aguardando o seu contacto,
 	</email_text>
 	<email_text key="REVIEW_REMIND_AUTO_ONECLICK">
 		<subject>Lembrete automático de pedido de revisão</subject>
-		<body>{$reviewerName},
+		<body>{$reviewerName}:
 
 Este é apenas um lembrete automático, referente ao pedido de revisão da submissão "{$articleTitle}" a {$journalName}.
 
 O prazo para entrega da revisão era {$reviewDueDate} e este email foi enviado automaticamente pois o prazo expirou.
 
 Aguardamos o recebimento da revisão assim que for possível concluí-la.
-
-Caso não possua o nome de utilziador e a senha para aceder ao sistema da revista, use o link a seguir para criar uma nova senha, que lhe será enviada via email junto com os seus dados de acesso.
-
-Criar nova senha: {$passwordResetUrl}.
 
 URL da Submissão: {$submissionReviewUrl}
 
@@ -813,9 +795,7 @@ Agradecendo desde já a sua atenção,
 	</email_text>
 	<email_text key="REVIEWER_REGISTER">
 		<subject>Registo como revisor na revista {$journalName}</subject>
-		<body>{$reviewrName},
-
-Devido ao conhecimento excepcional na sua área de investigação/intervenção, tomamos a liberdade de registá-lo na base de dados de revisores da nossa revista, {$journalName}.
+		<body>Atendendendo ao conhecimento excepcional na sua área de investigação/intervenção, tomamos a liberdade de registá-lo na base de dados de revisores da nossa revista, {$journalName}.
 
 O seu registo não significa assumir responsabilidade alguma, apenas permitindo-nos solicitar a sua revisão de submissões, de acordo com seus interesses informados no perfil.
 
@@ -826,7 +806,7 @@ Os seus dados de acesso, nome de utilizador e senha, utilizados para interagir c
 Nome de utilizador: {$username}
 Senha: {$password}
 
-Esperamos poder contar com a sua colaboração para garantir a qualidade desta publicação.
+Esperamos poder contar com a sua colaboração para garantir a qualidade desta revista.
 
 Agradecendo desde já a atenção dispensada,
 {$principalContactSignature}</body>
@@ -844,8 +824,8 @@ Link: {$url}
 		<description>Esta mensagem é enviada a utilizadores registados que escolheram activar este tipo de notificação via email.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nova notificação de {$siteTitle}</subject>
-		<body>Você possui uma nova notificação de {$siteTitle}:
+		<subject>Nova notificação de {$journalName}</subject>
+		<body>Você possui uma nova notificação de {$journalName}:
 --
 {$notificationContents}
 
@@ -858,14 +838,12 @@ Caso não deseje receber mais notificações via e-mail, aceda a {$unsubscribeLi
 		<description>Esta mensagem é enviada a utilizadores não registados que pertencem à lista de correio.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Bem-vindo à lista de correio de {$siteTitle}!</subject>
-		<body>Você assinou a lista de notificações de {$siteTitle}.
+		<subject>Bem-vindo à lista de correio de {$journalName}!</subject>
+		<body>Você assinou a lista de notificações de {$journalName}.
 
 Clique no link a seguir para confirmar o seu pedido e incluir o seu e-mail na lista de correio: {$confirmLink}
 
 Caso não deseje mais receber as notificações, aceda a {$unsubscribeLink} e forneça o seu e-mail e senha.
-
-A senha para desactivar os e-mails é: {$password}
 
 {$principalContactSignature}</body>
 		<description>Esta mensagem é enviada a utilizadores não registados que acabaram de se registar no serviço de notificações via lista de correio.</description>
@@ -1020,5 +998,149 @@ Obrigado!
 {$userFirstName}
 Editor, {$journalName}</body>
 		<description></description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_SUBSEQUENT">
+		<subject>Pedido de Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+O assunto é respeitante ao manuscrito "{$articleTitle}," o qual foi submetido para {$journalName}.
+
+Na sequência da revisão da versão anterior do manuscrito, o autor já apresentou uma versão revista do seu artigo. Agradecemos a sua ajuda na revisão do artigo.
+
+Por favor aceda à pagina da revista até {$weekLaterDate} para indicar se aceita ou o pedido de revisão, assim como para aceder à submissão e registar a sua revisão e recomendação. O endereço da revista é {$journalUrl}
+
+O prazo de revisão do artigo é {$reviewDueDate}.
+
+Se não possui o seu nome de utilizador ou senha, pode usar este link para recuperar a senha (a qual será enviada por e-mail, assimo como o nome de utilizador). {$passwordResetUrl}
+
+URL submissão: {$submissionReviewUrl}
+
+Obrigado pela aceitação do convite para revisão.
+
+{$editorialContactSignature}
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Este e-mail do Editor de Secção para um Revisor solicita que o Revisor aceite ou recuse a tarefa de revisão de uma submissão para uma segunda ou nova ronda de revisão. Fornece informação sobre a submissão  tal como o título e resumo, a data de fim da revisão, e como aceder à submissão. Esta mensagem é usada quando o Processo de Revisão Padrão está seleccionado em Configuração Revista, Passo 2. (Em alternativa ver REVIEW_REQUEST_ATTACHED_SUBSEQUENT.)</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_ONECLICK_SUBSEQUENT">
+		<subject>Pedido de Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+O assunto diz respeito ao "{$articleTitle}," o qual foi submetido para {$journalName}.
+
+Na sequência da revisão da versão anterior do manuscrito, o autor já submeteu uma versão revista do seu artigo. Nós apreciaríamos o seu contributo na sua avaliação.
+
+Por favor aceda à página da revista até {$weekLaterDate} para indicar se aceita ou não o pedido de revisão, assim como aceder à submissão e registar a sua revisão e recomendações.
+
+O prazo de revisão é {$reviewDueDate}.
+
+URL submissão: {$submissionReviewUrl}
+
+Obrigado por aceitar este pedido de revisão.
+
+{$editorialContactSignature}
+
+
+
+"{$articleTitle}"
+
+{$abstractTermIfEnabled}
+{$articleAbstract}</body>
+		<description>Este e-mail do Editor de Secção para o Revisor solicita a este a aceitação ou recusa da tarefa de revisão de artigo submetido para uma segunda ronda de revisão. Fornece informação sobre a submissão tal como título e resumo, prazo de revisão, e como aceder ao artigo. Esta mensagem é usada no Processo Padrão de Revisão seleccionado em Configuração Revista, Passo 2, e o acesso um-clique do revisor é activado.</description>
+	</email_text>
+	<email_text key="REVIEW_REQUEST_ATTACHED_SUBSEQUENT">
+		<subject>Pedido Revisão Artigo</subject>
+		<body>{$reviewerName}:
+
+This regards the manuscript "{$articleTitle}," which is under consideration by {$journalName}.
+
+Following the review of the previous version of the manuscript, the authors have now submitted a revised version of their paper. We would appreciate it if you could help evaluate it.
+
+The Review Guidelines for this journal are appended below, and the submission is attached to this email. Your review of the submission, along with your recommendation, should be emailed to me by {$reviewDueDate}.
+
+Please indicate in a return email by {$weekLaterDate} whether you are able and willing to do the review.
+
+Thank you for considering this request.
+
+{$editorialContactSignature}
+
+
+Review Guidelines
+
+{$reviewGuidelines}</body>
+		<description>This email is sent by the Section Editor to a Reviewer to request that they accept or decline the task of reviewing a submission for a second or greater round of review. It includes the submission as an attachment. This message is used when the Email-Attachment Review Process is selected in Journal Setup, Step 2. (Otherwise see REVIEW_REQUEST_SUBSEQUENT.)</description>
+	</email_text>
+	<email_text key="GIFT_AVAILABLE">
+		<subject>{$giftNoteTitle}</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+{$giftNote}
+
+
+You will receive a follow-up email that includes login details and instructions for redeeming your gift.
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient that a gift has been purchased and is available for redemption.</description>
+	</email_text>
+	<email_text key="GIFT_USER_REGISTER">
+		<subject>Redeem Your Gift: Login Details</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+To redeem your gift, please login to the journal website at {$giftUrl}
+
+Your username: {$username}
+Your password: {$password}
+
+Once logged in, you can change your password at any time.
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient of their login details for a new account.</description>
+	</email_text>
+	<email_text key="GIFT_USER_LOGIN">
+		<subject>Redeem Your Gift: Login Details</subject>
+		<body>Dear {$recipientFirstName},
+
+{$buyerFullName} would like to share a gift with you at {$giftJournalName}:
+
+{$giftDetails}
+
+
+To redeem your gift, please login to the journal website at {$giftUrl}
+
+Your username: {$username}
+
+We hope that you enjoy your gift!
+
+{$giftContactSignature}</body>
+		<description>This email notifies a gift recipient of their login details.</description>
+	</email_text>
+	<email_text key="REVISED_VERSION_NOTIFY">
+		<subject>Versão da Revisão Uploaded</subject>
+		<body>{$editorialContactName}:
+
+A revised version of "{$articleTitle}" has been uploaded by the author {$authorName}.
+
+Submission URL: {$submissionUrl}
+
+{$editorialContactSignature}</body>
+		<description>This email is automatically sent to the assigned editor when author uploads a revised version of an article.</description>
 	</email_text>
 </email_texts>

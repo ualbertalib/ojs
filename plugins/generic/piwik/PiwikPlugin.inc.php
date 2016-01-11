@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/piwik/PiwikPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PiwikPlugin
@@ -25,9 +26,8 @@ class PiwikPlugin extends GenericPlugin {
 	 */
 	function register($category, $path) {
 		$success = parent::register($category, $path);
-		if (!Config::getVar('general', 'installed')) return false;
-		$this->addLocaleData();
-		if ($success) {
+		if (!Config::getVar('general', 'installed') || defined('RUNNING_UPGRADE')) return true;
+		if ($success && $this->getEnabled()) {
 			// Insert Piwik page tag to common footer
 			HookRegistry::register('Templates::Common::Footer::PageFooter', array($this, 'insertFooter'));
 
@@ -93,7 +93,7 @@ class PiwikPlugin extends GenericPlugin {
 	 * @param $subclass boolean
 	 */
 	function setBreadcrumbs($isSubclass = false) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$pageCrumbs = array(
 			array(
 				Request::url(null, 'user'),
@@ -148,7 +148,7 @@ class PiwikPlugin extends GenericPlugin {
 	 * Set the enabled/disabled state of this plugin
 	 */
 	function setEnabled($enabled) {
-		$journal = &Request::getJournal();
+		$journal =& Request::getJournal();
 		if ($journal) {
 			$this->updateSetting($journal->getJournalId(), 'enabled', $enabled ? true : false);
 			return true;
@@ -161,15 +161,15 @@ class PiwikPlugin extends GenericPlugin {
 	 */
 	function insertFooter($hookName, $params) {
 		if ($this->getEnabled()) {
-			$smarty = &$params[1];
-			$output = &$params[2];
-			$journal = &Request::getJournal();
+			$smarty =& $params[1];
+			$output =& $params[2];
+			$journal =& Request::getJournal();
 			$journalId = $journal->getJournalId();
 			$journalPath = $journal->getPath();
 			$piwikSiteId = $this->getSetting($journalId, 'piwikSiteId');
 			$piwikUrl = $this->getSetting($journalId, 'piwikUrl');
 			if (!empty($piwikSiteId) && !empty($piwikUrl)) {
-				$output = 	'<!-- Piwik -->'.
+				$output .= 	'<!-- Piwik -->'.
 						'<script type="text/javascript">'.
 						'var pkBaseURL = "'.$piwikUrl.'/";'.
 						'document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));'.
@@ -191,9 +191,9 @@ class PiwikPlugin extends GenericPlugin {
 	 * Perform management functions
 	 */
 	function manage($verb, $args) {
-		$templateMgr = &TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->register_function('plugin_url', array(&$this, 'smartyPluginUrl'));
-		$journal = &Request::getJournal();
+		$journal =& Request::getJournal();
 		$returner = true;
 
 		switch ($verb) {
@@ -208,7 +208,7 @@ class PiwikPlugin extends GenericPlugin {
 			case 'settings':
 				if ($this->getEnabled()) {
 					$this->import('PiwikSettingsForm');
-					$form = &new PiwikSettingsForm($this, $journal->getJournalId());
+					$form = new PiwikSettingsForm($this, $journal->getJournalId());
 					if (Request::getUserVar('save')) {
 						$form->readInputData();
 						if ($form->validate()) {

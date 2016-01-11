@@ -4,16 +4,16 @@
 <!-- 
   * locale/sr_SR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the sr_SR (Serbian/Srpski) locale.
+  * Localization strings for the sr_SR (Cрпски) locale.
   *
   * Marija Matesic(mmatesi1@ffzg.hr), Tomislav Biscan (info@seofruits.com.hr) Exp $
   -->
 
-<locale name="sr_SR"
-        full_name="Srpski">
+<locale name="sr_SR" full_name="Cрпски">
 	<!-- 
 	 * This file is organized into several major sections, separated
 	 * by comments like this one. These sections are called:
@@ -25,13 +25,23 @@
 	 *  LOG - Contains phrases related to log entries
 	 *  MISC - Entries that don't belong elsewhere.
 	 *  DEFAULT - Default settings for configuration items.
-	 --><!-- 
+	 -->
+	 
+	 <!-- 
 	 *
 	 * COMMON - This section contains the most frequently-used words
 	 *
-	 --><!--  Common Messages  -->	<message key="common.openJournalSystems">Open Journal Systems</message>
+	 -->
+	 
+	 <!--  Common Messages  -->	
+	 <message key="common.openJournalSystems">Open Journal Systems</message>
 
-	<!--  Common Form Messages  -->	<!--  Common Email Messages  -->	<!--  Common Localization Terms  -->	<!--  Common Error Messages  -->	<!--  Navigation  --><message key="navigation.journalHelp">Pomoć</message>
+	<!--  Common Form Messages  -->	
+	<!--  Common Email Messages  -->	
+	<!--  Common Localization Terms  -->	
+	<!--  Common Error Messages  -->	
+	<!--  Navigation  -->
+	<message key="navigation.journalHelp">Pomoć</message>
 	
 	
 	<message key="navigation.archives">Arhiva</message>
@@ -66,14 +76,16 @@
 	 * ENTITIES - This section contains terms pertaining to the system's
 	 *            major entities, e.g. Article, Journal, Section
 	 *
-	 --><!--  Common Section Terms  --><message key="section.section">Sekcija</message>
+	 --><!--  Common Section Terms  -->
+	 <message key="section.section">Sekcija</message>
 	<message key="section.sections">Sekcije časopisa</message>
 	<message key="section.title">Naslov sekcije</message>
 	<message key="section.abbreviation">Skraćenica</message>
 	<message key="section.abbreviation.example">(Npr. Članci=ČLA)</message>
 	<message key="section.default.policy"/>
 
-	<!--  Common Article Terms  --><message key="article.articles">Članci</message>
+	<!--  Common Article Terms  -->
+	<message key="article.articles">Članci</message>
 	<message key="article.submissionId">Identifikator prijave</message>
 	<message key="article.title">Naslov</message>
 	<message key="article.authors">Autor(i)</message>
@@ -100,7 +112,8 @@
 	<message key="article.abstract">Apstrakt</message>
 	<message key="article.details">Detalji</message>
 
-	<!--  Submission Tracking - Common  -->	<message key="submission.submissionEditing">Uređivanje prijave</message>
+	<!--  Submission Tracking - Common  -->	
+	<message key="submission.submissionEditing">Uređivanje prijave</message>
 	<message key="submission.changeSection">Promeni u</message>
 
 	<message key="submission.editorDecision">Odluka urednika</message>
@@ -137,21 +150,27 @@
 	<message key="submissions.editorRuling">Odluka urednika</message>
 	<message key="submission.eventLog">Zapis događaja</message>
 
-	<!--  Submission list search engine  -->	<message key="submissions.copyeditComplete">Lektura dovršena</message>
+	<!--  Submission list search engine  -->	
+	<message key="submissions.copyeditComplete">Lektura dovršena</message>
 	<message key="submissions.layoutComplete">Prelom dovršen</message>
 	<message key="submissions.proofreadingComplete">Korigovano</message>
 
-	<!--  Submission Notes  -->	<!--  Common Journal Terms  --><message key="journal.currentIssue">Trenutni broj</message>
+	<!--  Submission Notes  -->	
+	
+	<!--  Common Journal Terms  -->
+	<message key="journal.currentIssue">Trenutni broj</message>
 	<message key="journal.journals">Časopisi</message>
 	<message key="journal.path">Putanja</message>
 	<message key="journal.journal">Časopis</message>
 
-	<!--  User  -->	<message key="user.showAllJournals">Prikaži moje časopise</message>
+	<!--  User  -->	
+	<message key="user.showAllJournals">Prikaži moje časopise</message>
 
 	<message key="user.registerForOtherJournals">Registracija za ostale časopise</message>
 	<message key="user.myJournals">Moji časopisi</message>
 	
-	<!--  Roles  -->	<message key="user.role.manager">Glavni urednik</message>
+	<!--  Roles  -->	
+	<message key="user.role.manager">Glavni urednik</message>
 	<message key="user.role.editor">Urednik</message>
 	<message key="user.role.sectionEditor">Urednik sekcije</message>
 	<message key="user.role.layoutEditor">Grafički urednik</message>
@@ -168,7 +187,8 @@
 	<message key="user.role.authors">Autori</message>
 	<message key="user.role.subscriptionManagers">Menadžeri pretplata</message>
 	
-	<!--  Common Issue Terms  --><message key="issue.issue">Broj časopisa</message>
+	<!--  Common Issue Terms  -->
+	<message key="issue.issue">Broj časopisa</message>
 	<message key="issue.issues">Brojevi časopisa</message>
 	<message key="issue.title">Naslov</message>
 	<message key="issue.volume">Godina</message>
@@ -184,7 +204,8 @@
 	 *
 	 * LOG - This section contains entries related to log entries.
 	 *
-	 -->	<message key="submission.event.general.defaultEvent">Dešavanja prilikom predaje</message>
+	 -->	
+	 <message key="submission.event.general.defaultEvent">Dešavanja prilikom predaje</message>
 	<message key="submission.event.general.articleSubmitted">Članak predat</message>
 	<message key="submission.event.general.issueScheduled">Rad je stavljen u red čekanja u rasporedu časopisa</message>
 	<message key="submission.event.general.issueAssigned">Rad je dodeljen broju časopisa</message>
@@ -221,15 +242,20 @@
 	<message key="submission.event.layout.layoutInitiated">Pokrenuta je dodela uređivanja preloma</message>
 	<message key="submission.event.layout.layoutGalleyCreated">Ažurirani prelomi</message>
 	<message key="submission.event.layout.layoutComplete">Završena je dodela uređivanja preloma</message>
+	
 	<!-- 
 	 *
 	 * INTERFACE - Contains phrases organized by the section of the
 	 *             user interface they appear in.
 	 *
-	 --><!--  Reader article view  -->	<!--  Reader Comments  --><message key="comments.commentsOnArticle">Komentari na ovaj članak</message>
+	 -->
+	 <!--  Reader article view  -->	
+	 <!--  Reader Comments  -->
+	 <message key="comments.commentsOnArticle">Komentari na ovaj članak</message>
 	<message key="comments.authenticated"><![CDATA[od <a href="{$publicProfileUrl}" target="_parent">{$userName}</a>{$userName}]]></message>
 
-	<!--  Site Administration  -->	<message key="admin.settings.oaiRegistrationDescription"><![CDATA[Kako biste učinili sadržaj svih časopisa objavljenih u okviru ovog sajta indeksiranim unutar globalno distribuisanog sistema istraživačkih baza podataka, <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">registrujte</a> URL ove stranice na <a href="http://pkp.sfu.ca/harvester/" target="_blank">sakupljaču</a> metapodataka Public Knowledge Project-a. Ovaj alat sakuplja metapodatke iz svakog indeksiranog priloga svakog časopisa na ovom sajtu, omogućavajući precizno i kolektivno pretraživanje istraživačkih stranica koje sudeluju u <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank">Open Archives Initiative Protocol for Metadata Harvesting</a>.
+	<!--  Site Administration  -->	
+	<message key="admin.settings.oaiRegistrationDescription"><![CDATA[Kako biste učinili sadržaj svih časopisa objavljenih u okviru ovog sajta indeksiranim unutar globalno distribuisanog sistema istraživačkih baza podataka, <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">registrujte</a> URL ove stranice na <a href="http://pkp.sfu.ca/harvester/" target="_blank">sakupljaču</a> metapodataka Public Knowledge Project-a. Ovaj alat sakuplja metapodatke iz svakog indeksiranog priloga svakog časopisa na ovom sajtu, omogućavajući precizno i kolektivno pretraživanje istraživačkih stranica koje sudeluju u <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank">Open Archives Initiative Protocol for Metadata Harvesting</a>.
 <br /><br />
 Za registraciju na PKP sakupljaču <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">kliknite ovde</a> i upišite: <span class="highlight">{$siteUrl}</span> unutar <b>Site URL</b>-a i <span class="highlight">{$oaiUrl}</span> unutar <b>Base URL for OAI Archive</b>.
 <br /><br />
@@ -237,27 +263,38 @@ Aktivirani OAI protokol može biti isključen na nivou čitavog sajta promenom s
 
 	
 	
-	<!--  Languages  -->	<message key="admin.auth.defaultSourceDescription"><![CDATA[<p>Određivanje primarnog izvora autentifikacije izvan OJS-a rezultuje sledećim:</p>
+	<!--  Languages  -->	
+	<message key="admin.auth.defaultSourceDescription"><![CDATA[<p>Određivanje primarnog izvora autentifikacije izvan OJS-a rezultuje sledećim:</p>
 <ul>
  <li>Ako korisnik pokuša registrovati novi korisnički nalog na ovom sajtu sa korisničkim imenom koje postoji na izvoru autentifikacije (ali ne i u OJS bazi podataka), registracija je dopuštena ukoliko je priložena lozinka ispravna za taj korisnički nalog.</li>
 </ul>]]></message>
 	
-	<!--  System Information  -->	<message key="admin.overwriteConfigFileInstructions"><![CDATA[<h4>NAPOMENA!</h4>
+	<!--  System Information  -->	
+	<message key="admin.overwriteConfigFileInstructions"><![CDATA[<h4>NAPOMENA!</h4>
 <p>Sistem ne može automatski izvršiti prepisivanje konfiguracionog fajla. Da biste izvršili izmene fajl  <tt>config.inc.php</tt> mora imati perm. mod 777.</p>]]></message>
 
 	
-	<!--  Subscription Management  --><message key="subscriptionManager.subscriptionManagement">Upravljanje pretplatama</message>
+	<!--  Subscription Management  -->
+	<message key="subscriptionManager.subscriptionManagement">Upravljanje pretplatama</message>
 	
-	<!--  Journal Management  -->	<!--  Statistics & Reports  -->	<!--  Plugin Management  -->	<!--  General plugin information  -->	<message key="plugins.categories.generic.description">Generički dodaci služe proširivanju funkcionalnosti OJS-a na mnoge načine koji nisu podržani dodacima u drugim katerogijama.</message>
+	<!--  Journal Management  -->	
+	<!--  Statistics & Reports  -->	
+	<!--  Plugin Management  -->	
+	<!--  General plugin information  -->	
+	<message key="plugins.categories.generic.description">Generički dodaci služe proširivanju funkcionalnosti OJS-a na mnoge načine koji nisu podržani dodacima u drugim katerogijama.</message>
 	<message key="plugins.categories.auth.description">Autorizacijski dodaci omogućuju Open Journal Sistemu da vrši proveru verodostojnosti korisničkih pristupa putem spoljašnjih sistema  kao što je LDAP.</message>
 
 
 
-	<!--  Files Browser  -->	<!--  Journal Setup  -->	<!--  Setup Step 1  -->	<!--  Setup Step 2  -->	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems podržava <a href="http://lockss.org/" target="_blank">LOCKSS</a> (mnogo kopija čuva stvari sigurnima) sistem da bi osigurao sigurnu i trajnu arhivu za časopise. LOCKSS je program otvorenog koda razvijen pri univerzitetskoj biblioteci u Stanfordu koji omogućuje bibliotekama  da čuvaju odabrane elektronske časopise tako što periodički proveravaju sadržaj web sajtova časopisa registrovanih u sistemu, te arhiviraju sve novoobjavljene sadržaje. Sadržaj svakog arhiva se konstantno uspoređuje sa drugim bibliotekama koje su uključene u sistem, pa ako je bilo koji sadržaj neispravan ili izgubljen, sadržaj se obnavlja podacima iz drugih arhiva u mreži ili iz izvornog časopisa.
+	<!--  Files Browser  -->	
+	<!--  Journal Setup  -->	
+	<!--  Setup Step 1  -->	<!--  Setup Step 2  -->	
+	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems podržava <a href="http://www.lockss.org/" target="_blank">LOCKSS</a> (mnogo kopija čuva stvari sigurnima) sistem da bi osigurao sigurnu i trajnu arhivu za časopise. LOCKSS je program otvorenog koda razvijen pri univerzitetskoj biblioteci u Stanfordu koji omogućuje bibliotekama  da čuvaju odabrane elektronske časopise tako što periodički proveravaju sadržaj web sajtova časopisa registrovanih u sistemu, te arhiviraju sve novoobjavljene sadržaje. Sadržaj svakog arhiva se konstantno uspoređuje sa drugim bibliotekama koje su uključene u sistem, pa ako je bilo koji sadržaj neispravan ili izgubljen, sadržaj se obnavlja podacima iz drugih arhiva u mreži ili iz izvornog časopisa.
 <br /><br />
 Postavljanje LOCKSS podrške za Open Journal Systems nije potrebno dok izdavanje elektronske verzije časopisa nije zaista pokrenuto, odnosno prvi broj objavljen ili u izdavanju. Da bi se to učinilo, potrebno je slediti ova dva koraka:]]></message>
 	
-	<!--  Setup Step 3  -->	<message key="manager.setup.subjectClassificationDescription"><![CDATA[[Časopis će koristiti predmetnu klasifikaciju sistema dostupnu na mreži.<br />
+	<!--  Setup Step 3  -->	
+	<message key="manager.setup.subjectClassificationDescription"><![CDATA[[Časopis će koristiti predmetnu klasifikaciju sistema dostupnu na mreži.<br />
 Naslov klasifikacionog sistema]]></message>
 	<message key="manager.setup.registerJournalForIndexingDescription"><![CDATA[Kako biste učinili sadržaj ovog časopisa indeksiranim unutar globalno distribuisanog sistema istraživačkih baza podataka, <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">registrujte</a> URL vašeg časopisa na <a href="http://pkp.sfu.ca/harvester/" target="_blank">sakupljaču</a> metapodataka Public Knowledge Project-a. Ovaj alat sakuplja metapodatke iz svakog indeksiranog priloga u ovom časopisu, omogućavajući precizno i kolektivno pretraživanje istraživačkih sajtova koji sudeluju u <a href="http://www.openarchives.org/OAI/openarchivesprotocol.htm#Introduction" target="_blank">Open Archives Initiative Protocol for Metadata Harvesting</a>.
 <br /><br />
@@ -265,10 +302,17 @@ Ako je vaš administrator već registrovao ovaj sajt kod PKP sakupljača, vaš �
 <br /><br />
 Za registraciju na PKP sakupljaču <a href="http://pkp.sfu.ca/harvester/add.php" target="_blank">kliknite ovde</a> i unesite: <span class="highlight">{$siteUrl}</span> unutar <b>Site URL</b> i <span class="highlight">{$oaiUrl}</span> unutar <b>Base URL for OAI Archive</b>.]]></message>
 
-	<!--  Setup Step 4  -->	<message key="manager.setup.basicEditorialStepsDescription"><![CDATA[Koraci: Red čekanja prijave > Recenzija prijave> Uređivanje prijave > Red čekanja pri određivanju rokova > Sadržaj.<br /><br />
+	<!--  Setup Step 4  -->	
+	<message key="manager.setup.basicEditorialStepsDescription"><![CDATA[Koraci: Red čekanja prijave > Recenzija prijave> Uređivanje prijave > Red čekanja pri određivanju rokova > Sadržaj.<br /><br />
 Odaberite model za korištenje ovih aspekata lektorskoga postupka. (Da biste odredili glavnog urednika i urednika sekcija, idite na Urednici u Uređivački postupci.)]]></message>
 
-	<!--  Setup Step 5  -->	<!--  Languages  -->	<!--  Section Management  -->	<!--  Import/Export  -->	<!--  Groups / Editorial Team  -->	<!--  People Management  -->	<message key="manager.people.confirmDisable">Da li želite da onemogućite ovog korisnika? Ovo će sprečiti korisnika da se prijavi u sistem.
+	<!--  Setup Step 5  -->	
+	<!--  Languages  -->	
+	<!--  Section Management  -->	
+	<!--  Import/Export  -->	
+	<!--  Groups / Editorial Team  -->	
+	<!--  People Management  -->	
+	<message key="manager.people.confirmDisable">Da li želite da onemogućite ovog korisnika? Ovo će sprečiti korisnika da se prijavi u sistem.
 
 Opciono možete proslediti korisniku razlog zašto ste mu onemogućili nalog.</message>
 	<message key="manager.people.noAdministrativeRights"><![CDATA[Izvinite, nemate administrativnih prava nad ovim korisnikom. To može biti zbog:
@@ -461,7 +505,7 @@ Sadržaj priloženog fajla možete proveriti ukoliko kliknete na njegovo ime. Um
 	<message key="search.allJournals">Svi časopisi</message>
 	<message key="search.authorIndex">Indeks autora</message>
 	<message key="search.authorDetails">Detalji o autoru</message>
-	<message key="search.syntaxInstructions"><![CDATA[Saveti za pretraživanje: <ul>
+	<message key="search.syntaxInstructions"><![CDATA[<h4>Saveti za pretraživanje: </h4><ul>
 <li>Pojmovi koji se pretražuju su neosjetljivi na veličinu slova</li>
 <li>Kao rezultat se vraćaju samo članci koji sadrže sve izraze u upitu</li>
 <li>Višestruke reči kombinujte sa <i>ILI</i> da biste pronašli članke koji sadrže jedan od pojmova; npr. <i>edukacija ILI istraživanje</i></li>
@@ -535,7 +579,7 @@ Sadržaj priloženog fajla možete proveriti ukoliko kliknete na njegovo ime. Um
 	<message key="installer.ojsUpgrade">OJS nadogradnja</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>OJS verzija {$version}</h4>
 
-<p>Hvala vam na preuzimanju Public Knowledge Project-ovog <strong>Open Journal Systems-a</strong>. Pre postupka, molimo vas da pročitate <a href="{$baseUrl}/docs/README">README</a> fajl koji dolazi uz ovaj program. Za više informacija o Public Knowledge Project-u i njegovim programskim projektima, posetite <a href="http://pkp.sfu.ca/" target="_blank">PKP sajt</a>. Ako primite izveštaj o greški u programu ili tražite tehničku podršku za Open Journal Systems, pogledajte <a href="http://pkp.sfu.ca/support/forum">forum za podršku</a> ili posjetite  PKP-ov online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">sistem za prijavljivanje greške</a>. Iako je forum za podršku korišćenija metoda kontaktiranja, možete poslati i imejl stručnom timu na <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>Hvala vam na preuzimanju Public Knowledge Project-ovog <strong>Open Journal Systems-a</strong>. Pre postupka, molimo vas da pročitate <a href="{$baseUrl}/docs/README">README</a> fajl koji dolazi uz ovaj program. Za više informacija o Public Knowledge Project-u i njegovim programskim projektima, posetite <a href="http://pkp.sfu.ca/" target="_blank">PKP sajt</a>. Ako primite izveštaj o greški u programu ili tražite tehničku podršku za Open Journal Systems, pogledajte <a href="http://forum.pkp.sfu.ca">forum za podršku</a> ili posjetite  PKP-ov online <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">sistem za prijavljivanje greške</a>. Iako je forum za podršku korišćenija metoda kontaktiranja, možete poslati i imejl stručnom timu na <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
 
 <h4>Nadogradnja</h4>
 
@@ -545,9 +589,9 @@ Sadržaj priloženog fajla možete proveriti ukoliko kliknete na njegovo ime. Um
 
 <ul>
  <li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpRequiredVersion} (uključujući PHP 5.x); trenutno koristite PHP {$phpVersion}{$wrongPhpText}</li>
- <li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (uključujući MySQL 4.x) ili <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (uključujući PostgreSQL 8.x)</li>
+ <li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 4.1 ili <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (uključujući PostgreSQL 8.x)</li>
  <li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x ili >= 2.0.4x ili Microsoft IIS 6</li>
- <li>Operativni sistem: bilo koji OS koji podržava gore navedene programe, uključujući <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
+ <li>Operativni sistem: bilo koji OS koji podržava gore navedene programe, uključujući <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
 </ul>
 
 <p>Budući da PKP nema sredstava da testira svaku moguću kombinaciju programskih verzija i platformi, nije garantovana potpuna ispravnost postupka ili podrške.</p>
@@ -577,7 +621,7 @@ Sadržaj priloženog fajla možete proveriti ukoliko kliknete na njegovo ime. Um
 <p>Izaberite <strong>Manuelnu instalaciju</strong> da bi prikazali SQL izjave potrebne za kreiranje OJS sheme baze podataka i inicijalnih podataka, tako da instalacija baze podataka može biti izvršena ručno. Ta opcija je korisna kada otkrivate greške kod instalacionih problema, delimično na nepodržanim platformama. Napomena: ovaj metod instalacije neće preduzeti ništa kako bi kreirao bazu podataka ili bilo koju tabelu, iako će konfiguracioni fajl svejedno biti zapisan sa isporučenim podešavanjima baze podataka.</p>]]></message>
 	<message key="installer.upgradeInstructions"><![CDATA[<h4>OJS verzija {$version}</h4>
 	
-<p>Hvala Vam što ste preuzeli Public Knowledge Project, <strong>Open Journal Systems</strong>. Pre postupka, molimo pročitajte <a href="{$baseUrl}/docs/README">README</a> i <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> fajlove uključene u paketu sa ovim softverom. Za više informacija o Public Knowledge Project-u i njegovim softverskim projektima, molimo posetite <a href="http://pkp.sfu.ca/" target="_blank">PKP sajt</a>. Ako imate prijavu o grešci ili tražite tehničku podršku za OJS, pogledajte <a href="http://pkp.sfu.ca/support/forum">forum podrške</a> ili posetite PKP-ov online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">sistem prijave grešaka</a>. Iako je forum podrške preferirana metoda kontakta, takođe možete timu poslati imejl na <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>Hvala Vam što ste preuzeli Public Knowledge Project, <strong>Open Journal Systems</strong>. Pre postupka, molimo pročitajte <a href="{$baseUrl}/docs/README">README</a> i <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> fajlove uključene u paketu sa ovim softverom. Za više informacija o Public Knowledge Project-u i njegovim softverskim projektima, molimo posetite <a href="http://pkp.sfu.ca/" target="_blank">PKP sajt</a>. Ako imate prijavu o grešci ili tražite tehničku podršku za OJS, pogledajte <a href="http://forum.pkp.sfu.ca">forum podrške</a> ili posetite PKP-ov online <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">sistem prijave grešaka</a>. Iako je forum podrške preferirana metoda kontakta, takođe možete timu poslati imejl na <a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
 
 <p><strong>Preporučljivo je</strong> da napravite sigurnosnu kopiju vaše baze podataka, direktorijuma sa fajlovima i OJS instalacionog direktorijuma pre nastavka.</p>
 <p>Ako imate pokrenut <a href="http://www.php.net/features.safe-mode" target="_blank">PHP sigurnosni mod</a>, molimo osigurajte da je max_execution_time direktiva u vašoj php.ini konfiguracionom fajlu postavljena na visok limit. Ako je taj ili bilo koji drugi vremenski limit (npr. Apacheva "timeout" direktiva) dosegnut i postupak nadogradnje prekinut, biće potrebna ručna intervencija.</p>]]></message>
@@ -592,10 +636,10 @@ Vaš server trenutno podržava mbstring: <strong>{$supportsMBString}</strong>]]>
 <p>Instalacioni program ne može automatski pisati preko konfiguracionog fajla. Pre pokušaja korišćenja sistema, molimo otvorite <tt>config.inc.php</tt> u odgovarajućem editoru teksta i zamenite njegov sadržaj sa sadržajem teksta koji se nalazi u polju ispod.</p>]]></message>
 	<message key="installer.installationComplete"><![CDATA[<p>Instalacija OJS-a je uspešno dovršena.</p>
 <p>Da biste započeli sa korišćenjem sistema, <a href="{$loginUrl}">prijavite se</a> sa Vašim korisničkim imenom i lozinkom navedenim na prošloj stranici.</p>
-<p>Ako želite da primate vesti i nadogradnje, <strong>molimo da se registrujete na <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Ako imate pitanja ili komentare, posetite <a href="http://pkp.sfu.ca/support/forum" target="_new">forum podrške</a>.</p>]]></message>
+<p>Ako želite da primate vesti i nadogradnje, <strong>molimo da se registrujete na <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Ako imate pitanja ili komentare, posetite <a href="http://forum.pkp.sfu.ca" target="_new">forum podrške</a>.</p>]]></message>
 	<message key="installer.upgradeComplete"><![CDATA[<p>Nadogradnja OJS-a na verziju {$version} je uspešno završena.</p>
 <p>Ne zaboravite postaviti "installed" podešavanje u vašem config.inc.php konfiguracionom fajlu nazad na <i>On</i>.</p>
-<p>Ako se još niste registrovali, a želite primati vesti i nadogradnje, <strong>molimo Vas da se registrujte na <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Ako imate pitanja ili komentare, molimo Vas da posetite <a href="http://pkp.sfu.ca/support/forum" target="_new">forum podrške</a>.</p>]]></message>
+<p>Ako se još niste registrovali, a želite primati vesti i nadogradnje, <strong>molimo Vas da se registrujte na <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Ako imate pitanja ili komentare, molimo Vas da posetite <a href="http://forum.pkp.sfu.ca" target="_new">forum podrške</a>.</p>]]></message>
 
 
 	<!--  Article Logs  --><message key="log.author.submitted">{$authorName} je prijavio novi prilog, ID {$submissionId}.</message>
@@ -878,7 +922,7 @@ Autori koji objavljuju u ovom časopisu pristaju na sljedeće uvijete:
 	<message key="user.subscriptions.form.domainInstructions"><![CDATA[Ukoliko je domen unet, IP opsezi su opcioni.<br />Ispravne vrednosti su imena domena (npr. ff.uns.ac.rs)]]></message>
 	<message key="user.subscriptions.form.domainIPRangeRequired">Odabrani tip pretplate zahteva da unesete domen i/ili IP opsege radi autentifikacije.</message>
 	<message key="user.subscriptions.form.ipRangeInstructions"><![CDATA[Ukoliko su IP opsezi uneti, domen je opcion.<br />Ispravne vrednosti uključuju IP adresu (npr. 142.58.103.1), IP opseg (npr. 142.58.103.1 - 142.58.103.4) IP opseg sa "wildcard" (npr.  142.58.*.*) i IP opseg sa CIDR (npr. 142.58.100.0/24).]]></message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p>PDF fajl koji ste odabrali trebalo bi da se učita ovde ako vaš web pregledač ima PDF Reader plug-in instaliran (na primer, najnovija verzija <a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader</a>).</p> <p>Alternativno, možete preuzeti PDF fajl direktno na računar, odakle se može otvoriti pomoću PDF čitač. Da biste preuzeli PDF, kliknite na "Preuzmi PDF fajl" link ispod.</p><p>Ako želite više informacija o tome kako da odštampate, sačuvate PDF fajlove, Highwire Press pruža korisne <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">informacije u vezi sa PDF formatom</a>.</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p>PDF fajl koji ste odabrali trebalo bi da se učita ovde ako vaš web pregledač ima PDF Reader plug-in instaliran (na primer, najnovija verzija <a href="https://get.adobe.com/reader/">Adobe Acrobat Reader</a>).</p> <p>Alternativno, možete preuzeti PDF fajl direktno na računar, odakle se može otvoriti pomoću PDF čitač. Da biste preuzeli PDF, kliknite na "Preuzmi PDF fajl" link ispod.</p><p>Ako želite više informacija o tome kako da odštampate, sačuvate PDF fajlove, Highwire Press pruža korisne <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">informacije u vezi sa PDF formatom</a>.</p>]]></message>
 	<message key="payment.subscription.purchase">Kupi pretplatu</message>
 	<message key="installer.installApplication">Instaliraj OJS</message>
 	<message key="installer.upgradeApplication">Nadogradi OJS</message>

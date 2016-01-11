@@ -7,7 +7,8 @@
 /**
  * @file classes/article/Article.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class Article
@@ -40,6 +41,11 @@ define ('AUTHOR_TOC_SHOW', 2);
 define ('COMMENTS_SECTION_DEFAULT', 0);
 define ('COMMENTS_DISABLE', 1);
 define ('COMMENTS_ENABLE', 2);
+
+// License settings (internal use only)
+define ('PERMISSIONS_FIELD_LICENSE_URL', 1);
+define ('PERMISSIONS_FIELD_COPYRIGHT_HOLDER', 2);
+define ('PERMISSIONS_FIELD_COPYRIGHT_YEAR', 3);
 
 import('lib.pkp.classes.submission.Submission');
 
@@ -119,7 +125,7 @@ class Article extends Submission {
 	//
 
 	/**
-	 * Get ID of article.
+	 * Get ID of article. DEPRECATED in favor of getId()
 	 * @return int
 	 */
 	function getArticleId() {
@@ -128,7 +134,7 @@ class Article extends Submission {
 	}
 
 	/**
-	 * Set ID of article.
+	 * Set ID of article. DEPRECATED in favor of setId($id)
 	 * @param $articleId int
 	 */
 	function setArticleId($articleId) {
@@ -155,6 +161,130 @@ class Article extends Submission {
 			if (!empty($publicArticleId)) return $publicArticleId;
 		}
 		return $this->getId();
+	}
+
+	/**
+	 * Get the localized copyright holder for this article.
+	 */
+	function getLocalizedCopyrightHolder($preferredLocale = null) {
+		return $this->getLocalizedData('copyrightHolder', $preferredLocale);
+	}
+
+	/**
+	 * Get the license URL for this article.
+	 */
+	function getDefaultLicenseUrl() {
+		return $this->_getDefaultLicenseFieldValue(null, PERMISSIONS_FIELD_LICENSE_URL);
+	}
+
+	/**
+	 * Get the copyright holder for this article.
+	 * @param $locale string Locale
+	 */
+	function getDefaultCopyrightHolder($locale) {
+		return $this->_getDefaultLicenseFieldValue($locale, PERMISSIONS_FIELD_COPYRIGHT_HOLDER);
+	}
+
+	/**
+	 * Get the copyright year for this article.
+	 */
+	function getDefaultCopyrightYear() {
+		return $this->_getDefaultLicenseFieldValue(null, PERMISSIONS_FIELD_COPYRIGHT_YEAR);
+	}
+
+	/**
+	 * Get the best guess license field for this article.
+	 * Return the existing value if the field is already set,
+	 * otherwise calculate a best value based on the Journal Settings.
+	 * @param $locale string Locale
+	 * @param $field int PERMISSIONS_FIELD_... Which to return
+	 */
+	function _getDefaultLicenseFieldValue($locale, $field) {
+		// If already set, use the stored permissions info
+		switch ($field) {
+			case PERMISSIONS_FIELD_LICENSE_URL:
+				$fieldValue = $this->getLicenseURL();
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_HOLDER:
+				$fieldValue = $this->getCopyrightHolder($locale);
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_YEAR:
+				$fieldValue = $this->getCopyrightYear();
+				break;
+			default: assert(false);
+		}
+		if (!empty($fieldValue)) {
+			if ($locale === null || !is_array($fieldValue)) return $fieldValue;
+			if (isset($fieldValue[$locale])) return $fieldValue[$locale];
+		}
+
+		// Otherwise, get the permissions info from journal settings.
+		$journalDao = DAORegistry::getDAO('JournalDAO');
+		$journal =& $journalDao->getById($this->getJournalId());
+		switch ($field) {
+			case PERMISSIONS_FIELD_LICENSE_URL:
+				$licenseUrl = $journal->getSetting('licenseURL');
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_HOLDER:
+				switch($journal->getSetting('copyrightHolderType')) {
+					case 'author':
+						$copyrightHolder = array($journal->getPrimaryLocale() => $this->getAuthorString());
+						break;
+					case 'other':
+						$copyrightHolder = $journal->getSetting('copyrightHolderOther');
+						break;
+					case 'journal':
+					default:
+						$copyrightHolder = $journal->getTitle(null);
+						break;
+				}
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_YEAR:
+				// Default copyright year to current year
+				$copyrightYear = date('Y');
+				// Override based on journal settings
+				$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
+				$publishedArticle = $publishedArticleDao->getPublishedArticleByArticleId($this->getId());
+				if ($publishedArticle) {
+					switch($journal->getSetting('copyrightYearBasis')) {
+						case 'article':
+							// override to the article's year if published as you go
+							$copyrightYear = date('Y', strtotime($publishedArticle->getDatePublished()));
+							break;
+						case 'issue':
+							if ($publishedArticle->getIssueId()) {
+								// override to the issue's year if published as issue-based
+								$issueDao =& DAORegistry::getDAO('IssueDAO');
+								$issue = $issueDao->getIssueByArticleId($this->getId());
+								if ($issue && $issue->getDatePublished()) {
+									$copyrightYear = date('Y', strtotime($issue->getDatePublished()));
+								}
+							}
+							break;
+						default: assert(false);
+					}
+				}
+				break;
+			default: assert(false);
+		}
+
+		switch ($field) {
+			case PERMISSIONS_FIELD_LICENSE_URL:
+				$fieldValue = $licenseUrl;
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_HOLDER:
+				$fieldValue = $copyrightHolder;
+				break;
+			case PERMISSIONS_FIELD_COPYRIGHT_YEAR:
+				$fieldValue = $copyrightYear;
+				break;
+			default: assert(false);
+		}
+
+		// Return the fetched license field
+		if ($locale === null || !is_array($fieldValue)) return $fieldValue;
+		if (isset($fieldValue[$locale])) return $fieldValue[$locale];
+		return null;
 	}
 
 	/**
@@ -239,6 +369,56 @@ class Article extends Submission {
 	 */
 	function setStoredPubId($pubIdType, $pubId) {
 		return $this->setData('pub-id::'.$pubIdType, $pubId);
+	}
+
+	/**
+	 * Get stored copyright holder for the submission.
+	 * @param $locale string locale
+	 * @return string
+	 */
+	function getCopyrightHolder($locale) {
+		return $this->getData('copyrightHolder', $locale);
+	}
+
+	/**
+	 * Set the stored copyright holder for the submission.
+	 * @param $copyrightHolder string Copyright holder
+	 * @param $locale string locale
+	 */
+	function setCopyrightHolder($copyrightHolder, $locale) {
+		return $this->setData('copyrightHolder', $copyrightHolder, $locale);
+	}
+
+	/**
+	 * Get stored copyright year for the submission.
+	 * @return string
+	 */
+	function getCopyrightYear() {
+		return $this->getData('copyrightYear');
+	}
+
+	/**
+	 * Set the stored copyright year for the submission.
+	 * @param $copyrightYear string Copyright holder
+	 */
+	function setCopyrightYear($copyrightYear) {
+		return $this->setData('copyrightYear', $copyrightYear);
+	}
+
+	/**
+	 * Get stored license URL for the submission content.
+	 * @return string
+	 */
+	function getLicenseURL() {
+		return $this->getData('licenseURL');
+	}
+
+	/**
+	 * Set the stored license URL for the submission content.
+	 * @param $license string License of submission content
+	 */
+	function setLicenseURL($licenseUrl) {
+		return $this->setData('licenseURL', $licenseUrl);
 	}
 
 	/**
@@ -524,7 +704,7 @@ class Article extends Submission {
 			case COMMENTS_SECTION_DEFAULT:
 				$sectionDao =& DAORegistry::getDAO('SectionDAO');
 				$section =& $sectionDao->getSection($this->getSectionId(), $this->getJournalId(), true);
-				if ($section->getDisableComments()) {
+				if (!$section || $section->getDisableComments()) {
 					return false;
 				} else {
 					return true;
@@ -673,6 +853,51 @@ class Article extends Submission {
 		if (!$signoff) return false;
 
 		return $signoff->getUserId();
+	}
+
+	/**
+	 * Get starting page of an article.
+	 * @return int
+	 */
+	function getStartingPage() {
+		preg_match('/^[^\d]*(\d+)\D*(.*)$/', $this->getPages(), $pages);
+		return $pages[1];
+	}
+
+	/**
+	 * Get ending page of an article.
+	 * @return int
+	 */
+	function getEndingPage() {
+		preg_match('/^[^\d]*(\d+)\D*(.*)$/', $this->getPages(), $pages);
+		return $pages[2];
+	}
+
+	/**
+	 * Initialize the copyright and license metadata for an article.
+	 * This should be called at creation and at publication, to setup license/copyright holder and copyright year, respectively.
+	 * This depends on the permissions configuration in Journal Setup, and (potentially) on the authors of a article being populated.
+	 * Only initializes empty fields because of the getDefault...() behaviour, so subsequent calls are safe.
+	 */
+	function initializePermissions() {
+		$this->setLicenseURL($this->getDefaultLicenseURL());
+		$this->setCopyrightHolder($this->getDefaultCopyrightHolder(null), null);
+		if ($this->getStatus() == STATUS_PUBLISHED) {
+			$this->setCopyrightYear($this->getDefaultCopyrightYear());
+		}
+	}
+
+	/**
+	 * Determines whether or not the license for copyright on this Article is
+	 * a Creative Commons license or not.
+	 * @return boolean
+	 */
+	function isCCLicense() {
+		if (preg_match('/creativecommons\.org/i', $this->getLicenseURL())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

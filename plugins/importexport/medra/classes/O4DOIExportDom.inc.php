@@ -3,7 +3,8 @@
 /**
  * @file plugins/importexport/medra/classes/O4DOIExportDom.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class O4DOIExportDom
@@ -279,8 +280,8 @@ class O4DOIExportDom extends DOIExportDom {
 	function &retrievePublicationObjects(&$object) {
 		// Initialize local variables.
 		$nullVar = null;
- 		$journal =& $this->getJournal();
- 		$cache =& $this->getCache();
+		$journal =& $this->getJournal();
+		$cache =& $this->getCache();
 
 		// Retrieve basic OJS objects.
 		$publicationObjects = parent::retrievePublicationObjects($object);
@@ -446,15 +447,15 @@ class O4DOIExportDom extends DOIExportDom {
 		switch ($this->_getSchema()) {
 			case O4DOI_ISSUE_AS_WORK:
 			case O4DOI_ISSUE_AS_MANIFESTATION:
-				$url = $router->url($request, null, 'issue', 'view', $issue->getBestIssueId($journal));
+				$url = $router->url($request, $journal->getPath(), 'issue', 'view', $issue->getBestIssueId($journal));
 				break;
 
 			case O4DOI_ARTICLE_AS_WORK:
-				$url = $router->url($request, null, 'article', 'view', $article->getBestArticleId($journal));
+				$url = $router->url($request, $journal->getPath(), 'article', 'view', $article->getBestArticleId($journal));
 				break;
 
 			case O4DOI_ARTICLE_AS_MANIFESTATION:
-				$url = $router->url($request, null, 'article', 'view', array($article->getBestArticleId($journal), $galley->getBestGalleyId($journal)));
+				$url = $router->url($request, $journal->getPath(), 'article', 'view', array($article->getBestArticleId($journal), $galley->getBestGalleyId($journal)));
 				break;
 		}
 		assert(!empty($url));
@@ -738,7 +739,7 @@ class O4DOIExportDom extends DOIExportDom {
 		XMLCustomWriter::createChildWithText($this->getDoc(), $titleElement, 'TitleType', $titleType);
 
 		// Title text (mandatory)
-		XMLCustomWriter::createChildWithText($this->getDoc(), $titleElement, 'TitleText', $localizedTitle);
+		XMLCustomWriter::createChildWithText($this->getDoc(), $titleElement, 'TitleText', String::html2text($localizedTitle));
 
 		return $titleElement;
 	}
@@ -781,7 +782,7 @@ class O4DOIExportDom extends DOIExportDom {
 
 		// ISSN
 		if (!empty($issn)) {
-			$issn = String::regexp_replace('/[^0-9]/', '', $issn);
+			$issn = String::regexp_replace('/[^0-9xX]/', '', $issn);
 			XMLCustomWriter::appendChild($serialVersionElement, $this->_idElement('Product', O4DOI_ID_TYPE_ISSN, $issn));
 		}
 
@@ -1045,7 +1046,7 @@ class O4DOIExportDom extends DOIExportDom {
 		// Biographical note
 		$bioNote = $this->getPrimaryTranslation($author->getBiography(null), $objectLocalePrecedence);
 		if (!empty($bioNote)) {
-			XMLCustomWriter::createChildWithText($this->getDoc(), $contributorElement, 'BiographicalNote', $bioNote);
+			XMLCustomWriter::createChildWithText($this->getDoc(), $contributorElement, 'BiographicalNote', String::html2text($bioNote));
 		}
 
 		return $contributorElement;

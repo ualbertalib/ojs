@@ -1,10 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE email_texts SYSTEM "../../lib/pkp/dtd/emailTemplateData.dtd">
 
 <!--
   * locale/tr_TR/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -29,17 +30,17 @@ Eğer şifrenizi değiştirmek istiyorsanız aşağıdaki bağlantıyı tıklay�
 		<body>{$siteTitle} sitesinde kullanacağınız şifreniz değiştirilmiştir. Kullanıcı adı ve şifre dergi ile yapacağınız tüm çalışmalarda gerekli olduğundan güvenli bir yere not ediniz. 
 
 Kullanıcı adı: {$username}
-Yeni şifreniz: {$password}
+Yeni şifre: {$password}
 
 {$principalContactSignature}</body>
 		<description>Bu e-posta PASSWORD_RESET_CONFIRM mesajında aktarılan süreç doğrultusunda şifre değişikliği yapmış kayıtlı kullanıcılara gönderilmektedir.</description>
 	</email_text>
 	<email_text key="USER_REGISTER">
 		<subject>Yeni Kullanıcı Kaydı</subject>
-		<body>{$journalName} dergisine kayıt yaptırdığınız için teşekkür ederiz. Kullanıcı adı ve şifre dergi ile yapacağınız tüm çalışmalarda gerekli olduğundan güvenli bir yere not ediniz.
+		<body>{$journalName} adlı dergiye kayıt yaptırdığınız için teşekkür ederiz. Kullanıcı adı ve şifre dergi ile yapacağınız tüm işlemlerde gerekli olduğundan güvenli bir yere not ediniz.
 
 Kullanıcı adı: {$username}
-Şifre: {$password}
+Şifreniz: {$password}
 
 Teşekkür ederiz,
 {$principalContactSignature}</body>
@@ -661,8 +662,8 @@ Bağlantı: {$url}
 		<description></description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>{$siteTitle} Adlı  Siteden Yeni Bildirim</subject>
-		<body>{$siteTitle} adlı siteden yeni bir bir bildiriminiz var:
+		<subject>{$journalName} Adlı  Siteden Yeni Bildirim</subject>
+		<body>{$journalName} adlı siteden yeni bir bir bildiriminiz var:
 --
 {$notificationContents}
 
@@ -675,8 +676,8 @@ Eğer bu bildirimi almak istemiyorsanız, lütfen tıklayınız {$unsubscribeLin
 		<description>Bu e-posta bildirim listesindeki kayıtsız kullanıcılar tarafından gönderilir.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Welcome to the the {$siteTitle} mailing list!</subject>
-		<body>You have signed up to receive notifications from {$siteTitle}.
+		<subject>Welcome to the the {$journalName} mailing list!</subject>
+		<body>You have signed up to receive notifications from {$journalName}.
 
 Please click on this link to confirm your request and add your email address to the mailing list: {$confirmLink}
 
@@ -695,7 +696,7 @@ You have created an account with {$journalName}, but before you can start using 
 
 Thank you,
 {$principalContactSignature}</body>
-		<description>This email is sent to a newly registered user to welcome them to the system and provide them with a record of their username and password.</description>
+		<description>Bu e-posta sisteme yeni kayıt olan kullanıcılara gönderilir ve sisteme hoşgeldin mesajı ile birlikte kullanıcı adı ve şifre bilgilerini de içerir.</description>
 	</email_text>
 	<email_text key="REVIEWER_REGISTER">
 		<subject>Registration as Reviewer with {$journalName}</subject>
@@ -708,7 +709,7 @@ Password: {$password}
 
 Thank you,
 {$principalContactSignature}</body>
-		<description>This email is sent to a newly registered reviewer to welcome them to the system and provide them with a record of their username and password.</description>
+		<description>Bu e-posta sisteme yeni kayıt olan kullanıcılara gönderilir ve sisteme hoşgeldin mesajı ile birlikte kullanıcı adı ve şifre bilgilerini de içerir.</description>
 	</email_text>
 	<email_text key="REVIEW_REQUEST_SUBSEQUENT">
 		<subject>Article Review Request</subject>

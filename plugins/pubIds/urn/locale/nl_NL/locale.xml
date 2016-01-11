@@ -4,7 +4,8 @@
 <!--
   * plugins/pubIds/urn/locale/nl_NL/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
@@ -32,8 +33,7 @@
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.pattern.suppFiles">voor aanvullende bestanden.</message>
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.patternExample">bijvoorbeeld, vol%viss%ipp%p  kan het URN achtervoegsel "vol3iss2pp230" opleveren.</message>
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.description">Een URN achtervoegsel kan iedere vorm aannemen zolang het uniek is voor ieder gepubliceerd item.</message>
-	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.publisherId">Gebruik de aangepaste identificatie voor gepubliceerde items als URN achtervoegsel (moet ingeschakeld worden in stap 4.3). Dit is dezelfde identificatie die gebruik zal worden voor publieke URL's.</message>
-	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.customIdentifier">Voer een individueel URN achtervoegsel in voor ieder gepubliceerd item onafhankelijk en afwijkend van de aangepaste identificatie uit de vorige optie. U zult een extra URN invoerveld tegenkomen op de metadata pagina van ieder item.</message>
+	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.customIdentifier">Voer een individueel URN achtervoegsel in voor ieder gepubliceerd item. U zult een extra URN invoerveld tegenkomen op de metadata pagina van ieder item.</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs">Wis URN's</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs.description">Als u de URN configuratie verandert heeft dat geen gevolgen voor reeds toegekende URN's. Nadat de gewijzigde URN configuratie is opgeslagen kunt u deze knop gebruiken om alle bestaande URN's te wissen om de nieuwe instellingen ook toe te passen op bestaande objecten.</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs.confirm">Weet u zeker dat u allle bestaande URN's wilt verwijderen?</message>
@@ -72,4 +72,12 @@
 	<message key="plugins.pubIds.urn.form.customIdentifierNotUnique">Het opgegeven URN achtervoegsel is al in gebruik bij een ander gepubliceerd item. Kies een uniek URN achtervoegsel voor ieder item.</message>
 	<message key="plugins.pubIds.urn.form.checkNoRequired">Het controlegetal ontbreekt.</message>
 
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeArticle">artikel</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeSuppFile">aanvullend bestand</message>
+	<message key="plugins.pubIds.urn.manager.settings.form.urnResolverRequired">Geef de URL van de resolver.</message>
+	<message key="plugins.pubIds.urn.manager.settings.urnResolver">Resolver URL</message>
+	<message key="plugins.pubIds.urn.manager.settings.urnResolver.description">(bv. http://nbn-resolving.de/)</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeIssue">nummer</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeGalley">proefdruk</message>
+	<message key="plugins.pubIds.urn.editor.urnNotYetGenerated">Wat u ziet is een voorvertoning van de URN die incompleet kan zijn. Er is nog geen URN gegenereerd. Publiceren van het artikel en het bekijken van de publieke {$pubObjectType} pagina genereert automatisch een unieke URN foor dit {$pubObjectType}.</message>
 </locale>

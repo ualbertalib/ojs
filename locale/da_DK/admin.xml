@@ -4,10 +4,11 @@
 <!--
   * /locale/da_DK/admin.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the da_DK (Danish) locale.
+  * Localization strings for the da_DK (Dansk) locale.
   *
   -->
 
@@ -24,6 +25,7 @@
 	<message key="admin.languages.downloadFailed">Overførslen af landestandarden mislykkedes. Fejlen er beskrevet i nedenstående fejlmeddelelse(r).</message>
 	<message key="admin.languages.localeInstalled">Landestandarden "{$locale}" er blevet installeret.</message>
 	<message key="admin.languages.download">Hent landestandard</message>
+	<message key="admin.languages.reloadDefaultEmailTemplates">Reload standard e-mail-skabeloner</message>
 	<message key="admin.languages.download.cannotOpen">Det er ikke muligt at åbne sprogbeskrivelsen fra PKP-webstedet.</message>
 	<message key="admin.languages.download.cannotModifyRegistry">Det er ikke muligt at føje den nye landestandard til landestandardens registreringsdatabasefil, normalt "registry/locales.xml".</message>
 	<message key="admin.auth.ojs">OJS-brugerdatabase</message>
@@ -59,4 +61,41 @@
 	<message key="admin.mergeUsers.confirm">Er du sikker på, at du vil flette kontoen med brugernavnet {$oldAccountCount} til kontoen med brugernavnet "{$newUsername}"? Kontoen med brugernavnet {$oldAccountCount} vil derefter ophøre med at eksistere. Denne handling kan ikke fortrydes.</message>
 	<message key="admin.mergerUsers.noneEnrolled">Ingen tilmeldte brugere.</message>
 	<message key="admin.locale.maybeIncomplete">De markerede landestandarder kan være ufuldstændige</message>
+	<message key="admin.categories">Kategorier</message>
+	<message key="admin.categories.editTitle">Redigér kategori</message>
+	<message key="admin.categories.createTitle">Opret kategori</message>
+	<message key="admin.categories.create">Opret en ny kategori</message>
+	<message key="admin.categories.noneCreated">Der er ikke oprettet nogen kategorier</message>
+	<message key="admin.categories.confirmDelete">Er du sikker på, at du vil slette denne kategori?</message>
+	<message key="admin.categories.name">Navn</message>
+	<message key="admin.categories.nameRequired">Et kategorinavn er påkrævet</message>
+	<message key="admin.categories.enable.description">Websiteadministratoren kan her vælge at definere en række kategorier, så en større samling af tidsskrifter lettere kan overskues. Tidsskriftschefen kan vælge flere kategorier for hvert tidsskrift, og læseren kan browse gennem samlingen via kategorierne.</message>
+	<message key="admin.categories.disableCategories">Undlad at kategorisere tidsskrifterne</message>
+	<message key="admin.categories.enableCategories">Tillad tidsskriftchefer at rubricere tidsskrifterne under kategorier</message>
+	<message key="admin.settings.options">Valgmuligheder</message>
+	<message key="admin.settings.useAlphalist">Vis en alfabetisk liste til websites med mange tidsskrifter, så man kan foretage en alfabetisk navigation mellem tidsskrifterne.</message>
+	<message key="admin.settings.usePaging">Opdel listen over tidsskrifterne på flere sider for websites med mange tidsskrifter.</message>
+	<message key="admin.settings.journalsList">Tidsskriftselementer</message>
+	<message key="admin.settings.journalsList.description">Vælg de tidsskriftselementer, der skal vises for hvert tidsskrift på websiden.</message>
+	<message key="admin.settings.journalsList.showThumbnail">Tidsskrifts-thumbnail</message>
+	<message key="admin.settings.journalsList.showTitle">Tidsskriftstitel</message>
+	<message key="admin.settings.journalsList.showDescription">Tidsskriftsbeskrivelse</message>
+	<message key="admin.settings.defaultMetricDescription">Jeres OJS-installation er konfigureret til at registrere mere end en metrisk brugerenhed. Brugerstatistikker vil blive fremvist i flere forskellige sammenhænge.
+		Der er tilfælde, hvor en enkelt brugerstatistik skal anvendes, f.eks. ved visning af en sorteret liste over mest anvendte artikler eller ved rangering af
+		søgeresultater. Vælg én af de konfigurerede metriske enheder som standard.</message>
+	<message key="admin.copyAccessLogFileTool.usage">Copy the passed apache access log file(s), filtering the entries related with this installation,
+to the current files directory, inside the UsageStatsPlugin stage directory. Must run under user with enough privilegies to read access apache log files.
+
+This tool will only copy files that aren't already inside the usageStats file loader directories (stage, processing, archive, reject).
+
+Usage: {$scriptName} path/to/apache/log/file.log
+Usage (processing all files inside a directory): {$scriptName} path/to/apache/directory</message>
+	<message key="admin.copyAccessLogFileTool.error.creatingFolder">Fejl: Kan ikke oprette temporær mappe {$tmpDir}</message>
+	<message key="admin.copyAccessLogFileTool.error.acessingFile">Fejl: {$filePath} findes ikke eller kan ikke tilgås</message>
+	<message key="admin.copyAccessLogFileTool.error.copyingFile">Fejl: Kan ikke kopiere fra {$filePath} til {$tmpFilePath}</message>
+	<message key="admin.copyAccessLogFileTool.error.deletingFile">Fejl: Kan ikke slette  {$tmpFilePath}</message>
+	<message key="admin.copyAccessLogFileTool.warning.fileAlreadyExists">Advarsel: {$filePath} eksisterer allerede i brugerstatistikmappen.</message>
+	<message key="admin.copyAccessLogFileTool.success">Succes: {$filePath} to {$destinationPath}</message>
+	<message key="admin.settings.security">Security</message>
+	<message key="admin.settings.security.plugins">Prevent journal managers to install, update or delete plugins.</message>
 </locale>

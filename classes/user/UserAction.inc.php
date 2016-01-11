@@ -3,7 +3,8 @@
 /**
  * @file classes/user/UserAction.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class UserAction
@@ -141,6 +142,16 @@ class UserAction {
 		while ($gift =& $gifts->next()) {
 			$gift->setRecipientUserId($newUserId);
 			$giftDao->updateObject($gift);
+			unset($gift);
+		}
+
+		// Transfer completed payments.
+		$paymentDao =& DAORegistry::getDAO('OJSCompletedPaymentDAO');
+		$paymentFactory = $paymentDao->getByUserId($oldUserId);
+		while ($payment =& $paymentFactory->next()) {
+			$payment->setUserId($newUserId);
+			$paymentDao->updateObject($payment);
+			unset($payment);
 		}
 
 		// Delete the old user and associated info.

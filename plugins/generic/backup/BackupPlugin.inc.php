@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/backup/BackupPlugin.inc.php
  *
- * Copyright (c) 2000-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class BackupPlugin
@@ -52,7 +53,7 @@ class BackupPlugin extends GenericPlugin {
 		$smarty =& $args[1];
 		$output =& $args[2];
 		$request = Application::getRequest();
-		$output .= '<li>&#187; <a href="' . $request->url(null, 'backup') . '">' . __('plugins.generic.backup.link') . '</a></li>';
+		$output .= '<li><a href="' . $request->url(null, 'backup') . '">' . __('plugins.generic.backup.link') . '</a></li>';
 		return false;
 	}
 
@@ -166,7 +167,7 @@ class BackupPlugin extends GenericPlugin {
 	/**
 	 * @see PKPPlugin::manage()
 	 */
-	function manage($verb, $args, &$message, &$messageParams, &$pluginModalContent = null) {
+	function manage($verb, $args, &$message, &$messageParams) {
 		switch ($verb) {
 			case 'enable':
 				$this->updateSetting(0, 'enabled', true);

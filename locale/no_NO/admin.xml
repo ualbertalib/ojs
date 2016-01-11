@@ -4,10 +4,11 @@
 <!--
   * locale/no_NO/admin.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the no_NO (Norwegian) locale.
+  * Localization strings for the no_NO (Norsk) locale.
   *
   -->
 
@@ -48,6 +49,7 @@
 	<message key="admin.languages.downloadFailed">Noe gikk galt med nedlastingen av oversatte lokalfiler. Se feilmeldingen(e) nedenfor.</message>
 	<message key="admin.languages.localeInstalled">Den oversatte lokalfilen "{$locale}" ble installert.</message>
 	<message key="admin.languages.download">Last ned oversatte lokalfiler</message>
+	<message key="admin.languages.reloadDefaultEmailTemplates">Last standard e-postmaler</message>
 	<message key="admin.languages.download.cannotOpen">Språkdeskriptoren fra PKP-nettstedet lar seg ikke åpne.</message>
 	<message key="admin.languages.download.cannotModifyRegistry">Kan ikke legge til de oversatte lokalfilene i registerfilen for lokalfiler, som vanligvis heter "registry/locales.xml".</message>
 	<message key="admin.journals.redirect">Generer kode for å oversette OJS 1 URLs to OJS 2 URLs</message>

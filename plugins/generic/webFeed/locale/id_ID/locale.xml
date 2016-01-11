@@ -4,13 +4,14 @@
 <!--
   * plugins/generic/webFeed/locale/id_ID/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings.
   -->
 
-<locale name="id_ID" full_name="Indonesia">
+<locale name="id_ID" full_name="Bahasa Indonesia">
 	<message key="plugins.generic.webfeed.displayName">Plugin Feed Web </message> 
 	<message key="plugins.generic.webfeed.description"> Plugin ini menghasilkan RSS/ Atom web syndication feeds untuk terbitan sekarang.</message> 
 
@@ -22,6 +23,6 @@
 	<message key="plugins.generic.webfeed.settings.recentArticles"> item yang diterbitkan sekarang.</message> 
 	<message key="plugins.generic.webfeed.settings.recentItemsRequired"> Masukkan bilnagan bulat positif untuk item yang diterbitkan sekarang.</message> 
 	<message key="plugins.generic.webfeed.atom.altText"> Logo atom </message> 
-	<message key="plugins.generic.webfeed.rss1.altText">Logo RSS1</message> 	
-<message key="plugins.generic.webfeed.rss2.altText"> Logo RSS2</message>
-</locale> 
+	<message key="plugins.generic.webfeed.rss1.altText">Logo RSS1</message>
+	<message key="plugins.generic.webfeed.rss2.altText"> Logo RSS2</message>
+</locale>

@@ -7,7 +7,8 @@
 ;
 ; config.TEMPLATE.inc.php
 ;
-; Copyright (c) 2003-2013 John Willinsky
+; Copyright (c) 2013-2015 Simon Fraser University Library
+; Copyright (c) 2003-2015 John Willinsky
 ; Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
 ;
 ; OJS Configuration settings.
@@ -48,6 +49,12 @@ session_lifetime = 30
 ; execute periodically
 scheduled_tasks = Off
 
+; Scheduled tasks will send email about processing
+; only in case of errors. Set to off to receive
+; all other kind of notification, including success,
+; warnings and notices.
+scheduled_tasks_report_error_only = On
+
 ; Short and long date formats
 date_format_trunc = "%m-%d"
 date_format_short = "%Y-%m-%d"
@@ -58,7 +65,7 @@ time_format = "%I:%M %p"
 
 ; Use URL parameters instead of CGI PATH_INFO. This is useful for
 ; broken server setups that don't support the PATH_INFO environment
-; variable.
+; variable. Use of this mode is recommended as a last resort.
 disable_path_info = Off
 
 ; Use fopen(...) for URL-based reads. Modern versions of dspace
@@ -83,6 +90,11 @@ allow_url_fopen = Off
 ; See FAQ for more details.
 restful_urls = Off
 
+; Allow the X_FORWARDED_FOR header to override the REMOTE_ADDR as the source IP
+; Set this to "On" if you are behind a reverse proxy and you control the X_FORWARDED_FOR
+; Warning: This defaults to "On" if unset for backwards compatibility.
+trust_x_forwarded_for = Off
+
 ; Allow javascript files to be served through a content delivery network (set to off to use local files)
 enable_cdn = On
 
@@ -95,6 +107,11 @@ citation_checking_max_processes = 3
 
 ; Display a message on the site admin and journal manager user home pages if there is an upgrade available
 show_upgrade_warning = Off
+
+; Provide a unique site ID and OAI base URL to PKP for statistics and security
+; alert purposes only.
+enable_beacon = On
+
 
 ;;;;;;;;;;;;;;;;;;;;;
 ; Database Settings ;
@@ -203,7 +220,7 @@ umask = 0022
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 [finfo]
-mime_database_path = /etc/magic.mime
+; mime_database_path = /etc/magic.mime
 
 
 ;;;;;;;;;;;;;;;;;;;;;
@@ -227,6 +244,12 @@ session_check_ip = On
 ; Valid values are: md5, sha1
 ; Note that sha1 requires PHP >= 4.3.0
 encryption = md5
+
+; The unique salt to use for generating password reset hashes
+salt = "YouMustSetASecretKeyHere!!"
+
+; The number of seconds before a password reset hash expires (defaults to 7200 / 2 hours)
+reset_seconds = 7200
 
 ; Allowed HTML tags for fields that permit restricted HTML.
 ; For PHP 5.0.5 and greater, allowed attributes must be specified individually
@@ -288,6 +311,11 @@ allowed_html = "<a href|target> <em> <strong> <cite> <code> <ul> <ol> <li> <dl> 
 
 ; Default envelope sender to use if none is specified elsewhere
 ; default_envelope_sender = my_address@my_host.com
+
+; Force the default envelope sender (if present)
+; This is useful if setting up a site-wide noreply address
+; The reply-to field will be set with the reply-to or from address.
+; force_default_envelope_sender = Off
 
 ; Enable attachments in the various "Send Email" pages.
 ; (Disabling here will not disable attachments on features that
@@ -421,6 +449,12 @@ perl = /usr/bin/perl
 
 ; tar (used in backup plugin, translation packaging)
 tar = /bin/tar
+
+; egrep (used in copyAccessLogFileTool)
+egrep = /bin/egrep
+
+; gunzip (used in copyAccessLogFileTool)
+gunzip = /bin/gunzip
 
 ; On systems that do not have PHP4's Sablotron/xsl or PHP5's libxsl/xslt
 ; libraries installed, or for those who require a specific XSLT processor,

@@ -4,7 +4,8 @@
 <!--
   * plugins/citationFormats/apa/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for this citation plugin in Greek.
@@ -18,9 +19,9 @@
   *
   -->
  
-<locale name="el_GR" full_name="Greek">	
-	<message key="plugins.citationFormats.apa.displayName">Plugin σχήματος παραπομπής APA </message>
+<locale name="el_GR" full_name="ελληνικά">	
+	<message key="plugins.citationFormats.apa.displayName">Πρόσθετο σχήματος παραπομπής APA</message>
 	<message key="plugins.citationFormats.apa.citationFormatName">APA</message>
-	<message key="plugins.citationFormats.apa.description">Το plugin αυτό υλοποιεί το σχήμα παραπομπής APA.</message>
+	<message key="plugins.citationFormats.apa.description">Το πρόσθετο αυτό υλοποιεί το σχήμα παραπομπής APA.</message>
 	<message key="plugins.citationFormats.apa.retrieved"><![CDATA[Ανακτήθηκε από <a href="{$url}" target="_new">{$url}</a>]]></message>
 </locale>

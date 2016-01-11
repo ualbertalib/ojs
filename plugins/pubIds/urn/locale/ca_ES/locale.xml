@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
-
 <!--
-  * plugins/pubIds/urn/locale/en_US/locale.xml
+  * plugins/pubIds/urn/locale/ca_ES/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+  *
+  * Credits: http://pkp.sfu.ca/wiki/index.php?title=OJS:_Catalan_%28ca_ES%29
   *
   * URN plugin localization strings
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="ca_ES" full_name="Català">
 	<message key="plugins.pubIds.urn.urns">URNs</message>
 
 	<!-- plugin -->
-	<message key="plugins.pubIds.urn.displayName">URN</message>
+	<message key="plugins.pubIds.urn.displayName">Mòdul URN</message>
 	<message key="plugins.pubIds.urn.description">This plugin enables the assignment of the Uniform Resource Names to the objects (issues, articles, galley and supplementary files) in OJS.</message>
 
 	<!-- URN manager options, setting -->
@@ -32,8 +34,7 @@
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.pattern.suppFiles">for supplementary files.</message>
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.patternExample">For example, vol%viss%ipp%p could create the URN suffix "vol3iss2pp230".</message>
 	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.description">A URN suffix can take any form, but must be unique for each published item.</message>
-	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.publisherId">Use the "Custom Identifier" for published items as the URN suffix (must be enabled in Step 4.3). This is the same identifier that will be used for public URLs.</message>
-	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.customIdentifier">Enter an individual URN suffix for each published item independent and different from the "Custom Identifier" mentioned in the previous option. You'll find an additional URN input field on each item's metadata page.</message>
+	<message key="plugins.pubIds.urn.manager.settings.urnSuffix.customIdentifier">Enter an individual URN suffix for each published item. You'll find an additional URN input field on each item's metadata page.</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs">Clear URNs</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs.description">If you change your URN configuration, URNs that have already been assigned will not be affected. Once the changed URN configuration is saved, use this button to clear all existing URNs so that the new settings will take effect with existing objects.</message>
 	<message key="plugins.pubIds.urn.manager.settings.clearURNs.confirm">Are you sure you wish to delete all existing URNs?</message>
@@ -75,4 +76,9 @@
 	<message key="plugins.pubIds.urn.form.customIdentifierNotUnique">The given URN suffix is already in use for another published item. Please enter a unique URN suffix for each item.</message>
 	<message key="plugins.pubIds.urn.form.checkNoRequired">The check number is missing.</message>
 
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeArticle">article</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeGalley">galerada</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeSuppFile">arxiu complementari</message>
+	<message key="plugins.pubIds.urn.editor.urnObjectTypeIssue">edició</message>
+	<message key="plugins.pubIds.urn.editor.urnNotYetGenerated">El que veieu és una previsualització de la URN que podria ser incomplerta. La URN no s'ha generat encara. Publicar la edició i visualitzant la pàgina pública {$pubObjectType} generarà una URN única per a aquest {$pubObjectType}.</message>
 </locale>

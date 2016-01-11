@@ -3,7 +3,8 @@
 /**
  * @file plugins/generic/thesisFeed/ThesisFeedPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ThesisFeedPlugin
@@ -68,6 +69,10 @@ class ThesisFeedPlugin extends GenericPlugin {
 
 	function callbackAddLinks($hookName, $args) {
 		if ($this->getEnabled()) {
+			// Only pages requests interest us here
+			$request =& Registry::get('request');
+			if (!is_a($request->getRouter(), 'PKPPageRouter')) return false;
+
 			$templateManager =& $args[0];
 			$currentJournal =& $templateManager->get_template_vars('currentJournal');
 
@@ -77,7 +82,7 @@ class ThesisFeedPlugin extends GenericPlugin {
 			$thesisEnabled = isset($products['thesis'])?$products['thesis']:false;
 
 			$displayPage = $currentJournal ? $this->getSetting($currentJournal->getId(), 'displayPage') : null;
-			$requestedPage = Request::getRequestedPage();
+			$requestedPage = $request->getRequestedPage();
 
 			if ( $thesisEnabled && (($displayPage == 'all') || ($displayPage == 'homepage' && (empty($requestedPage) || $requestedPage == 'index' || $requestedPage == 'thesis')) || ($displayPage == $requestedPage)) ) {
 
@@ -106,10 +111,10 @@ class ThesisFeedPlugin extends GenericPlugin {
 		return parent::getManagementVerbs($verbs);
 	}
 
- 	/*
- 	 * Execute a management verb on this plugin
- 	 * @param $verb string
- 	 * @param $args array
+	/**
+	 * Execute a management verb on this plugin
+	 * @param $verb string
+	 * @param $args array
 	 * @param $message string Result status message
 	 * @param $messageParams array Parameters for the message key
 	 * @return boolean

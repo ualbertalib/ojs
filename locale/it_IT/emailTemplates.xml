@@ -4,7 +4,8 @@
 <!--
   * locale/it_IT/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -735,8 +736,8 @@ Link: {$url}
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nuova notifica da {$siteTitle}</subject>
-		<body>Hai ricevuto una notifica da  {$siteTitle}:
+		<subject>Nuova notifica da {$journalName}</subject>
+		<body>Hai ricevuto una notifica da  {$journalName}:
 --
 {$notificationContents}
 
@@ -748,8 +749,8 @@ Se non vuoi ricevere altre notifiche, vai alla pagina {$unsubscribeLink} per can
 {$principalContactSignature}</body>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Benvenuto nella mailing list di {$siteTitle}!</subject>
-		<body>Hai chiesto di ricevere notifiche da {$siteTitle}.
+		<subject>Benvenuto nella mailing list di {$journalName}!</subject>
+		<body>Hai chiesto di ricevere notifiche da {$journalName}.
 
 Clicca su questo link per confermare e aggiungere il tuo indirizzo nella lista di distribuzione: {$confirmLink}
 

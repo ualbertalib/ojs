@@ -1,7 +1,8 @@
 {**
  * @file plugins/importexport/datacite/templates/settings.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * DataCite plugin settings
@@ -38,6 +39,13 @@
 				<td width="20%" class="label">{fieldLabel name="password" key="plugins.importexport.common.settings.form.password"}</td>
 				<td width="80%" class="value">
 					<input type="password" name="password" value="{$password|escape}" size="20" maxlength="50" id="password" class="textField" />
+				</td>
+			</tr>
+			<tr><td colspan="2">&nbsp;</td></tr>
+			<tr valign="top">
+				<td width="20%" class="label">{fieldLabel name="automaticRegistration" key="plugins.importexport.datacite.settings.form.automaticRegistration"}</td>
+				<td width="80%" class="value">
+					<input type="checkbox" name="automaticRegistration" id="automaticRegistration" value="1" {if $automaticRegistration} checked="checked"{/if} />&nbsp;{translate key="plugins.importexport.datacite.settings.form.automaticRegistration.description" unregisteredURL=$unregisteredURL}
 				</td>
 			</tr>
 			<tr><td colspan="2">&nbsp;</td></tr>

@@ -3,7 +3,8 @@
 /**
  * @file classes/plugins/PluginSettingsDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class PluginSettingsDAO
@@ -110,9 +111,12 @@ class PluginSettingsDAO extends DAO {
 			'SELECT COUNT(*) FROM plugin_settings WHERE plugin_name = ? AND setting_name = ? AND journal_id = ?',
 			array($pluginName, $name, $journalId)
 		);
+		$count = $result->fields[0];
+		$result->Close();
+		unset($result);
 
 		$value = $this->convertToDB($value, $type);
-		if ($result->fields[0] == 0) {
+		if ($count == 0) {
 			$returner = $this->update(
 				'INSERT INTO plugin_settings
 					(plugin_name, journal_id, setting_name, setting_value, setting_type)
@@ -129,9 +133,6 @@ class PluginSettingsDAO extends DAO {
 				array($value, $type, $pluginName, $name, $journalId)
 			);
 		}
-
-		$result->Close();
-		unset($result);
 
 		return $returner;
 	}

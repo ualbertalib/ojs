@@ -3,15 +3,16 @@
 /**
  * @defgroup pages_manager
  */
- 
+
 /**
  * @file pages/manager/index.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @ingroup pages_manager
- * @brief Handle requests for journal management functions. 
+ * @brief Handle requests for journal management functions.
  *
  */
 
@@ -23,6 +24,7 @@ switch ($op) {
 	case 'saveSetup':
 	case 'setupSaved':
 	case 'downloadLayoutTemplate':
+	case 'resetPermissions':
 		define('HANDLER_CLASS', 'SetupHandler');
 		import('pages.manager.SetupHandler');
 		break;
@@ -92,6 +94,8 @@ switch ($op) {
 	case 'updateEmail':
 	case 'deleteCustomEmail':
 	case 'resetEmail':
+	case 'exportEmails':
+	case 'uploadEmails':
 	case 'disableEmail':
 	case 'enableEmail':
 	case 'resetAllEmails':
@@ -118,7 +122,7 @@ switch ($op) {
 		import('pages.manager.FilesHandler');
 		break;
 	//
-	// Subscription Policies 
+	// Subscription Policies
 	//
 	case 'subscriptionPolicies':
 	case 'saveSubscriptionPolicies':
@@ -142,6 +146,7 @@ switch ($op) {
 	case 'createSubscription':
 	case 'editSubscription':
 	case 'updateSubscription':
+	case 'resetDateReminded':
 		define('HANDLER_CLASS', 'SubscriptionHandler');
 		import('pages.manager.SubscriptionHandler');
 		break;
@@ -185,15 +190,17 @@ switch ($op) {
 	// Statistics Functions
 	//
 	case 'statistics':
-	case 'saveStatisticsSections':
+	case 'saveStatisticsSettings':
 	case 'savePublicStatisticsList':
 	case 'report':
+	case 'reportGenerator':
+	case 'generateReport':
 		define('HANDLER_CLASS', 'StatisticsHandler');
 		import('pages.manager.StatisticsHandler');
 		break;
 	//
 	// Payment
-	//	
+	//
 	case 'payments':
 	case 'savePaymentSettings':
 	case 'payMethodSettings':

@@ -3,7 +3,8 @@
 /**
  * @file pages/author/SubmissionCommentsHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SubmissionCommentsHandler
@@ -117,7 +118,7 @@ class SubmissionCommentsHandler extends AuthorHandler {
 	 */
 	function postLayoutComment($args, $request) {
 		$articleId = (int) $request->getUserVar('articleId');
-		$this->validate($request, $args, $articleId);
+		$this->validate($request, $articleId);
 		$this->setupTemplate($request, true);
 
 		// If the user pressed the "Save and email" button, then email the comment.

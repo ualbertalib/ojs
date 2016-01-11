@@ -3,7 +3,8 @@
 /**
  * @file classes/payment/ojs/OJSPaymentAction.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class OJSPaymentAction
@@ -126,7 +127,7 @@ class OJSPaymentAction {
 		$settingsForm = new PayMethodSettingsForm();
 		$settingsForm->readInputData();
 
- 		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('helpTopicId', 'journal.managementPages.payments');
 
 		if ($settingsForm->validate()) {

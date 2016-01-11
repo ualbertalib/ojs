@@ -4,7 +4,8 @@
 <!--
   * plugins/blocks/navigation/locale/it_IT/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the it_IT (Italiano) locale.
@@ -15,4 +16,5 @@
 	<message key="plugins.block.navigation.displayName">Modulo di navigazione</message>
 	<message key="plugins.block.navigation.description">Questo plugin inserisce link di navigazione al menu laterale.</message>
 	<message key="plugins.block.navigation.journalContent">Contenuti della rivista</message>
+	<message key="plugins.block.navigation.searchScope">Cerca in</message>
 </locale>

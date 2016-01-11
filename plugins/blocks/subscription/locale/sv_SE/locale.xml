@@ -6,14 +6,15 @@
   *
   * Translated to sv_SE per@funke.com 2010-03-15
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the sv_SE (Svenska) locale.
   *
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="sv_SE" full_name="Svenska">
 	<message key="plugins.block.subscription.displayName">Prenumerationsblock</message>
 	<message key="plugins.block.subscription.description">Det här tilläget bidrar med information om prenumerartion</message>
 	<message key="plugins.block.subscription.blockTitle">Prenumeration</message>
@@ -21,4 +22,5 @@
 	<message key="plugins.block.subscription.providedBy">Tillgång tillhandahållen av: </message>
 	<message key="plugins.block.subscription.providedByInstitution">Tillgång tillhandahålls av din egen organisation</message>
 	<message key="plugins.block.subscription.comingFromIP">Kommer från IP: </message>
+	<message key="plugins.block.subscription.about">Prenumerationer</message>
 </locale>

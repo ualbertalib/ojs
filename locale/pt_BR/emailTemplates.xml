@@ -3,7 +3,8 @@
 <!--
   * locale/pt_BR/emailTemplateData.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localized email templates XML file.
@@ -833,8 +834,8 @@ Link: {$url}
 		<description>Esta mensagem é enviada a usuários cadastrados que escolheram habilitar este tipo de notificação via email.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST">
-		<subject>Nova notificação de {$siteTitle}</subject>
-		<body>Você possui uma nova notificação de {$siteTitle}:
+		<subject>Nova notificação de {$journalName}</subject>
+		<body>Você possui uma nova notificação de {$journalName}:
 --
 {$notificationContents}
 
@@ -847,8 +848,8 @@ Caso não deseje receber mais notificações via e-mail, acesse {$unsubscribeLin
 		<description>Esta mensagem é enviada a usuários não cadastrados que pertencem à lista de correio.</description>
 	</email_text>
 	<email_text key="NOTIFICATION_MAILLIST_WELCOME">
-		<subject>Bem-vino à lista de correio de {$siteTitle}!</subject>
-		<body>Você assinou a lista de notificações de {$siteTitle}.
+		<subject>Bem-vino à lista de correio de {$journalName}!</subject>
+		<body>Você assinou a lista de notificações de {$journalName}.
 
 Clique no link a seguir para confirmar sua solicitação e incluir seu e-mail na lista de correio: {$confirmLink}
 

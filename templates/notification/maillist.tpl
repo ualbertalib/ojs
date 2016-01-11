@@ -1,7 +1,8 @@
 {**
  * templates/notification/maillist.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Displays the notification settings page and unchecks  
@@ -40,7 +41,14 @@
 		<td class="label" width="5%">{fieldLabel name="confirmEmail" key="user.confirmEmail"}</td>
 		<td class="value" width="45%"><input type="text" id="confirmEmail" name="confirmEmail" size="30" maxlength="90" class="textField" /></td>
 	</tr>
-	{if $captchaEnabled}
+	{if $captchaEnabled && $reCaptchaHtml}
+	<tr>
+		<td class="label" valign="top">{fieldLabel name="recaptcha_challenge_field" required="true" key="common.captchaField"}</td>
+		<td class="value">
+			{$reCaptchaHtml}
+		</td>
+	</tr>
+	{elseif $captchaEnabled}
 	<tr>
 		<td class="label" valign="top">{fieldLabel name="captcha" required="true" key="common.captchaField"}</td>
 		<td class="value">
@@ -58,20 +66,20 @@
 </table>
 </form>
 <h5 style="margin-left:10%">{translate key="notification.mailList.register"}</h5>
-<ul class="plain" style="margin-left:10%">
+<ul style="margin-left:10%">
 	{if $settings.allowRegReviewer}
 		{url|assign:"url" page="user" op="register"}
-		<li>&#187; {translate key="notification.mailList.review" reviewUrl=$url} </li>
+		<li>{translate key="notification.mailList.review" reviewUrl=$url} </li>
 	{/if}
 	{if $settings.allowRegAuthor}
 		{url|assign:"url" page="information" op="authors"}
-		<li>&#187; {translate key="notification.mailList.submit" submitUrl=$url} </li>
+		<li>{translate key="notification.mailList.submit" submitUrl=$url} </li>
 	{/if}
 	{if $settings.subscriptionsEnabled}
 		{url|assign:"url" page="user" op="register"}
-		<li>&#187; {translate key="notification.mailList.protectedContent" subscribeUrl=$url}
+		<li>{translate key="notification.mailList.protectedContent" subscribeUrl=$url}
 	{/if}
-<li>&#187; <a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>
+<li><a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>
 </ul>
 
 </form>

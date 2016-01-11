@@ -3,7 +3,8 @@
 /**
  * @file plugins/pubIds/urn/URNPubIdPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class URNPubIdPlugin
@@ -66,7 +67,7 @@ class URNPubIdPlugin extends PubIdPlugin {
 	 */
 	function getPubId(&$pubObject, $preview = false) {
 		$urn = $pubObject->getStoredPubId($this->getPubIdType());
-		if (!$urn) {
+		if (!$urn && !$this->isExcluded($pubObject)) {
 			// Determine the type of the publishing object
 			$pubObjectType = $this->getPubObjectType($pubObject);
 
@@ -89,11 +90,10 @@ class URNPubIdPlugin extends PubIdPlugin {
 				// Now we can identify the journal
 				$journalId = $article->getJournalId();
 			}
-			// get the journal
-			$request =& Application::getRequest();
-			$router =& $request->getRouter();
-			$journal =& $router->getContext($request);
-			if (!$journal || $journal->getId() != $journalId) return null;
+
+			$journal =& $this->getJournal($journalId);
+			if (!$journal) return null;
+			$journalId = $journal->getId();
 
 			// Check whether URNs are enabled for the given object type
 			$urnEnabled = ($this->getSetting($journalId, "enable${pubObjectType}URN") == '1');
@@ -113,56 +113,50 @@ class URNPubIdPlugin extends PubIdPlugin {
 			// Generate the URN suffix
 			$urnSuffixSetting = $this->getSetting($journal->getId(), 'urnSuffix');
 			switch ($urnSuffixSetting) {
-				case 'publisherId':
-					$urnSuffix = (string) call_user_func_array(array($pubObject, "getBest${pubObjectType}Id"), array(&$journal));
-					// When the suffix equals the object's ID then
-					// require an object-specific prefix to be sure that the suffix is unique
-					if ($pubObjectType != 'Article' && $urnSuffix === (string) $pubObject->getId()) {
-						$urnSuffix = strtolower_codesafe($pubObjectType{0}) . $urnSuffix;
-					}
-					$urn = $urnPrefix . $urnSuffix;
-					if ($this->getSetting($journal->getId(), 'checkNo')) {
-						$urn .= $this->_calculateCheckNo($urn);
-					}
-					break;
-
 				case 'customIdentifier':
 					$urnSuffix = $pubObject->getData('urnSuffix');
+
 					if (!empty($urnSuffix)) {
 						$urn = $urnPrefix . $urnSuffix;
 					}
 					break;
 
 				case 'pattern':
-					$suffixPattern = $this->getSetting($journal->getId(), "urn${pubObjectType}SuffixPattern");
-					$urn = $urnPrefix . $suffixPattern;
+					$urnSuffix = $this->getSetting($journal->getId(), "urn${pubObjectType}SuffixPattern");
+
+					// %j - journal initials
+					$urnSuffix = String::regexp_replace('/%j/', String::strtolower($journal->getLocalizedSetting('initials', $journal->getPrimaryLocale())), $urnSuffix);
+					// %x - custom identifier
+					if ($pubObject->getStoredPubId('publisher-id')) {
+						$urnSuffix = String::regexp_replace('/%x/', $pubObject->getStoredPubId('publisher-id'), $urnSuffix);
+					}
 					if ($issue) {
-						// %j - journal initials
-						$suffixPattern = String::regexp_replace('/%j/', String::strtolower($journal->getLocalizedSetting('initials')), $suffixPattern);
 						// %v - volume number
-						$suffixPattern = String::regexp_replace('/%v/', $issue->getVolume(), $suffixPattern);
+						$urnSuffix = String::regexp_replace('/%v/', $issue->getVolume(), $urnSuffix);
 						// %i - issue number
-						$suffixPattern = String::regexp_replace('/%i/', $issue->getNumber(), $suffixPattern);
+						$urnSuffix = String::regexp_replace('/%i/', $issue->getNumber(), $urnSuffix);
 						// %Y - year
-						$suffixPattern = String::regexp_replace('/%Y/', $issue->getYear(), $suffixPattern);
-
-						if ($article) {
-							// %a - article id
-							$suffixPattern = String::regexp_replace('/%a/', $article->getId(), $suffixPattern);
-							// %p - page number
-							$suffixPattern = String::regexp_replace('/%p/', $article->getPages(), $suffixPattern);
+						$urnSuffix = String::regexp_replace('/%Y/', $issue->getYear(), $urnSuffix);
+					}
+					if ($article) {
+						// %a - article id
+						$urnSuffix = String::regexp_replace('/%a/', $article->getId(), $urnSuffix);
+						// %p - page number
+						if ($article->getPages()) {
+							$urnSuffix = String::regexp_replace('/%p/', $article->getPages(), $urnSuffix);
 						}
+					}
+					if ($galley) {
+						// %g - galley id
+						$urnSuffix = String::regexp_replace('/%g/', $galley->getId(), $urnSuffix);
+					}
+					if ($suppFile) {
+						// %s - supp file id
+						$urnSuffix = String::regexp_replace('/%s/', $suppFile->getId(), $urnSuffix);
+					}
 
-						if ($galley) {
-							// %g - galley id
-							$suffixPattern = String::regexp_replace('/%g/', $galley->getId(), $suffixPattern);
-						}
-
-						if ($suppFile) {
-							// %s - supp file id
-							$suffixPattern = String::regexp_replace('/%s/', $suppFile->getId(), $suffixPattern);
-						}
-						$urn = $urnPrefix . $suffixPattern;
+					if (!empty($urnSuffix)) {
+						$urn = $urnPrefix . $urnSuffix;
 						if ($this->getSetting($journal->getId(), 'checkNo')) {
 							$urn .= $this->_calculateCheckNo($urn);
 						}
@@ -170,34 +164,29 @@ class URNPubIdPlugin extends PubIdPlugin {
 					break;
 
 				default:
+					$urnSuffix = String::strtolower($journal->getLocalizedSetting('initials', $journal->getPrimaryLocale()));
+
 					if ($issue) {
-						$suffixPattern = String::strtolower($journal->getLocalizedSetting('initials'));
-						$suffixPattern .= '.v' . $issue->getVolume() . 'i' . $issue->getNumber();
-						if ($article) {
-		 					$suffixPattern .= '.' . $article->getId();
-						}
-						if ($galley) {
-							$suffixPattern .= '.g' . $galley->getId();
-						}
-						if ($suppFile) {
-							$suffixPattern .= '.s' . $suppFile->getId();
-						}
-						$urn = $urnPrefix . $suffixPattern;
-						if ($this->getSetting($journal->getId(), 'checkNo')) {
-							$urn .= $this->_calculateCheckNo($urn);
-						}
+						$urnSuffix .= '.v' . $issue->getVolume() . 'i' . $issue->getNumber();
 					} else {
-						$suffixPattern = '%j.v%vi%i';
-						if ($article) {
-							$suffixPattern .= '.%a';
-						}
-						if ($galley) {
-							$suffixPattern .= '.g%g';
-						}
-						if ($suppFile) {
-							$suffixPattern .= '.s%s';
-						}
-						$urn = $urnPrefix . $suffixPattern;
+						$urnSuffix .= '.v%vi%i';
+					}
+
+					if ($article) {
+						$urnSuffix .= '.' . $article->getId();
+					}
+
+					if ($galley) {
+						$urnSuffix .= '.g' . $galley->getId();
+					}
+
+					if ($suppFile) {
+						$urnSuffix .= '.s' . $suppFile->getId();
+					}
+
+					$urn = $urnPrefix . $urnSuffix;
+					if ($this->getSetting($journal->getId(), 'checkNo')) {
+						$urn .= $this->_calculateCheckNo($urn);
 					}
 			}
 
@@ -241,7 +230,21 @@ class URNPubIdPlugin extends PubIdPlugin {
 	 * @see PubIdPlugin::getFormFieldNames()
 	 */
 	function getFormFieldNames() {
-		return array('urnSuffix');
+		return array('urnSuffix', 'excludeURN');
+	}
+
+	/**
+	 * @see PubIdPlugin::getExcludeFormFieldName()
+	 */
+	function getExcludeFormFieldName() {
+		return 'excludeURN';
+	}
+
+	/**
+	 * @see PubIdPlugin::isEnabled()
+	 */
+	function isEnabled($pubObjectType, $journalId) {
+		return $this->getSetting($journalId, "enable${pubObjectType}URN") == '1';
 	}
 
 	/**
@@ -269,24 +272,25 @@ class URNPubIdPlugin extends PubIdPlugin {
 	 * @see PubIdPlugin::verifyData()
 	 */
 	function verifyData($fieldName, $fieldValue, &$pubObject, $journalId, &$errorMsg) {
-		assert($fieldName == 'urnSuffix');
-		if (empty($fieldValue)) return true;
+		if ($fieldName == 'urnSuffix') {
+			if (empty($fieldValue)) return true;
 
-		// Construct the potential new URN with the posted suffix.
-		$urnPrefix = $this->getSetting($journalId, 'urnPrefix');
-		if (empty($urnPrefix)) return true;
-		$newURN = $urnPrefix . $fieldValue;
-		if ($this->getSetting($journalId, 'checkNo')) {
-			$newURNWithoutCheckNo = substr($newURN, 0, -1);
-			$newURNWithCheckNo = $newURNWithoutCheckNo . $this->_calculateCheckNo($newURNWithoutCheckNo);
-			if ($newURN != $newURNWithCheckNo) {
-				$errorMsg = __('plugins.pubIds.urn.form.checkNoRequired');
+			// Construct the potential new URN with the posted suffix.
+			$urnPrefix = $this->getSetting($journalId, 'urnPrefix');
+			if (empty($urnPrefix)) return true;
+			$newURN = $urnPrefix . $fieldValue;
+			if ($this->getSetting($journalId, 'checkNo')) {
+				$newURNWithoutCheckNo = substr($newURN, 0, -1);
+				$newURNWithCheckNo = $newURNWithoutCheckNo . $this->_calculateCheckNo($newURNWithoutCheckNo);
+				if ($newURN != $newURNWithCheckNo) {
+					$errorMsg = __('plugins.pubIds.urn.form.checkNoRequired');
+					return false;
+				}
+			}
+			if(!$this->checkDuplicate($newURN, $pubObject, $journalId)) {
+				$errorMsg = __('plugins.pubIds.urn.form.customIdentifierNotUnique');
 				return false;
 			}
-		}
-		if(!$this->checkDuplicate($newURN, $pubObject, $journalId)) {
-			$errorMsg = __('plugins.pubIds.urn.form.customIdentifierNotUnique');
-			return false;
 		}
 		return true;
 	}
@@ -302,27 +306,28 @@ class URNPubIdPlugin extends PubIdPlugin {
 	 *  the numbers' sum is calculated,
 	 *  the sum is devided by the last number,
 	 *  the last number of the quotient before the decimal point is the check number.
+	 * @param $urn string
 	 */
 	function _calculateCheckNo($urn) {
-	    $urnLower = strtolower_codesafe($urn);
+		$urnLower = strtolower_codesafe($urn);
 
-	    $conversionTable = array('9' => '41', '8' => '9', '7' => '8', '6' => '7', '5' => '6', '4' => '5', '3' => '4', '2' => '3', '1' => '2', '0' => '1', 'a' => '18', 'b' => '14', 'c' => '19', 'd' => '15', 'e' => '16', 'f' => '21', 'g' => '22', 'h' => '23', 'i' => '24', 'j' => '25', 'k' => '42', 'l' => '26', 'm' => '27', 'n' => '13', 'o' => '28', 'p' => '29', 'q' => '31', 'r' => '12', 's' => '32', 't' => '33', 'u' => '11', 'v' => '34', 'w' => '35', 'x' => '36', 'y' => '37', 'z' => '38', '-' => '39', ':' => '17', '_' => '43', '/' => '45', '.' => '47', '+' => '49');
+		$conversionTable = array('9' => '41', '8' => '9', '7' => '8', '6' => '7', '5' => '6', '4' => '5', '3' => '4', '2' => '3', '1' => '2', '0' => '1', 'a' => '18', 'b' => '14', 'c' => '19', 'd' => '15', 'e' => '16', 'f' => '21', 'g' => '22', 'h' => '23', 'i' => '24', 'j' => '25', 'k' => '42', 'l' => '26', 'm' => '27', 'n' => '13', 'o' => '28', 'p' => '29', 'q' => '31', 'r' => '12', 's' => '32', 't' => '33', 'u' => '11', 'v' => '34', 'w' => '35', 'x' => '36', 'y' => '37', 'z' => '38', '-' => '39', ':' => '17', '_' => '43', '/' => '45', '.' => '47', '+' => '49');
 
-	    $newURN = '';
-	    for ($i = 0; $i < strlen($urnLower); $i++) {
-	    	$char = $urnLower[$i];
-	    	$newURN .= $conversionTable[$char];
-	    }
-	    $sum = 0;
-	    for ($j = 1; $j <= strlen($newURN); $j++) {
-		    $sum = $sum + ($newURN[$j-1] * $j);
-	    }
-	    $lastNumber = $newURN[strlen($newURN)-1];
-	    $quot = $sum / $lastNumber;
-	    $quotRound = floor($quot);
-	    $quotString = (string)$quotRound;
+		$newURN = '';
+		for ($i = 0; $i < strlen($urnLower); $i++) {
+			$char = $urnLower[$i];
+			$newURN .= $conversionTable[$char];
+		}
+		$sum = 0;
+		for ($j = 1; $j <= strlen($newURN); $j++) {
+			$sum = $sum + ($newURN[$j-1] * $j);
+		}
+		$lastNumber = $newURN[strlen($newURN)-1];
+		$quot = $sum / $lastNumber;
+		$quotRound = floor($quot);
+		$quotString = (string)$quotRound;
 
-	    return $quotString[strlen($quotString)-1];
+		return $quotString[strlen($quotString)-1];
 	}
 }
 

@@ -4,15 +4,16 @@
 <!--
   * locale/it_IT/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the it_IT (Italian) locale.
+  * Localization strings for the it_IT (Italiano) locale.
   * Contributed by Andrea Marchitelli - CINECA.
   *
   -->
 
-<locale name="it_IT" full_name="Italian">
+<locale name="it_IT" full_name="Italiano">
 	<!--
 	 * This file is organized into several major sections, separated
 	 * by comments like this one. These sections are called:
@@ -31,6 +32,9 @@
 	 * COMMON - This section contains the most frequently-used words
 	 *
 	-->
+	
+	<!-- common -->
+	<message key="common.journal">Rivista</message>
 
 	<!-- Common Messages -->
 	<message key="common.openJournalSystems">Open Journal Systems</message>
@@ -279,12 +283,9 @@ Da notare che l'interfaccia OAI può essere disabilitata per l'intero sito dal f
 	<!-- Plugin Management -->
 
 	<!-- General plugin information -->
-	<message key="plugins.categories.generic.description">I plugin generici sono usati per estendere Open Journal Systems con un'ampia serie di funzionalità aggiuntive.</message>
 	<message key="plugins.categories.auth.description">I plugin per le modalità di autenticazione consentono a Open Journal Systems di delegare ad altri sistemi (es. server LDAP) il compiti di gestire l'autenticazione degli utenti.</message>
-
-
-
-
+	<message key="plugins.categories.citationFormats.description">Citation format plugins provide users with various formats in which to access article citations.</message>
+	<message key="plugins.categories.generic.description">I plugin generici sono usati per estendere Open Journal Systems con un'ampia serie di funzionalità aggiuntive.</message>
 	<!-- Files Browser -->
 
 	<!-- Journal Setup -->
@@ -304,7 +305,7 @@ Da notare che l'interfaccia OAI può essere disabilitata per l'intero sito dal f
 
 
 
-	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems supporta <a href="http://lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe) per garantire un'archiviazione permanente della rivista. LOCKSS &#x00E8; un software open source sviluppato alla Stanford University Library che consente alle biblioteche di conservare le riviste elettroniche visitando regolarmente i siti web delle riviste registrate alla ricerca delle nuove pubblicazioni per archiviarle. Ogni archivio viene continuamente confrontato con i depositi presso le altre biblioteche del sistema e, se il contenuto risulta essere compromesso, viene ripristinato a partire da uno degli altri archivi di deposito.
+	<message key="manager.setup.lockssDescription"><![CDATA[Open Journal Systems supporta <a href="http://www.lockss.org/" target="_blank">LOCKSS</a> (Lots of Copies Keep Stuff Safe) per garantire un'archiviazione permanente della rivista. LOCKSS &#x00E8; un software open source sviluppato alla Stanford University Library che consente alle biblioteche di conservare le riviste elettroniche visitando regolarmente i siti web delle riviste registrate alla ricerca delle nuove pubblicazioni per archiviarle. Ogni archivio viene continuamente confrontato con i depositi presso le altre biblioteche del sistema e, se il contenuto risulta essere compromesso, viene ripristinato a partire da uno degli altri archivi di deposito.
 <br /><br />
 L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino a che la pubblicazione non &#x00E8; già completamente in corso, a questo punto seguire questi due passi:]]></message>
 
@@ -362,8 +363,29 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 
 
 
-	<!-- Scheduling Queue -->
-
+	<message key="editor.submissionReview.notes">
+        <![CDATA[<ol>
+        <li>Gli elementi evidenziati richiedono l'attenzione dell'editor, per i motivi indicati sotto:
+                <ul>
+                        <li class="highlightReviewerNotNotified">Un revisore è stato assegnato ma non gli è stata inviata l'email di notifica</li>
+                        <li class="highlightNoDecision">Tutti i revisori hanno completato l'incarico, ma non è stata registrata ancora alcuna decisione</li>
+                        <li class="highlightRevisedCopyUploaded">L'autore ha caricato una versione aggiornata del manoscritto</li>
+                        <li class="highlightReviewerConfirmationOverdue">Un revisore è in ritardo nel rispondere all'invito a revisionare il manoscritto</li>
+                        <li class="highlightReviewerCompletionOverdue">Un revisore è in ritardo nel completare l'incarico assegnatogli.</li>
+                </ul>
+        </li>
+        <li>"Scadenza" viene compilato dopo l'accettazione da parte del revisore; mostra il numero delle settimane mancanti alla scadenza dell'incarico, oppure (-) le settimane di ritardo.</li>
+</ol>]]></message>
+        <message key="editor.submissionEditing.notes">
+        <![CDATA[<ol>
+        <li>Gli elementi evidenziati richiedono l'attenzione dell'editor, per i motivi indicati sotto:
+                <ul>
+                        <li class="highlightCopyediting">È necessario intervenire nel passaggio di copyediting </li>
+                        <li class="highlightLayoutEditing">È necessario intervenire nell'impaginazione</li>
+                        <li class="higlightProofreading">È necessario intervenire nel passaggio di correzione delle bozze</li>
+                </ul>
+        </li>
+</ol>]]></message>
 
 
 	<!-- Editor Index Page -->
@@ -586,7 +608,7 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 	<message key="search.allJournals">Tutte le riviste</message>
 	<message key="search.authorIndex">Scorri l'indice degli autori</message>
 	<message key="search.authorDetails">Dettagli dell'autore</message>
-	<message key="search.syntaxInstructions"><![CDATA[Suggerimenti per la ricerca: <ul>
+	<message key="search.syntaxInstructions"><![CDATA[<h4>Suggerimenti per la ricerca: </h4><ul>
 <li>I termini di ricerca non distinguono maiuscole e minuscole</li>
 <li>Le parole comuni (stopword) sono ignorate</li>
 <li>Per default vengono restituiti solo gli articoli contenenti <em>tutti</em> i termini della ricerca (<em>AND</em> &#x00E8; sottointeso)</li>
@@ -643,7 +665,7 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 	<message key="about.onlineSubmissions.registrationRequired"><![CDATA[&Egrave; necessario essere registrati e autenticati per inviare proposte di contributi e controllare lo stato di quelle gi&agrave; inviate.]]></message>
 	<message key="about.authorGuidelines">Linee guida per gli autori</message>
 	<message key="about.submissionPreparationChecklist">Lista di controllo per l'invio di una proposta</message>
-	<message key="about.submissionPreparationChecklist.description">Gli autori devono controllare la rispondenza della loro proposta di contributo alle richieste seguenti, pena il rifiuto delle proposte che non aderiscano a queste linne guida.</message>
+	<message key="about.submissionPreparationChecklist.description">Gli autori devono controllare la rispondenza della loro proposta di contributo alle richieste seguenti, pena il rifiuto delle proposte che non aderiscano a queste linee guida.</message>
 	<message key="about.copyrightNotice">Diritti degli autori</message>
 	<message key="about.privacyStatement">Informazioni sulla privacy</message>
 	<message key="about.peerReviewProcess">Peer review</message>
@@ -673,7 +695,7 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 	<message key="installer.ojsUpgrade">Aggiornamento OJS</message>
 	<message key="installer.installationInstructions"><![CDATA[<h4>OJS Versione {$version}</h4>
 
-<p>Grazie per aver scaricato <strong>Open Journal Systems</strong> del Public Knowledge Project. Prima di procedere, leggi il file <a href="{$baseUrl}/docs/README">README</a> incluso in questo software. Per ulteriori informazioni sul Public Knowledge Project e i suoi progetti software, visita il <a href="http://pkp.sfu.ca/" target="_blank">sito web del PKP</a>. Se hai trovato un bug o hai richieste tecniche su Open Journal Systems, utilizza il <a href="http://pkp.sfu.ca/support/forum" target="_blank">forum</a> o visita il <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">bug reporting system</a> del PKP. Sebbene il forum sia il metodo preferito di contatto, puoi anche inviare una mail al team PKP a<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
+<p>Grazie per aver scaricato <strong>Open Journal Systems</strong> del Public Knowledge Project. Prima di procedere, leggi il file <a href="{$baseUrl}/docs/README">README</a> incluso in questo software. Per ulteriori informazioni sul Public Knowledge Project e i suoi progetti software, visita il <a href="http://pkp.sfu.ca/" target="_blank">sito web del PKP</a>. Se hai trovato un bug o hai richieste tecniche su Open Journal Systems, utilizza il <a href="http://forum.pkp.sfu.ca" target="_blank">forum</a> o visita il <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">bug reporting system</a> del PKP. Sebbene il forum sia il metodo preferito di contatto, puoi anche inviare una mail al team PKP a<a href="mailto:pkp.contact@gmail.com">pkp.contact@gmail.com</a>.</p>
 
 <h4>Upgrade</h4>
 
@@ -683,9 +705,9 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 
 <ul>
 	<li><a href="http://www.php.net/" target="_blank">PHP</a> >= {$phpRequiredVersion} (incluso PHP 5.x); versione PHP attualmente in uso: {$phpVersion}{$wrongPhpText}</li>
-	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 3.23.23 (incluso MySQL 4.x) or <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (incluso PostgreSQL 8.x)</li>
+	<li><a href="http://www.mysql.com/" target="_blank">MySQL</a> >= 4.1 or <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a> >= 7.1 (incluso PostgreSQL 8.x)</li>
 	<li><a href="http://httpd.apache.org/" target="_blank">Apache</a> >= 1.3.2x o >= 2.0.4x o Microsoft IIS 6</li>
-	<li>Sistema operativo: Qualsiasi sistema operativo che supporti i software indicati sopra, compresi <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.sun.com/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
+	<li>Sistema operativo: Qualsiasi sistema operativo che supporti i software indicati sopra, compresi <a href="http://www.linux.org/" target="_blank">Linux</a>, <a href="http://www.bsd.org/" target="_blank">BSD</a>, <a href="http://www.oracle.com/sun/" target="_blank">Solaris</a>, <a href="http://www.apple.com/" target="_blank">Mac OS X</a>, <a href="http://www.microsoft.com/">Windows</a></li>
 </ul>
 
 <p>PKP non ha le risorse per testare qualsiasi combinazione possibile di versioni di software e piattaforme,, quindi non vengono fornite garanzie di corretto funzionamento o di supporto.</p>
@@ -711,7 +733,7 @@ L'impostare del supporto LOCKSS per Open Journal Systems non deve avvenire fino 
 <p>2. Deve essere creata e resa scrivibile una directory per contenere i file caricati (v. Impostazioni del file sotto).</p>]]></message>
 	<message key="installer.upgradeInstructions"><![CDATA[<h4>OJS versione {$version}</h4>
 
-<p>Grazie per aver scaricato il Public Knowledge Project <strong>Open Journal Systems</strong>. Prima di procedere, si prega di leggere <a href="{$baseUrl}/docs/README">README</a> e <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> i  files inclusi in questo programma. Per ulteriori informazioni sul Public Knowledge Project e i suoi progetti, si prega di visitare il <a href="http://pkp.sfu.ca/" target="_blank">sito web PKP</a>. Se hai dei bug da segnalare o richieste di supporto tecnico su Open Journal Systems, vedi il <a href="http://pkp.sfu.ca/support/forum">forum di supporto</a> o visita online <a href="http://pkp.sfu.ca/bugzilla/" target="_blank">il sistema di segnalazione dei bug</a> di PKP. Nonostante il forum di supporto sarebbe il metodo preferito per il contatto, puoi inoltre mandare una email al team a <a href="mailto:pkp-support@sfu.ca">pkp-support@sfu.ca</a>.</p>
+<p>Grazie per aver scaricato il Public Knowledge Project <strong>Open Journal Systems</strong>. Prima di procedere, si prega di leggere <a href="{$baseUrl}/docs/README">README</a> e <a href="{$baseUrl}/docs/UPGRADE">UPGRADE</a> i  files inclusi in questo programma. Per ulteriori informazioni sul Public Knowledge Project e i suoi progetti, si prega di visitare il <a href="http://pkp.sfu.ca/" target="_blank">sito web PKP</a>. Se hai dei bug da segnalare o richieste di supporto tecnico su Open Journal Systems, vedi il <a href="http://forum.pkp.sfu.ca">forum di supporto</a> o visita online <a href="https://github.com/pkp/pkp-lib#issues" target="_blank">il sistema di segnalazione dei bug</a> di PKP. Nonostante il forum di supporto sarebbe il metodo preferito per il contatto, puoi inoltre mandare una email al team a <a href="mailto:pkp-support@sfu.ca">pkp-support@sfu.ca</a>.</p>
 <p>&#x00E0; <strong>fortemente raccomandato</strong> fare un backup del tuo database,directory dei files , e directory di installazione di OJS   prima di procedere.</p>
 <p>Se stai operando in <a href="http://www.php.net/features.safe-mode" target="_blank">PHP Safe Mode</a>, si prega di assicurarsi che  the max_execution_time directive nel tuo file di configurazione php.ini  sia impostato a un limite alto. Se questo o qualche altro tempo limite (e.g.  il "Timeout" directive di apache) viene raggiunto e l'aggiornamento viene interrotto, sar&#x00E0; richiesto un intervento manuale.</p>]]></message>
 	<message key="installer.localeSettingsInstructions"><![CDATA[Per un supporto completo di Unicode (UTF-8), selezionate UTF-8 per tutti i set di caratteri. Da notare che questo supporto richiede dei server di database MySQL >= 4.1.1 o PostgreSQL >= 7.1, e PHP >= 4.3.0 compilato con il supporto per la libreria <a href="http://www.php.net/mbstring" target="_blank">mbstring</a> (presente di default nelle installazioni pi&#x00F9; recenti di PHP). Se il vostro server non ha questi requisiti potreste avere dei problemi nell'utilizzo di set di caratteri estesi.
@@ -725,10 +747,10 @@ Il vostro server supporta mbstring: <strong>{$supportsMBString}</strong>]]></mes
 <p>Il programma d'installazione non &#x00E8; riuscito a sovrascrivere il file di configurazione. Prima di utilizzare OJS, apite il file <tt>config.inc.php</tt> con un editor di testo e sostituitene il contenuto con quello del campo sottostante..</p>]]></message>
 	<message key="installer.installationComplete"><![CDATA[<p>L'installazione di OJS &#x00E8; stata completata con successo.</p>
 <p>Per utilizzare OJS effettuate il <a href="{$loginUrl}">login</a> utilizzando lo username e la password inseriti nella pagina precedente.</p>
-<p>Se desideri ricevere news e aggiornamenti, <strong>si prega di registrarsi a <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Se hai domande o commenti, si prega di visitare <a href="http://pkp.sfu.ca/support/forum" target="_new">il forum di supporto</a>.</p>]]></message>
+<p>Se desideri ricevere news e aggiornamenti, <strong>si prega di registrarsi a <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Se hai domande o commenti, si prega di visitare <a href="http://forum.pkp.sfu.ca" target="_new">il forum di supporto</a>.</p>]]></message>
 	<message key="installer.upgradeComplete"><![CDATA[<p>Aggiornamento di  OJS alla versione {$version} completato con successo.</p>
 <p>Non dimenticare di mettere le impostazioni installate nel tuo file di configurazione config.inc.php su <em>On</em>.</p>
-<p>Se non sei gi&#x00E0; registrato e desideri ricevere news e aggiornamenti, <strong>si prega di registrarsi a  <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Se hai domande o commenti, si prega di visitare il <a href="http://pkp.sfu.ca/support/forum" target="_new">forum di supporto</a>.</p>]]></message>
+<p>Se non sei gi&#x00E0; registrato e desideri ricevere news e aggiornamenti, <strong>si prega di registrarsi a  <a href="http://pkp.sfu.ca/ojs/register" target="_new">http://pkp.sfu.ca/ojs/register</a>.</strong> Se hai domande o commenti, si prega di visitare il <a href="http://forum.pkp.sfu.ca" target="_new">forum di supporto</a>.</p>]]></message>
 
 
 	<!-- Article Logs -->
@@ -851,7 +873,6 @@ Il processo di validazione pu&#x00F2; non funzionare sugli URL di ricerca che ri
 		<li>OJS non &egrave; in grado di modificare il file di registro della lingua, solitamente "registry/locales.xml".</li>
 	</ul>
 <p>I pacchetti di localizzazione possono essere scaricati manualmente dal <a href="http://pkp.sfu.ca">sito web del PKP</a>.</p>]]></message>
-	<message key="plugins.categories.citationFormats.description">I plugin dei formati di citazione forniscono agli utenti vari formati con cui visualizzare le citazioni degli articoli.</message>
 	<message key="manager.setup.authorCopyrightNotice.sample"><![CDATA[<h3>Proposta di licenza Creative Commons</h3>
 <h4>1. Proposta per riviste Open Access</h4>
 Gli autori che pubblicano su questa rivista accettano le seguenti condizioni:
@@ -938,10 +959,8 @@ Gli autori che pubblicano su questa rivista accettano le seguenti condizioni:
 	<message key="help.searchReturnResults">Torna ai risultati della ricerca</message>
 	<message key="payment.membership.ends">Finisce</message>
 	<message key="payment.subscription.expires">Scade</message>
-	<message key="plugins.categories.implicitAuth">Plugin per l'autenticazione implicita</message>
 	<message key="submission.reviewForm">Modulo di revisione</message>
 	<message key="submission.reviewFormResponse">Risposta del modulo di revisione</message>
-	<message key="plugins.categories.implicitAuth.description">I plugins di autenticazione implicita possono autenticare gli utenti basandosi sulle intestazioni http.</message>
 	<message key="submission.layout.publicGalleyId">Identificativo pubblico</message>
 	<message key="submission.layout.galleyPublicIdentificationExists">Identificativo pubblico già esistente</message>
 	<message key="about.memberships">Membri</message>
@@ -1059,7 +1078,7 @@ Titolo dello schema di classificazione]]></message>
 	<message key="user.register.reviewerInterests">Identifica le aree di interesse per la revisione (aree e metodi di ricerca):</message>
 	<message key="user.subscriptions.status.needsApprovalDescription">L'abbonamento deve essere controllato prima di poter essere attivato.</message>
 	<message key="payment.authorFees">Tariffe per gli autori</message>
-	<message key="article.pdf.pluginMissing"><![CDATA[<p>Il file PDF selezionato dovrebbe caricarsi qui, se il tuo web browser ha un plugin per un lettore PDF installato (per esempio, una versione recente di <a href="http://www.adobe.com/products/acrobat/readstep2.html">Adobe Acrobat Reader</a>).</p> <p>In alternativa, puoi anche scaricare direttamente il file PDF nel computer, dove puoi aprirlo con un lettore di PDF. Per scaricare il PDF, clicca sul link Download qui sotto.</p> <p>Se vuoi avere maggiori informazioni su come stampare, salvare e lavorare con i PDF, Highwire Press ha preparato un'utile rassegna di <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions sui PDF</a>.</p>]]></message>
+	<message key="article.pdf.pluginMissing"><![CDATA[<p>Il file PDF selezionato dovrebbe caricarsi qui, se il tuo web browser ha un plugin per un lettore PDF installato (per esempio, una versione recente di <a href="https://get.adobe.com/reader/">Adobe Acrobat Reader</a>).</p> <p>In alternativa, puoi anche scaricare direttamente il file PDF nel computer, dove puoi aprirlo con un lettore di PDF. Per scaricare il PDF, clicca sul link Download qui sotto.</p> <p>Se vuoi avere maggiori informazioni su come stampare, salvare e lavorare con i PDF, Highwire Press ha preparato un'utile rassegna di <a href="http://highwire.stanford.edu/help/pdf-faq.dtl">Frequently Asked Questions sui PDF</a>.</p>]]></message>
 	<message key="user.subscriptions.statusInformation">Gli abbonamenti attivi e quelli scaduti sono visualizzati sotto, con la relativa data di scadenza. Inoltre, è possibile aggiungere le seguenti indicazioni di stato a ciascun abbonamento.</message>
 	<message key="user.authorization.copyeditorAssignmentMissing">Accesso negato! Non hai incarico di copyeditor su quest'articolo.</message>
 	<message key="user.authorization.noJournal">Nessuna rivista nel contesto!</message>
@@ -1092,9 +1111,7 @@ Titolo dello schema di classificazione]]></message>
 	<message key="gifts.manageMyGifts">Gestisci i regali</message>
 	<message key="gifts.status.notRedeemed">Disponibile</message>
 	<message key="payment.type.gift">Regalo</message>
-	<message key="plugins.categories.pubIds">Plugin degli identificatori pubblici</message>
 	<message key="gifts.purchaseGiftIndividualSubscription">Regala un abbonamento</message>
-	<message key="plugins.categories.pubIds.description">Questi plugin permettono la gestione di identificatori pubblici</message>
 	<message key="gifts.details">Dettagli del regalo</message>
 	<message key="gifts.note">Note sul regalo</message>
 	<message key="gifts.redeemGift">Riscatta il regalo</message>
@@ -1120,5 +1137,31 @@ Titolo dello schema di classificazione]]></message>
 	<message key="installer.allowFileUploads"><![CDATA[Il tuo server consente il caricamento di file: <strong>{$allowFileUploads}</strong>]]></message>
 	<message key="site.upgradeAvailable.admin"><![CDATA[C'è una nuova versione di OJS! Stai utilizzando OJS {$currentVersion}. La versione più recente è OJS {$latestVersion}. Visita <a href="http://pkp.sfu.ca/ojs_download" target="_new">la pagina dei download</a> per scaricare la versione più recente e conoscere le modalità di aggiornamento.]]></message>
 	<message key="site.upgradeAvailable.manager"><![CDATA[C'è una nuova versione di OJS! Stai utilizzando OJS {$currentVersion}. La versione più recente è OJS {$latestVersion}. Contatta l'amministratore del sito  ({$siteAdminName}, <a href="mailto:{$siteAdminEmail}">{$siteAdminEmail}</a>) per informarlo. Maggiori informazioni sono disponibili <a href="http://pkp.sfu.ca/ojs_download" target="_new">qui</a>.]]></message>
+	<message key="submission.permissions">Permessi</message>
+	<message key="submission.license">Licenza</message>
+	<message key="submission.copyright">Copyright</message>
+	<message key="submission.copyrightHolder">Detentore dei diritti</message>
+	<message key="submission.copyrightYear">Anno del Copyright</message>
+	<message key="submission.copyrightStatement">Copyright (c) {$copyrightYear} {$copyrightHolder}</message>
+	<message key="submission.licenseURLValid">Inserisci una URL valida (compreso http://).</message>
+	<message key="submission.licenseURL">URL della licenza</message>
+	<message key="submission.license.cc.by-nc-nd4">CC Attribuzione - Non commerciale - Non opere derivate 4.0</message>
+	<message key="submission.license.cc.by-nc4">CC Attribuzione - Non commerciale 4.0</message>
+	<message key="submission.license.cc.by-nc-sa4">CC Attribuzione - Non commerciale - Condividi allo stesso modo 4.0</message>
+	<message key="submission.license.cc.by-nd4">CC Attribuzione - Non opere derivate 4.0</message>
+	<message key="submission.license.cc.by4">CC Attribuzione - Non opere derivate</message>
+	<message key="submission.license.cc.by-sa4">CC Attribuzione - Condividi allo stesso modo</message>
+	<message key="submission.license.cc.by-nc-nd4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.]]></message>
+	<message key="submission.license.cc.by-nc4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.]]></message>
+	<message key="submission.license.cc.by-nc-sa4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.]]></message>
+	<message key="submission.license.cc.by-nd4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nd/4.0/">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.]]></message>
+	<message key="submission.license.cc.by4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.]]></message>
+	<message key="submission.license.cc.by-sa4.footer"><![CDATA[<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.]]></message>
+	<message key="article.abstract.views">Viste:</message>
+	<message key="article.nbn">NBN</message>
+	<message key="user.profile.profileImage">Immagine del profilo</message>
+	<message key="user.orcid">Id ORCID</message>
+	<message key="user.profile.form.orcidInvalid">L'identificativo ORCID inserito non è valido.</message>
+	<message key="user.orcid.description"><![CDATA[Gli ORCID iD possono essere assegnati solo dal<a href="http://orcid.org/" target="_blank">Registro ORCID</a>. Devi adeguarti a quello standard per esprimere gli  ORCID iD, e includerela URI completa (es. <em>http://orcid.org/0000-0002-1825-0097</em>).]]></message>
 </locale>
 

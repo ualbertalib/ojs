@@ -1,7 +1,8 @@
 {**
  * templates/editor/issues/issueData.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form for creation and modification of an issue
@@ -79,7 +80,7 @@
 	{/if}
 	<tr valign="top">
 		<td class="label">{fieldLabel name="title" key="issue.title"}</td>
-		<td class="value"><input type="text" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="40" maxlength="120" class="textField" /></td>
+		<td class="value"><input type="text" name="title[{$formLocale|escape}]" id="title" value="{$title[$formLocale]|escape}" size="40" class="textField" /></td>
 	</tr>
 	<tr valign="top">
 		<td class="label">{fieldLabel name="description" key="editor.issues.description"}</td>
@@ -102,6 +103,8 @@
 					{math|assign:"maxYear" equation="x+2" x=$currentYear}
 				{/if}
 				{html_select_date prefix="datePublished" time=$datePublished|default:"---" all_extra="class=\"selectMenu\"" start_year=$minYear end_year=$maxYear year_empty="-" month_empty="-" day_empty="-"}
+				<br/>
+				<input type="checkbox" id="resetArticlePublicationDates" name="resetArticlePublicationDates" />&nbsp;{fieldLabel name="resetArticlePublicationDates" key="editor.issues.resetArticlePublicationDates"}<br/>
 			{else}
 				{translate key="editor.issues.unpublished"}
 			{/if}

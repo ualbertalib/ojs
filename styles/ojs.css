@@ -1,7 +1,8 @@
 /**
  * styles/ojs.css
  *
- * Copyright (c) 2000-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Temporary file based on omp.css for early introduction of
@@ -14,7 +15,7 @@
 /* Includes CSS files necessary for OJS to use new interface components such as Grids */
 
 /* OOCSS - http://github.com/stubbornella/oocss */
-@import url("../lib/pkp/styles/oocss/grids.css");
+@import url("../lib/pkp/styles/lib/oocss/grids.css");
 
 /* Theme */
 @import url("../lib/pkp/styles/themes/default/theme.css");

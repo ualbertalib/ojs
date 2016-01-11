@@ -1,16 +1,17 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
   * plugins/generic/booksForReview/locale/tr_TR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Books for review plugin localization strings for the tr_TR (Turkish) locale.
+  * Books for review plugin localization strings for the tr_TR (Türkçe) locale.
   -->
  
-<locale name="tr_TR" full_name="Türkiye Türkçesi">
+<locale name="tr_TR" full_name="Türkçe">
 
 	<!-- Books For Review Notifications -->
 	<message key="plugins.generic.booksForReview.notification.bookRequested">Kitap istendi. Editör'den onay bekliyor.</message>
@@ -76,7 +77,7 @@
 	<message key="plugins.generic.booksForReview.editor.form.copy">Mevcut Kopya</message>
 	<message key="plugins.generic.booksForReview.editor.form.publisher">Yayıncı</message>
 	<message key="plugins.generic.booksForReview.editor.form.year">Yıl</message>
-	<message key="plugins.generic.booksForReview.editor.form.language">Dil</message>
+	<message key="plugins.generic.booksForReview.editor.form.language">Form Dili</message>
 	<message key="plugins.generic.booksForReview.editor.form.edition">Basım</message>
 	<message key="plugins.generic.booksForReview.editor.form.pages">Sayfalar</message>
 	<message key="plugins.generic.booksForReview.editor.form.isbn">ISBN</message>
@@ -190,4 +191,5 @@
 	<message key="plugins.generic.booksForReview.field.title">Başlık</message>
 	<message key="plugins.generic.booksForReview.field.description">Açıklama</message>
 
+	<message key="plugins.generic.booksForReview.reminderTask.name">Kitaplar için değerlendirme hatırlatması</message>
 </locale>

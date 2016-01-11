@@ -3,7 +3,8 @@
 /**
  * @file plugins/citationFormats/abnt/AbntCitationPlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * With contributions from by Lepidus Tecnologia
  *
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
@@ -96,6 +97,8 @@ class AbntCitationPlugin extends CitationPlugin {
 	function displayCitation(&$article, &$issue, &$journal) {
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->register_modifier('mb_upper', array('String', 'strtoupper'));
+		$templateMgr->register_modifier('abnt_date_format', array($this, 'abntDateFormat'));
+		$templateMgr->register_modifier('abnt_date_format_with_day', array($this, 'abntDateFormatWithDay'));
 		return parent::displayCitation($article, $issue, $journal);
 	}
 
@@ -181,6 +184,46 @@ class AbntCitationPlugin extends CitationPlugin {
 		}
 
 		return $smarty->smartyUrl($params, $smarty);
+	}
+
+	/**
+	 * @function abntDateFormat Format date taking in consideration ABNT month abbreviations
+	 * @param $string string
+	 * @return string
+	 */
+	function abntDateFormat($string) {
+		if (is_numeric($string)) {
+			// it is a numeric string, we handle it as timestamp
+			$timestamp = (int)$string;
+		} else {
+			$timestamp = strtotime($string);
+		}
+		$format = "%B %Y";
+		if (String::strlen(strftime("%B", $timestamp)) > 4) {
+			$format = "%b. %Y";
+		}
+
+		return String::strtolower(strftime($format, $timestamp));
+	}
+
+	/**
+	 * @function abntDateFormatWithDay Format date taking in consideration ABNT month abbreviations
+	 * @param $string string
+	 * @return string
+	 */
+	function abntDateFormatWithDay($string) {
+		if (is_numeric($string)) {
+			// it is a numeric string, we handle it as timestamp
+			$timestamp = (int)$string;
+		} else {
+			$timestamp = strtotime($string);
+		}
+		$format = "%d %B %Y";
+		if (String::strlen(strftime("%B", $timestamp)) > 4) {
+			$format = "%d %b. %Y";
+		}
+
+		return String::strtolower(strftime($format, $timestamp));
 	}
 }
 

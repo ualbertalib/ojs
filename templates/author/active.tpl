@@ -1,7 +1,8 @@
 {**
  * templates/author/active.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Show the details of active submissions.
@@ -81,8 +82,8 @@
 						{if $completedPaymentDAO->hasPaidPublication($submission->getJournalId(), $submission->getId())}
 							{translate key="payment.publication.publicationPaid}
 						{else}
-						 	<a href="{url op="payPublicationFee" path="$articleId"}" class="action">{translate key="payment.publication.payPublication"}</a>
-						 {/if}
+							<a href="{url op="payPublicationFee" path="$articleId"}" class="action">{translate key="payment.publication.payPublication"}</a>
+						{/if}
 				{/if}		
 		{/if}
 			</td>

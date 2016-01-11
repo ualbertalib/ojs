@@ -1,18 +1,21 @@
 {**
  * plugins/generic/staticPages/editStaticPageForm.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Form for editing a Static Page
  *
  *}
+{strip}
 {if $staticPageId}
 	{assign var="pageTitle" value="plugins.generic.staticPages.editStaticPage"}
 {else}
 	{assign var="pageTitle" value="plugins.generic.staticPages.addStaticPage"}
 {/if}
 {include file="common/header.tpl"}
+{/strip}
 
 {translate key="plugins.generic.staticPages.editInstructions"}
 <br />
@@ -20,7 +23,7 @@
 <br />
 <br />
 
-<form method="post" name="editStaticPageForm" action="{if $staticPageId}{plugin_url path="save"|to_array:$staticPageId}{else}{plugin_url path="save"}{/if}" >
+<form method="post" id="editStaticPageForm" action="{if $staticPageId}{plugin_url path="save"|to_array:$staticPageId}{else}{plugin_url path="save"}{/if}" >
 <input type="hidden" name="edit" value="1" />
 {if $staticPageId}
 	<input type="hidden" name="staticPageId" value="{$staticPageId}" />
@@ -33,9 +36,9 @@
 	<tr valign="top">
 		<td width="20%" class="label">{fieldLabel name="formLocale" key="form.formLanguage"}</td>
 		<td width="80%" class="value">
-			{if $staticPageId}{plugin_url|assign:"staticPageEditPath" path="edit"|to_array:$staticPageId}
-			{else}{plugin_url|assign:"staticPageEditPath" path="edit"|to_array:$staticPageId}{/if}
-			{form_language_chooser form="editStaticPageForm" path=$staticPageEditPath}
+			{if $staticPageId}{plugin_url|assign:"staticPageEditUrl" path="edit"|to_array:$staticPageId}
+			{else}{plugin_url|assign:"staticPageEditUrl" path="edit"|to_array:$staticPageId}{/if}
+			{form_language_chooser form="editStaticPageForm" url=$staticPageEditUrl}
 			<span class="instruct">{translate key="form.formLanguage.description"}</span>
 		</td>
 	</tr>

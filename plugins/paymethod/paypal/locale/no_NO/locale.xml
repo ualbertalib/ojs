@@ -4,13 +4,14 @@
 <!--
   * plugins/paymethod/paypal/locale/no_NO/locale.xml
   *
+  * Copyright (c) 2013-2015 Simon Fraser University Library
   * Copyright (c) 2006-2009 Gunther Eysenbach, Juan Pablo Alperin, MJ Suhonos
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Localization strings for the en_US (U.S. English) locale.
+  * Localization strings for the no_NO (Norsk) locale.
   -->
  
-<locale name="en_US" full_name="U.S. English">
+<locale name="no_NO" full_name="Norsk">
 	<message key="plugins.paymethod.paypal.displayName">Betaling med PayPal</message>
 
 	<!-- PayPal Settings Form -->

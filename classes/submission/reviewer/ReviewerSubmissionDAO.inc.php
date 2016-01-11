@@ -3,7 +3,8 @@
 /**
  * @file classes/submission/reviewer/ReviewerSubmissionDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ReviewerSubmissionDAO
@@ -190,6 +191,8 @@ class ReviewerSubmissionDAO extends DAO {
 
 	/**
 	 * Get all submissions for a reviewer of a journal.
+	 * FIXME: Beware of bug #8872 WRT this function. There is currently
+	 * no reviewer search form so the search options here are dead code.
 	 * @param $reviewerId int
 	 * @param $journalId int
 	 * @param $rangeInfo object

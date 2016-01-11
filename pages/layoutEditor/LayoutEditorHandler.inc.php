@@ -3,7 +3,8 @@
 /**
  * @file pages/layoutEditor/LayoutEditorHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LayoutEditorHandler
@@ -84,6 +85,12 @@ class LayoutEditorHandler extends Handler {
 
 		$rangeInfo = $this->getRangeInfo('submissions');
 		$submissions = $layoutEditorSubmissionDao->getSubmissions($user->getId(), $journal->getId(), $searchField, $searchMatch, $search, $dateSearchField, $fromDate, $toDate, $active, $rangeInfo, $sort, $sortDirection);
+
+		// If only result is returned from a search, fast-forward to it
+		if ($search && $submissions && $submissions->getCount() == 1) {
+			$submission =& $submissions->next();
+			$request->redirect(null, null, 'submission', array($submission->getId()));
+		}
 
 		$templateMgr =& TemplateManager::getManager();
 		$templateMgr->assign('pageToDisplay', $page);

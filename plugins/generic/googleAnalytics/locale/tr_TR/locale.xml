@@ -1,17 +1,18 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
 
 <!--
   * plugins/generic/googleAnalytics/locale/tr_TR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
-  * Google Analytics plugin localization strings for the tr_TR (Turkish) locale.
+  * Google Analytics plugin localization strings for the tr_TR (Türkçe) locale.
   *
   -->
  
-<locale name="tr_TR" full_name="Türkiye Türkçesi">
+<locale name="tr_TR" full_name="Türkçe">
 
 	<!-- Google Analytics -->
 	<message key="plugins.generic.googleAnalytics.displayName">Google Analitk Eklentisi</message>
@@ -31,4 +32,5 @@
 	<message key="plugins.generic.googleAnalytics.authorAccount">Google Analitik hesap numarası</message>
 	<message key="plugins.generic.googleAnalytics.authorAccount.description">Google Analytics kullanarak yayımlanmış makale okuyucusunu izlemek için, buraya bir hesap numarası girin (Örneğin; UA-xxxxxx-x) .</message>
 	<message key="plugins.generic.googleAnalytics.authorAccountInvalid">Gönderi yazarı için girilen bir veya birden çok Google Analitik hesap numarası geçerli değil.</message>
+	<message key="plugins.generic.googleAnalytics.manager.settings.analytics">Evrensel analtik için yeni izleme kodu (analytics.js)</message>
 </locale>

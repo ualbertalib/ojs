@@ -3,8 +3,12 @@
 /**
  * @file classes/submission/sectionEditor/SectionEditorSubmissionDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
+ *
+ * With contributions from:
+ *  - 2014 Instituto Nacional de Investigacion y Tecnologia Agraria y Alimentaria
  *
  * @class SectionEditorSubmissionDAO
  * @ingroup submission
@@ -347,6 +351,9 @@ class SectionEditorSubmissionDAO extends DAO {
 			'cleanTitle', // Article title
 			'cleanTitle',
 			$locale,
+			'title', // Article title
+			'title',
+			$locale,
 			$journalId,
 			$sectionEditorId
 		);
@@ -355,8 +362,22 @@ class SectionEditorSubmissionDAO extends DAO {
 
 		if (!empty($search)) switch ($searchField) {
 			case SUBMISSION_FIELD_ID:
-				$params[] = (int) $search;
-				$searchSql = ' AND a.article_id = ?';
+				switch ($searchMatch) {
+					case 'is':
+						$params[] = (int) $search;
+						$searchSql = ' AND a.article_id = ?';
+						break;
+					case 'contains':
+						$search = '%' . $search . '%';
+						$params[] = $search;
+						$searchSql = ' AND CONCAT(a.article_id) LIKE ?';
+						break;
+					case 'startsWith':
+						$search = $search . '%';
+						$params[] = $search;
+						$searchSql = 'AND CONCAT(a.article_id) LIKE ?';
+						break;
+				}
 				break;
 			case SUBMISSION_FIELD_TITLE:
 				if ($searchMatch === 'is') {
@@ -418,7 +439,7 @@ class SectionEditorSubmissionDAO extends DAO {
 				scf.date_completed as copyedit_completed,
 				spr.date_completed as proofread_completed,
 				sle.date_completed as layout_completed,
-				SUBSTRING(COALESCE(atl.setting_value, atpl.setting_value) FROM 1 FOR 255) AS submission_title,
+				SUBSTRING(COALESCE(actl.setting_value, actpl.setting_value) FROM 1 FOR 255) AS submission_clean_title,
 				aap.last_name AS author_name,
 				e.can_review AS can_review,
 				e.can_edit AS can_edit,
@@ -441,6 +462,8 @@ class SectionEditorSubmissionDAO extends DAO {
 				LEFT JOIN section_settings stl ON (s.section_id = stl.section_id AND stl.setting_name = ? AND stl.locale = ?)
 				LEFT JOIN section_settings sapl ON (s.section_id = sapl.section_id AND sapl.setting_name = ? AND sapl.locale = ?)
 				LEFT JOIN section_settings sal ON (s.section_id = sal.section_id AND sal.setting_name = ? AND sal.locale = ?)
+				LEFT JOIN article_settings actpl ON (actpl.article_id = a.article_id AND actpl.setting_name = ? AND actpl.locale = a.locale)
+				LEFT JOIN article_settings actl ON (a.article_id = actl.article_id AND actl.setting_name = ? AND actl.locale = ?)
 				LEFT JOIN article_settings atpl ON (atpl.article_id = a.article_id AND atpl.setting_name = ? AND atpl.locale = a.locale)
 				LEFT JOIN article_settings atl ON (a.article_id = atl.article_id AND atl.setting_name = ? AND atl.locale = ?)
 				LEFT JOIN edit_decisions edec ON (a.article_id = edec.article_id)
@@ -575,15 +598,17 @@ class SectionEditorSubmissionDAO extends DAO {
 			'SELECT	COUNT(*) AS review_count
 			FROM	articles a
 				LEFT JOIN edit_assignments e ON (a.article_id = e.article_id)
+				LEFT JOIN edit_assignments e2 ON (a.article_id = e2.article_id AND e.edit_id < e2.edit_id AND e2.editor_id=?)
 				LEFT JOIN edit_decisions d ON (a.article_id = d.article_id)
 				LEFT JOIN edit_decisions d2 ON (a.article_id = d2.article_id AND d.edit_decision_id < d2.edit_decision_id)
 			WHERE	a.journal_id = ?
 				AND e.editor_id = ?
+				AND e2.edit_id IS NULL
 				AND a.submission_progress = 0
 				AND a.status = ' . STATUS_QUEUED . '
 				AND d2.edit_decision_id IS NULL
 				AND (d.decision IS NULL OR d.decision <> ' . SUBMISSION_EDITOR_DECISION_ACCEPT . ')',
-			array((int) $journalId, (int) $sectionEditorId)
+			array((int) $sectionEditorId, (int) $journalId, (int) $sectionEditorId)
 		);
 		$submissionsCount[0] = $result->Fields('review_count');
 		$result->Close();
@@ -595,15 +620,17 @@ class SectionEditorSubmissionDAO extends DAO {
 			'SELECT	COUNT(*) AS editing_count
 			FROM	articles a
 				LEFT JOIN edit_assignments e ON (a.article_id = e.article_id)
+				LEFT JOIN edit_assignments e2 ON (a.article_id = e2.article_id AND e.edit_id < e2.edit_id AND e2.editor_id=?)
 				LEFT JOIN edit_decisions d ON (a.article_id = d.article_id)
 				LEFT JOIN edit_decisions d2 ON (a.article_id = d2.article_id AND d.edit_decision_id < d2.edit_decision_id)
 			WHERE	a.journal_id = ?
 				AND e.editor_id = ?
+				AND e2.edit_id IS NULL
 				AND a.submission_progress = 0
 				AND a.status = ' . STATUS_QUEUED . '
 				AND d2.edit_decision_id IS NULL
 				AND d.decision = ' . SUBMISSION_EDITOR_DECISION_ACCEPT,
-			array((int) $journalId, (int) $sectionEditorId)
+			array((int) $sectionEditorId, (int) $journalId, (int) $sectionEditorId)
 		);
 		$submissionsCount[1] = $result->Fields('editing_count');
 		$result->Close();
@@ -784,53 +811,38 @@ class SectionEditorSubmissionDAO extends DAO {
 				break;
 		}
 
+		$interestJoinSql = ($joinInterests ? '
+					LEFT JOIN user_interests ui ON (ui.user_id = u.user_id)
+					LEFT JOIN controlled_vocab_entry_settings cves ON (cves.controlled_vocab_entry_id = ui.controlled_vocab_entry_id) ':'');
 
-		// If we are sorting a column, we'll need to configure the additional join conditions
-		$sortSelect = '';
-		$joinAll = $joinComplete = $joinIncomplete = false;
-		$selectQuality = $selectLatest = $selectComplete = $selectAverage = $selectIncomplete = false;
-		if($sortBy) switch($sortBy) {
-			case 'quality':
-				$selectQuality = $joinAll = true;
-				break;
-			case 'latest':
-				$selectLatest = $joinAll = true;
-				break;
-			case 'done':
-				$selectComplete = $joinComplete = true;
-				break;
-			case 'average':
-				$selectAverage = $joinComplete = true;
-				break;
-			case 'active':
-				$selectIncomplete = $joinIncomplete = true;
-				break;
-		}
-
-		$sql = 'SELECT DISTINCT
+		$result =& $this->retrieveRange(
+			'SELECT DISTINCT
 				u.user_id,
 				u.last_name,
 				ar.review_id,
-				MAX(ar.declined) ' . // MAX needed for PSQL (bug #6007)
-				($selectQuality ? ', AVG(ac.quality) AS average_quality ' : '') .
-				($selectLatest ? ', MAX(ac.date_notified) AS latest ' : '') .
-				($selectComplete ? ', COUNT(ra.review_id) AS completed ' : '') .
-				($selectAverage ? ', AVG(ra.date_completed-ra.date_notified) AS average ' : '') .
-				($selectIncomplete ? ', COUNT(ai.review_id) AS incomplete ' : '') .
-			'FROM roles r, users u
-				LEFT JOIN review_assignments ar ON (ar.reviewer_id = u.user_id AND ar.cancelled = 0 AND ar.submission_id = ? AND ar.round = ?) ' .
-				($joinInterests ? 'LEFT JOIN user_interests ui ON (ui.user_id = u.user_id)
-				LEFT JOIN controlled_vocab_entry_settings cves ON (cves.controlled_vocab_entry_id = ui.controlled_vocab_entry_id) ':'') .
-		 		($joinAll ? 'LEFT JOIN review_assignments ac ON (ac.reviewer_id = u.user_id) ':'') .
-				($joinComplete ? 'LEFT JOIN review_assignments ra ON (ra.reviewer_id = u.user_id AND ra.date_completed IS NOT NULL) ':'') .
-				($joinIncomplete ? 'LEFT JOIN review_assignments ai ON (ai.reviewer_id = u.user_id AND ai.date_notified IS NOT NULL AND ai.cancelled = 0 AND ai.date_completed IS NULL) ':'') .
-			'WHERE u.user_id = r.user_id AND
+				(SELECT AVG(ra.quality) FROM review_assignments ra WHERE ra.reviewer_id = u.user_id) AS average_quality,
+				(SELECT COUNT(ac.review_id) FROM review_assignments ac WHERE ac.reviewer_id = u.user_id AND ac.date_completed IS NOT NULL AND ac.cancelled = 0) AS completed,
+				(SELECT COUNT(ac.review_id) FROM review_assignments ac, articles a WHERE
+					ac.reviewer_id = u.user_id AND
+					ac.submission_id = a.article_id AND
+					ac.date_notified IS NOT NULL AND
+					ac.date_completed IS NULL AND
+					ac.cancelled = 0 AND
+					ac.declined = 0 AND
+					a.status <> '.STATUS_QUEUED.') AS incomplete,
+				(SELECT MAX(ac.date_notified) FROM review_assignments ac WHERE ac.reviewer_id = u.user_id AND ac.date_completed IS NOT NULL) AS latest,
+				(SELECT AVG(ac.date_completed-ac.date_notified) FROM review_assignments ac WHERE ac.reviewer_id = u.user_id AND ac.date_completed IS NOT NULL AND ac.cancelled = 0) AS average
+			 FROM users u
+				LEFT JOIN review_assignments ra ON (ra.reviewer_id = u.user_id)
+				LEFT JOIN review_assignments ar ON (ar.reviewer_id = u.user_id AND ar.cancelled = 0 AND ar.submission_id = ? AND ar.round = ?)
+				LEFT JOIN roles r ON (r.user_id = u.user_id)
+				LEFT JOIN articles a ON (ra.submission_id = a.article_id)
+				'.$interestJoinSql.'
+				WHERE u.user_id = r.user_id AND
 				r.journal_id = ? AND
-				r.role_id = ? ' . $searchSql . ' GROUP BY u.user_id, u.last_name, ar.review_id' .
-			($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : '');
-
-		$result =& $this->retrieveRange(
-			$sql, $paramArray, $rangeInfo
+				r.role_id = ? ' . $searchSql . 'GROUP BY u.user_id, u.last_name, ar.review_id' .
+			($sortBy?(' ORDER BY ' . $this->getSortMapping($sortBy) . ' ' . $this->getDirectionMapping($sortDirection)) : ''),
+			$paramArray, $rangeInfo
 		);
 
 		$returner = new DAOResultFactory($result, $this, '_returnReviewerUserFromRow');
@@ -838,7 +850,7 @@ class SectionEditorSubmissionDAO extends DAO {
 	}
 
 	function &_returnReviewerUserFromRow(&$row) { // FIXME
-		$user =& $this->userDao->getUser($row['user_id']);
+		$user =& $this->userDao->getById($row['user_id']);
 		$user->review_id = $row['review_id'];
 		$user->declined = $row['declined'];
 
@@ -893,89 +905,43 @@ class SectionEditorSubmissionDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve a list of all copyeditors not assigned to the specified article.
-	 * @param $journalId int
-	 * @param $articleId int
-	 * @return array matching Users
-	 */
-	function &getCopyeditorsNotAssignedToArticle($journalId, $articleId, $searchType = null, $search = null, $searchMatch = null) {
-		$users = array();
-
-		$paramArray = array(ASSOC_TYPE_USER, 'interest', $articleId, ASSOC_TYPE_ARTICLE, 'SIGNOFF_COPYEDITING_INITIAL', $journalId, RoleDAO::getRoleIdFromPath('copyeditor'));
-		$searchSql = '';
-
-		$searchTypeMap = array(
-			USER_FIELD_FIRSTNAME => 'u.first_name',
-			USER_FIELD_LASTNAME => 'u.last_name',
-			USER_FIELD_USERNAME => 'u.username',
-			USER_FIELD_EMAIL => 'u.email',
-			USER_FIELD_INTERESTS => 'cves.setting_value'
-		);
-
-		if (isset($search) && isset($searchTypeMap[$searchType])) {
-			$fieldName = $searchTypeMap[$searchType];
-			switch ($searchMatch) {
-				case 'is':
-					$searchSql = "AND LOWER($fieldName) = LOWER(?)";
-					$paramArray[] = $search;
-					break;
-				case 'contains':
-					$searchSql = "AND LOWER($fieldName) LIKE LOWER(?)";
-					$paramArray[] = '%' . $search . '%';
-					break;
-				case 'startsWith':
-					$searchSql = "AND LOWER($fieldName) LIKE LOWER(?)";
-					$paramArray[] = $search . '%';
-					break;
-			}
-		} elseif (isset($search)) switch ($searchType) {
-			case USER_FIELD_USERID:
-				$searchSql = 'AND user_id=?';
-				$paramArray[] = $search;
-				break;
-			case USER_FIELD_INITIAL:
-				$searchSql = 'AND (LOWER(last_name) LIKE LOWER(?) OR LOWER(username) LIKE LOWER(?))';
-				$paramArray[] = $search . '%';
-				$paramArray[] = $search . '%';
-				break;
-		}
-
-		$result =& $this->retrieve(
-			'SELECT	u.*
-			FROM	users u
-				LEFT JOIN controlled_vocabs cv ON (cv.assoc_type = ? AND cv.assoc_id = u.user_id AND cv.symbolic = ?)
-				LEFT JOIN controlled_vocab_entries cve ON (cve.controlled_vocab_id = cv.controlled_vocab_id)
-				LEFT JOIN controlled_vocab_entry_settings cves ON (cves.controlled_vocab_entry_id = cve.controlled_vocab_entry_id)
-				LEFT JOIN roles r ON (r.user_id = u.user_id)
-				LEFT JOIN signoffs sci ON (sci.user_id = u.user_id AND sci.assoc_id = ? AND sci.assoc_type = ? AND sci.symbolic = ?)
-			WHERE	r.journal_id = ? AND
-				r.role_id = ? AND
-				sci.assoc_id IS NULL
-				' . $searchSql . '
-			ORDER BY last_name, first_name',
-			$paramArray
-		);
-
-		while (!$result->EOF) {
-			$users[] =& $this->userDao->_returnUserFromRowWithData($result->GetRowAssoc(false));
-			$result->moveNext();
-		}
-
-		$result->Close();
-		unset($result);
-
-		return $users;
-	}
-
-	/**
 	 * Get the assignment counts and last assigned date for all layout editors of the given journal.
+	 * @param $journalId int Journal ID
+	 * @param $layoutEditorId int Optional layout editor ID
 	 * @return array
 	 */
-	function getLayoutEditorStatistics($journalId) {
-		$statistics = Array();
+	function getLayoutEditorStatistics($journalId, $layoutEditorId = null) {
+		$statistics = array();
+
+		// WARNING: This is reused for the next two queries
+		$params = array(
+			(int) $journalId,
+			'SIGNOFF_LAYOUT',
+			'SIGNOFF_PROOFREADING_LAYOUT',
+			ASSOC_TYPE_ARTICLE,
+			ASSOC_TYPE_ARTICLE
+		);
+		if ($layoutEditorId) $params[] = (int) $layoutEditorId;
 
 		// Get counts of completed submissions
-		$result =& $this->retrieve('SELECT sl.user_id AS editor_id, COUNT(sl.assoc_id) AS complete FROM signoffs sl, articles a INNER JOIN signoffs sp ON (sp.assoc_id = a.article_id) WHERE sl.assoc_id = a.article_id AND (sl.date_completed IS NOT NULL AND sp.date_completed IS NOT NULL) AND sl.date_notified IS NOT NULL AND a.journal_id = ? AND sl.symbolic = ? AND sp.symbolic = ? AND sl.assoc_type = ? AND sp.assoc_type = ? GROUP BY sl.user_id', array($journalId, 'SIGNOFF_LAYOUT', 'SIGNOFF_PROOFREADING_LAYOUT', ASSOC_TYPE_ARTICLE, ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sl.user_id AS editor_id,
+				COUNT(sl.assoc_id) AS complete
+			FROM	signoffs sl,
+				articles a
+				INNER JOIN signoffs sp ON (sp.assoc_id = a.article_id)
+			WHERE	sl.assoc_id = a.article_id AND
+				a.status <> ' . STATUS_QUEUED . ' AND
+				sl.date_notified IS NOT NULL AND
+				a.journal_id = ? AND
+				sl.symbolic = ? AND
+				sp.symbolic = ? AND
+				sl.assoc_type = ? AND
+				sp.assoc_type = ?
+				' . ($layoutEditorId?' AND sl.user_id = ?':'') . '
+			GROUP BY sl.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -987,7 +953,24 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get counts of incomplete submissions
-		$result =& $this->retrieve('SELECT sl.user_id AS editor_id, COUNT(sl.assoc_id) AS complete FROM signoffs sl, articles a INNER JOIN signoffs sp ON (sp.assoc_id = a.article_id) WHERE sl.assoc_id = a.article_id AND (sl.date_completed IS NULL AND sp.date_completed IS NULL) AND sl.date_notified IS NOT NULL AND a.journal_id = ? AND sl.symbolic = ? AND sp.symbolic = ? AND sl.assoc_type = ? AND sp.assoc_type = ? GROUP BY sl.user_id', array($journalId, 'SIGNOFF_LAYOUT', 'SIGNOFF_PROOFREADING_LAYOUT', ASSOC_TYPE_ARTICLE, ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sl.user_id AS editor_id,
+				COUNT(sl.assoc_id) AS incomplete
+			FROM	signoffs sl,
+				articles a
+				INNER JOIN signoffs sp ON (sp.assoc_id = a.article_id)
+			WHERE	sl.assoc_id = a.article_id AND
+				a.status = ' . STATUS_QUEUED . ' AND
+				sl.date_notified IS NOT NULL AND
+				a.journal_id = ? AND
+				sl.symbolic = ? AND
+				sp.symbolic = ? AND
+				sl.assoc_type = ? AND
+				sp.assoc_type = ?
+				' . ($layoutEditorId?' AND sl.user_id = ?':'') . '
+			GROUP BY sl.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -999,7 +982,26 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get last assignment date
-		$result =& $this->retrieve('SELECT sl.user_id AS editor_id, MAX(sl.date_notified) AS last_assigned FROM signoffs sl, articles a WHERE sl.assoc_id=a.article_id AND a.journal_id=? AND sl.symbolic = ? AND sl.assoc_type = ? GROUP BY sl.user_id', array($journalId, 'SIGNOFF_LAYOUT', ASSOC_TYPE_ARTICLE));
+		$params = array(
+			(int) $journalId,
+			'SIGNOFF_LAYOUT',
+			ASSOC_TYPE_ARTICLE
+		);
+		if ($layoutEditorId) $params[] = (int) $layoutEditorId;
+
+		$result =& $this->retrieve(
+			'SELECT	sl.user_id AS editor_id,
+				MAX(sl.date_notified) AS last_assigned
+			FROM	signoffs sl,
+				articles a
+			WHERE	sl.assoc_id = a.article_id AND
+				a.journal_id = ? AND
+				sl.symbolic = ? AND
+				sl.assoc_type = ?
+				' . ($layoutEditorId?' AND sl.user_id = ?':'') . '
+			GROUP BY sl.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1015,10 +1017,11 @@ class SectionEditorSubmissionDAO extends DAO {
 
 	/**
 	 * Get the last assigned and last completed dates for all reviewers of the given journal.
+	 * @param $journalId int Journal ID
 	 * @return array
 	 */
 	function getReviewerStatistics($journalId) {
-		$statistics = Array();
+		$statistics = array();
 
 		// Get latest review request date
 		$result =& $this->retrieve(
@@ -1040,15 +1043,17 @@ class SectionEditorSubmissionDAO extends DAO {
 		$result->Close();
 		unset($result);
 
-		// Get completion status
+		// Get incomplete submission count
 		$result =& $this->retrieve(
-			'SELECT	r.reviewer_id, COUNT(*) AS incomplete
-			FROM	review_assignments r,
+			'SELECT r.reviewer_id, COUNT(*) AS incomplete
+			FROM    review_assignments r,
 				articles a
-			WHERE	r.submission_id = a.article_id AND
+			WHERE   r.submission_id = a.article_id AND
 				r.date_notified IS NOT NULL AND
 				r.date_completed IS NULL AND
 				r.cancelled = 0 AND
+				r.declined = 0 AND
+				r.date_completed IS NULL AND r.declined <> 1 AND (r.cancelled = 0 OR r.cancelled IS NULL) AND a.status = ' . STATUS_QUEUED . ' AND
 				a.journal_id = ?
 			GROUP BY r.reviewer_id',
 			(int) $journalId
@@ -1102,13 +1107,37 @@ class SectionEditorSubmissionDAO extends DAO {
 
 	/**
 	 * Get the assignment counts and last assigned date for all copyeditors of the given journal.
+	 * @param $journalId int Journal ID
+	 * @param $copyeditorId int Optional copyeditor ID
 	 * @return array
 	 */
-	function getCopyeditorStatistics($journalId) {
-		$statistics = Array();
+	function getCopyeditorStatistics($journalId, $copyeditorId = null) {
+		$statistics = array();
+
+		// WARNING: This is reused for the next two queries.
+		$params = array(
+			(int) $journalId,
+			'SIGNOFF_COPYEDITING_INITIAL',
+			ASSOC_TYPE_ARTICLE
+		);
+		if ($copyeditorId) $params[] = (int) $copyeditorId;
 
 		// Get counts of completed submissions
-		$result =& $this->retrieve('SELECT sc.user_id AS editor_id, COUNT(sc.assoc_id) AS complete FROM signoffs sc, articles a WHERE sc.assoc_id = a.article_id AND sc.date_completed IS NOT NULL AND a.journal_id = ? AND sc.symbolic = ? AND sc.assoc_type = ? GROUP BY sc.user_id', array($journalId, 'SIGNOFF_COPYEDITING_FINAL', ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sc.user_id AS editor_id,
+				COUNT(sc.assoc_id) AS complete
+			FROM	signoffs sc,
+				articles a
+				LEFT JOIN published_articles pa ON (pa.article_id = a.article_id)
+			WHERE	sc.assoc_id = a.article_id AND
+				(pa.date_published IS NOT NULL AND a.status <> ' . STATUS_QUEUED . ') AND
+				a.journal_id = ? AND
+				sc.symbolic = ? AND
+				sc.assoc_type = ?
+				' . ($copyeditorId?' AND sc.user_id = ?':'') . '
+			GROUP BY sc.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1120,7 +1149,23 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get counts of incomplete submissions
-		$result =& $this->retrieve('SELECT sc.user_id AS editor_id, COUNT(sc.assoc_id) AS incomplete FROM signoffs sc, articles a WHERE sc.assoc_id = a.article_id AND sc.date_completed IS NULL AND a.journal_id = ? AND sc.symbolic = ? AND sc.assoc_type = ? GROUP BY sc.user_id', array($journalId, 'SIGNOFF_COPYEDITING_FINAL', ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sc.user_id AS editor_id,
+				COUNT(sc.assoc_id) AS incomplete
+			FROM	signoffs sc,
+				articles a
+				LEFT JOIN published_articles pa ON (pa.article_id = a.article_id)
+				LEFT JOIN issues i ON (i.issue_id = pa.issue_id)
+			WHERE	sc.assoc_id = a.article_id AND
+				NOT (pa.date_published IS NOT NULL AND a.status <> ' . STATUS_QUEUED . ') AND
+				i.date_published IS NULL AND a.status = ' . STATUS_QUEUED . ' AND
+				a.journal_id = ? AND
+				sc.symbolic = ? AND
+				sc.assoc_type = ?
+				' . ($copyeditorId?' AND sc.user_id = ?':'') . '
+			GROUP BY sc.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1132,7 +1177,26 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get last assignment date
-		$result =& $this->retrieve('SELECT sc.user_id AS editor_id, MAX(sc.date_notified) AS last_assigned FROM signoffs sc, articles a WHERE sc.assoc_id = a.article_id AND a.journal_id = ? AND sc.symbolic = ? AND sc.assoc_type = ? GROUP BY sc.user_id', array($journalId, 'SIGNOFF_COPYEDITING_INITIAL', ASSOC_TYPE_ARTICLE));
+		$params = array(
+			(int) $journalId,
+			'SIGNOFF_COPYEDITING_INITIAL',
+			ASSOC_TYPE_ARTICLE
+		);
+		if ($copyeditorId) $params[] = (int) $copyeditorId;
+
+		$result =& $this->retrieve(
+			'SELECT	sc.user_id AS editor_id,
+				MAX(sc.date_notified) AS last_assigned
+			FROM	signoffs sc,
+				articles a
+			WHERE	sc.assoc_id = a.article_id AND
+				a.journal_id = ? AND
+				sc.symbolic = ? AND
+				sc.assoc_type = ?
+				' . ($copyeditorId?' AND sc.user_id = ?':'') . '
+			GROUP BY sc.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1148,13 +1212,37 @@ class SectionEditorSubmissionDAO extends DAO {
 
 	/**
 	 * Get the assignment counts and last assigned date for all proofreaders of the given journal.
+	 * @param $journalId int Journal ID
+	 * @param $proofreaderId int Optional proofreader ID
 	 * @return array
 	 */
-	function getProofreaderStatistics($journalId) {
-		$statistics = Array();
+	function getProofreaderStatistics($journalId, $proofreaderId = null) {
+		$statistics = array();
+
+		// WARNING: This is used in the next three queries
+		$params = array(
+			(int) $journalId,
+			'SIGNOFF_PROOFREADING_PROOFREADER',
+			ASSOC_TYPE_ARTICLE
+		);
+		if ($proofreaderId) $params[] = (int) $proofreaderId;
 
 		// Get counts of completed submissions
-		$result =& $this->retrieve('SELECT sp.user_id AS editor_id, COUNT(sp.assoc_id) AS complete FROM signoffs sp, articles a WHERE sp.assoc_id = a.article_id AND sp.date_completed IS NOT NULL AND a.journal_id = ? AND sp.symbolic = ? AND sp.assoc_type = ? GROUP BY sp.user_id', array($journalId, 'SIGNOFF_PROOFREADING_PROOFREADER', ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sp.user_id AS editor_id,
+				COUNT(sp.assoc_id) AS complete
+			FROM	signoffs sp,
+				articles a
+			WHERE	sp.assoc_id = a.article_id AND
+				sp.date_completed IS NOT NULL AND
+				a.journal_id = ? AND
+				sp.symbolic = ? AND
+				sp.assoc_type = ? AND
+				a.status <> ' . STATUS_QUEUED . '
+				' . ($proofreaderId?' AND sp.user_id = ?':'') . '
+			GROUP BY sp.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1166,7 +1254,22 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get counts of incomplete submissions
-		$result =& $this->retrieve('SELECT sp.user_id AS editor_id, COUNT(sp.assoc_id) AS incomplete FROM signoffs sp, articles a WHERE sp.assoc_id = a.article_id AND sp.date_completed IS NULL AND a.journal_id = ? AND sp.symbolic = ? AND sp.assoc_type = ? GROUP BY sp.user_id', array($journalId, 'SIGNOFF_PROOFREADING_PROOFREADER', ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sp.user_id AS editor_id,
+				COUNT(sp.assoc_id) AS incomplete
+			FROM	signoffs sp,
+				articles a
+			WHERE	sp.assoc_id = a.article_id AND
+				sp.date_completed IS NULL AND
+				sp.date_notified IS NOT NULL AND
+				a.status = ' . STATUS_QUEUED . ' AND
+				a.journal_id = ? AND
+				sp.symbolic = ? AND
+				sp.assoc_type = ?
+				' . ($proofreaderId?' AND sp.user_id = ?':'') . '
+			GROUP BY sp.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1178,7 +1281,19 @@ class SectionEditorSubmissionDAO extends DAO {
 		unset($result);
 
 		// Get last assignment date
-		$result =& $this->retrieve('SELECT sp.user_id AS editor_id, MAX(sp.date_notified) AS last_assigned FROM signoffs sp, articles a WHERE sp.assoc_id = a.article_id AND a.journal_id = ? AND sp.symbolic = ? AND sp.assoc_type = ? GROUP BY sp.user_id', array($journalId, 'SIGNOFF_PROOFREADING_PROOFREADER', ASSOC_TYPE_ARTICLE));
+		$result =& $this->retrieve(
+			'SELECT	sp.user_id AS editor_id,
+				MAX(sp.date_notified) AS last_assigned
+			FROM	signoffs sp,
+				articles a
+			WHERE	sp.assoc_id = a.article_id AND
+				a.journal_id = ? AND
+				sp.symbolic = ? AND
+				sp.assoc_type = ?
+				' . ($proofreaderId?' AND sp.user_id = ?':'') . '
+			GROUP BY sp.user_id',
+			$params
+		);
 		while (!$result->EOF) {
 			$row = $result->GetRowAssoc(false);
 			if (!isset($statistics[$row['editor_id']])) $statistics[$row['editor_id']] = array();
@@ -1202,7 +1317,7 @@ class SectionEditorSubmissionDAO extends DAO {
 			case 'submitDate': return 'a.date_submitted';
 			case 'section': return 'section_abbrev';
 			case 'authors': return 'author_name';
-			case 'title': return 'submission_title';
+			case 'title': return 'submission_clean_title';
 			case 'active': return 'incomplete';
 			case 'subCopyedit': return 'copyedit_completed';
 			case 'subLayout': return 'layout_completed';
@@ -1214,6 +1329,7 @@ class SectionEditorSubmissionDAO extends DAO {
 			case 'active': return 'active';
 			case 'average': return 'average';
 			case 'name': return 'u.last_name';
+			case 'status': return 'a.status';
 			default: return null;
 		}
 	}

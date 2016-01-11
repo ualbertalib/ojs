@@ -4,7 +4,8 @@
 <!--
   * plugins/blocks/fontSize/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the Greek locale.
@@ -18,9 +19,9 @@
   *
   -->
  
-<locale name="el_GR" full_name="Greek">
-	<message key="plugins.block.fontSize.displayName">Μέγεθος Χαρακτήρων Block</message>
-	<message key="plugins.block.fontSize.description">Το plugin αυτό παρέχει την λειτουργία αλλαγής του μεγέθους των χαρακτήρων της ιστοσελίδας στην πλαϊνή μπάρα.</message>
+<locale name="el_GR" full_name="ελληνικά">
+	<message key="plugins.block.fontSize.displayName">Δομική Μονάδα Μεγέθους Χαρακτήρων</message>
+	<message key="plugins.block.fontSize.description">Το πρόσθετο αυτό παρέχει την λειτουργία αλλαγής του μεγέθους των χαρακτήρων της ιστοσελίδας στην πλαϊνή μπάρα.</message>
 	<message key="plugins.block.fontSize.title">Μέγεθος Χαρακτήρων</message>
 	<message key="plugins.block.fontSize.small">Μικρά</message>
 	<message key="plugins.block.fontSize.medium">Μέτρια</message>

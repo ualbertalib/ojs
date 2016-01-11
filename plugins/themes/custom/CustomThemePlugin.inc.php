@@ -3,7 +3,8 @@
 /**
  * @file plugins/themes/custom/CustomThemePlugin.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class CustomThemePlugin
@@ -38,18 +39,49 @@ class CustomThemePlugin extends ThemePlugin {
 		return 'CustomThemePlugin';
 	}
 
+	/**
+	 * Get the display name of this plugin.
+	 * @return String display name of plugin
+	 */
 	function getDisplayName() {
 		return __('plugins.theme.custom.name');
 	}
 
+	/**
+	 * Get the description of this plugin.
+	 * @return String description of plugin
+	 */
 	function getDescription() {
 		return __('plugins.theme.custom.description');
 	}
 
+	/**
+	 * Get the filename of this plugin's stylesheet.
+	 * @return String stylesheet filename
+	 */
 	function getStylesheetFilename() {
 		return 'custom.css';
 	}
 
+	/**
+	 * Get the file path to this plugin's stylesheet.
+	 * @return String stylesheet path
+	 */
+	function getStylesheetPath() {
+		$journal =& Request::getJournal();
+		if ($journal && $this->getSetting($journal->getId(), 'customThemePerJournal')) {
+			import('classes.file.PublicFileManager');
+			$fileManager = new PublicFileManager();
+			return $fileManager->getJournalFilesPath($journal->getId());
+		} else {
+			return $this->getPluginPath();
+		}
+	}
+	
+	/**
+	 * Get the available management verbs.
+	 * @return array key-value pairs
+	 */
 	function getManagementVerbs() {
 		return array(array('settings', __('plugins.theme.custom.settings')));
 	}
@@ -71,9 +103,13 @@ class CustomThemePlugin extends ThemePlugin {
 				'user.role.manager'
 			)
 		);
-		if ($isSubclass) $pageCrumbs[] = array(
+		$pageCrumbs[] = array(
 			Request::url(null, 'manager', 'plugins'),
 			'manager.plugins'
+		);
+		$pageCrumbs[] = array(
+			Request::url(null, 'manager', 'plugins', 'themes'),
+			'plugins.categories.themes'
 		);
 
 		$templateMgr->assign('pageHierarchy', $pageCrumbs);
@@ -81,6 +117,9 @@ class CustomThemePlugin extends ThemePlugin {
 
 	/**
 	 * Extend the {url ...} smarty to support this plugin.
+	 * @param $params array
+	 * @param $smarty object reference
+	 * @return string
 	 */
 	function smartyPluginUrl($params, &$smarty) {
 		$path = array($this->getCategory(), $this->getName());
@@ -99,17 +138,22 @@ class CustomThemePlugin extends ThemePlugin {
 		return $smarty->smartyUrl($params, $smarty);
 	}
 
+	/**
+	 * Manage the theme.
+	 * @param $verb string management action
+	 */
 	function manage($verb) {
 		if ($verb != 'settings') return false;
 
 		$journal =& Request::getJournal();
+		$journalId = ($journal ? $journal->getId() : CONTEXT_ID_NONE);
 		$templateMgr =& TemplateManager::getManager();
 
 		$templateMgr->register_function('plugin_url', array(&$this, 'smartyPluginUrl'));
 		$templateMgr->setCacheability(CACHEABILITY_MUST_REVALIDATE);
 
 		$this->import('CustomThemeSettingsForm');
-		$form = new CustomThemeSettingsForm($this, $journal->getId());
+		$form = new CustomThemeSettingsForm($this, $journalId);
 		if (Request::getUserVar('save')) {
 			$form->readInputData();
 			if ($form->validate()) {
@@ -126,6 +170,18 @@ class CustomThemePlugin extends ThemePlugin {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Activate the theme.
+	 * @param $templateMgr object reference
+	 */
+	function activate(&$templateMgr) {
+		// Overrides parent::activate because path needs to be changed.
+		if (($stylesheetFilename = $this->getStylesheetFilename()) != null) {
+			$path = Request::getBaseUrl() . '/' . $this->getStylesheetPath() . '/' . $stylesheetFilename;
+			$templateMgr->addStyleSheet($path);
+		}
 	}
 }
 

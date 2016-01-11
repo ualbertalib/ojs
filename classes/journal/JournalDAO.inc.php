@@ -3,7 +3,8 @@
 /**
  * @file classes/journal/JournalDAO.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class JournalDAO
@@ -14,6 +15,7 @@
  */
 
 import ('classes.journal.Journal');
+import('lib.pkp.classes.metadata.MetadataTypeDescription');
 
 define('JOURNAL_FIELD_TITLE', 1);
 define('JOURNAL_FIELD_SEQUENCE', 2);
@@ -143,6 +145,8 @@ class JournalDAO extends DAO {
 	 * @param $journalId int
 	 */
 	function deleteJournalById($journalId) {
+		if (HookRegistry::call('JournalDAO::deleteJournalById', array(&$this, &$journalId))) return;
+
 		$journalSettingsDao =& DAORegistry::getDAO('JournalSettingsDAO');
 		$journalSettingsDao->deleteSettingsByJournal($journalId);
 
@@ -413,6 +417,29 @@ class JournalDAO extends DAO {
 	 */
 	function getInsertJournalId() {
 		return $this->getInsertId('journals', 'journal_id');
+	}
+
+	/**
+	 * Get journals by setting.  Backported from master pkp-lib's ContextDAO.
+	 * @param $settingName string
+	 * @param $settingValue mixed
+	 * @param $contextId int
+	 * @return DAOResultFactory
+	 */
+	function getBySetting($settingName, $settingValue, $contextId = null) {
+		$params = array($settingName, $settingValue);
+		if ($contextId) $params[] = $contextId;
+
+		$result = $this->retrieve(
+			'SELECT * FROM journals AS c
+			LEFT JOIN journal_settings AS cs
+			ON c.journal_id = cs.journal_id'.
+			' WHERE cs.setting_name = ? AND cs.setting_value = ?' .
+			($contextId?' AND c.journal_id = ?':''),
+			$params
+		);
+
+		return new DAOResultFactory($result, $this, '_returnJournalFromRow');
 	}
 }
 

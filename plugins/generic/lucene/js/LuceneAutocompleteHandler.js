@@ -4,7 +4,8 @@
 /**
  * @file plugins/generic/lucene/js/LuceneAutocompleteHandler.js
  *
- * Copyright (c) 2000-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class LuceneAutocompleteHandler
@@ -62,6 +63,7 @@
 	 * @param {Object} request The autocomplete search request.
 	 * @param {Function} response The response handler function.
 	 */
+	/*jslint unparam: true*/
 	$.pkp.plugins.generic.lucene.LuceneAutocompleteHandler.prototype.
 			fetchAutocomplete = function(callingElement, request, response) {
 		var $textInput;
@@ -74,6 +76,7 @@
 					response(data.content);
 				}, 'json');
 	};
+	/*jslint unparam: false*/
 
 /** @param {jQuery} $ jQuery closure. */
 }(jQuery));

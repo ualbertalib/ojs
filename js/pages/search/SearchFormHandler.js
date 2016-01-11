@@ -4,7 +4,8 @@
 /**
  * @file js/pages/search/SearchFormHandler.js
  *
- * Copyright (c) 2000-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2000-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class SearchFormHandler
@@ -57,6 +58,7 @@
 	 * @param {Object} validator The validator plug-in.
 	 * @param {HTMLElement} formElement The wrapped HTML form.
 	 */
+	/*jslint unparam: true*/
 	$.pkp.pages.search.SearchFormHandler.prototype.submitForm =
 			function(validator, formElement) {
 		var $form, allBlank, formFields, i, max;
@@ -80,6 +82,7 @@
 
 		this.submitFormWithoutValidation(validator);
 	};
+	/*jslint unparam: false*/
 
 /** @param {jQuery} $ jQuery closure. */
 }(jQuery));

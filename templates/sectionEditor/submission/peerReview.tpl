@@ -1,7 +1,8 @@
 {**
  * templates/sectionEditor/submission/peerReview.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Subtemplate defining the peer review table.
@@ -80,8 +81,10 @@
 				<input type="hidden" name="articleId" value="{$submission->getId()}" />
 				<input type="hidden" name="fileId" value="{$suppFile->getId()}" />
 
-				<a href="{url op="downloadFile" path=$submission->getId()|to_array:$suppFile->getFileId():$suppFile->getRevision()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;
-				{$suppFile->getDateModified()|date_format:$dateFormatShort}&nbsp;&nbsp;
+				{if $suppFile->getFileId() > 0}<a href="{url op="downloadFile" path=$submission->getId()|to_array:$suppFile->getFileId():$suppFile->getRevision()}" class="file">{$suppFile->getFileName()|escape}</a>&nbsp;&nbsp;
+				{$suppFile->getDateModified()|date_format:$dateFormatShort}
+				{elseif $suppFile->getRemoteURL() != ''}<a href="{$suppFile->getRemoteURL()|escape}" target="_blank">{$suppFile->getRemoteURL()|truncate:20:"..."|escape}</a>{/if}
+				&nbsp;&nbsp;
 				<label for="show">{translate key="editor.article.showSuppFile"}</label>
 				<input type="checkbox" name="show" id="show" value="1"{if $suppFile->getShowReviewers()==1} checked="checked"{/if}/>
 				<input type="submit" name="submit" value="{translate key="common.record"}" class="button" />
@@ -134,7 +137,7 @@
 	</table>
 
 	<table width="100%" class="data">
- 	<tr valign="top">
+	<tr valign="top">
 		<td class="label">{translate key="submission.reviewForm"}</td>
 		<td>
 		{if $reviewAssignment->getReviewFormId()}

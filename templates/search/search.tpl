@@ -1,7 +1,8 @@
 {**
  * templates/search/search.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * A unified search interface.
@@ -18,7 +19,7 @@
 			$('#searchForm').pkpHandler('$.pkp.pages.search.SearchFormHandler');
 		{rdelim});
 	</script>
-	<form method="post" id="searchForm" action="{url op="search"}">
+	<form id="searchForm" action="{url op="search"}">
 		<table class="data">
 			<tr valign="top">
 				<td class="label"><label for="query">{translate key="search.searchAllCategories"}</label></td>
@@ -186,14 +187,12 @@
 	</table>
 
 	{capture assign="syntaxInstructions"}{call_hook name="Templates::Search::SearchResults::SyntaxInstructions"}{/capture}
-	<p>
 		{if empty($syntaxInstructions)}
 			{translate key="search.syntaxInstructions"}
 		{else}
 			{* Must be properly escaped in the controller as we potentially get HTML here! *}
 			{$syntaxInstructions}
 		{/if}
-	</p>
 </div>
 
 {include file="common/footer.tpl"}

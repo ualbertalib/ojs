@@ -1,7 +1,8 @@
 {**
  * plugins/importexport/users/importUsersResults.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Show the results of importing users.
@@ -59,6 +60,6 @@
 </p>
 {/if}
 
-<p>&#187; <a href="{url page="manager"}">{translate key="manager.journalManagement"}</a></p>
+<p><a href="{url page="manager"}">{translate key="manager.journalManagement"}</a></p>
 </div>
 {include file="common/footer.tpl"}

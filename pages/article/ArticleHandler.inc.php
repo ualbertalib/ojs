@@ -3,7 +3,8 @@
 /**
  * @file pages/article/ArticleHandler.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ArticleHandler
@@ -55,7 +56,7 @@ class ArticleHandler extends Handler {
 		$journal =& $this->journal;
 		$issue =& $this->issue;
 		$article =& $this->article;
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		$rtDao =& DAORegistry::getDAO('RTDAO');
 		$journalRt = $rtDao->getJournalRTByJournal($journal);
@@ -91,7 +92,9 @@ class ArticleHandler extends Handler {
 
 		if ($galley && !$galley->isHtmlGalley() && !$galley->isPdfGalley()) {
 			if ($galley->getRemoteURL()) {
-				$request->redirectUrl($galley->getRemoteURL());
+				if (!HookRegistry::call('ArticleHandler::viewRemoteGalley', array(&$article, &$galley))) {
+					$request->redirectUrl($galley->getRemoteURL());
+				}
 			}
 			if ($galley->isInlineable()) {
 				return $this->viewFile(
@@ -106,7 +109,7 @@ class ArticleHandler extends Handler {
 			}
 		}
 
-		$templateMgr =& TemplateManager::getManager();
+		$templateMgr =& TemplateManager::getManager($request);
 		$templateMgr->addJavaScript('js/relatedItems.js');
 		$templateMgr->addJavaScript('js/inlinePdf.js');
 		$templateMgr->addJavaScript('js/pdfobject.js');
@@ -157,19 +160,7 @@ class ArticleHandler extends Handler {
 			$citationDao =& DAORegistry::getDAO('CitationDAO'); /* @var $citationDao CitationDAO */
 			$citationFactory =& $citationDao->getObjectsByAssocId(ASSOC_TYPE_ARTICLE, $article->getId());
 			$templateMgr->assign('citationFactory', $citationFactory);
-
-			// Increment the published article's abstract views count
-			if (!$request->isBot()) {
-				$publishedArticleDao =& DAORegistry::getDAO('PublishedArticleDAO');
-				$publishedArticleDao->incrementViewsByArticleId($article->getId());
-			}
 		} else {
-			if (!$request->isBot() && !$galley->isPdfGalley()) {
-				// Increment the galley's views count.
-				// PDF galley views are counted in viewFile.
-				$galleyDao->incrementViews($galley->getId());
-			}
-
 			// Use the article's CSS file, if set.
 			if ($galley->isHTMLGalley() && $styleFile =& $galley->getStyleFile()) {
 				$templateMgr->addStyleSheet($router->url($request, null, 'article', 'viewFile', array(
@@ -205,7 +196,7 @@ class ArticleHandler extends Handler {
 
 		if($journalRt->getSharingEnabled()) {
 			$templateMgr->assign('sharingRequestURL', $request->getRequestURL());
-			$templateMgr->assign('sharingArticleTitle', $article->getArticleTitle());
+			$templateMgr->assign('sharingArticleTitle', $article->getLocalizedTitle());
 			$templateMgr->assign_by_ref('sharingUserName', $journalRt->getSharingUserName());
 			$templateMgr->assign_by_ref('sharingButtonStyle', $journalRt->getSharingButtonStyle());
 			$templateMgr->assign_by_ref('sharingDropDownMenu', $journalRt->getSharingDropDownMenu());
@@ -248,7 +239,7 @@ class ArticleHandler extends Handler {
 		$journal =& $this->journal;
 		$issue =& $this->issue;
 		$article =& $this->article;
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		if (!$galley) {
 			$galleyDao =& DAORegistry::getDAO('ArticleGalleyDAO');
@@ -284,7 +275,7 @@ class ArticleHandler extends Handler {
 		$journal =& $this->journal;
 		$issue =& $this->issue;
 		$article =& $this->article;
-		$this->setupTemplate();
+		$this->setupTemplate($request);
 
 		if (!$galley) {
 			$galleyDao =& DAORegistry::getDAO('ArticleGalleyDAO');
@@ -341,7 +332,6 @@ class ArticleHandler extends Handler {
 		if (!$galley) $request->redirect(null, null, 'view', $articleId);
 
 		if (!$fileId) {
-			if(!$request->isBot()) $galleyDao->incrementViews($galley->getId());
 			$fileId = $galley->getFileId();
 		} else {
 			if (!$galley->isDependentFile($fileId)) {
@@ -374,7 +364,6 @@ class ArticleHandler extends Handler {
 		} else {
 			$galley =& $galleyDao->getGalley($galleyId, $article->getId());
 		}
-		if (!$request->isBot() && $galley) $galleyDao->incrementViews($galley->getId());
 
 		if ($article && $galley && !HookRegistry::call('ArticleHandler::downloadFile', array(&$article, &$galley))) {
 			import('classes.file.ArticleFileManager');
@@ -403,7 +392,7 @@ class ArticleHandler extends Handler {
 			$suppFile =& $suppFileDao->getSuppFile((int) $suppId, $article->getId());
 		}
 
-		if ($article && $suppFile) {
+		if ($article && $suppFile && !HookRegistry::call('ArticleHandler::downloadSuppFile', array(&$article, &$suppFile))) {
 			import('classes.file.ArticleFileManager');
 			$articleFileManager = new ArticleFileManager($article->getId());
 			if ($suppFile->getRemoteURL()) {
@@ -546,9 +535,17 @@ class ArticleHandler extends Handler {
 		return true;
 	}
 
-	function setupTemplate() {
+	/**
+	 * Set up the template
+	 * @param $request PKPRequest
+	 */
+	function setupTemplate($request) {
 		parent::setupTemplate();
 		AppLocale::requireComponents(LOCALE_COMPONENT_PKP_READER, LOCALE_COMPONENT_PKP_SUBMISSION);
+		if ($this->article) {
+			$templateMgr =& TemplateManager::getManager($request);
+			$templateMgr->assign('ccLicenseBadge', Application::getCCLicenseBadge($this->article->getLicenseURL()));
+		}
 	}
 }
 

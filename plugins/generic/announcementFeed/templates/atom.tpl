@@ -1,7 +1,8 @@
 {**
  * plugins/generic/announcementFeed/templates/atom.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * Atom feed template
@@ -29,7 +30,7 @@
 		{assign var="description" value=$journal->getLocalizedSetting('searchDescription')}
 	{/if}
 	{if $description}
-	<subtitle>{$description|strip|escape:"html"}</subtitle>
+		<subtitle type="html">{$description|strip|escape:"html"}</subtitle>
 	{/if}
 
 {foreach from=$announcements item=announcement}
@@ -38,7 +39,7 @@
 		<id>{url page="announcement" op="view" path=$announcement->getId()}</id>
 		<title>{$announcement->getLocalizedTitleFull()|strip|escape:"html"}</title>
 		<updated>{$announcement->getDatetimePosted()|date_format:"%Y-%m-%dT%T%z"|regex_replace:"/00$/":":00"}</updated>
-	  	<author>
+	 	<author>
 			<name>{$journal->getLocalizedTitle()|strip|escape:"html"}</name>
         </author>
 		<link rel="alternate" href="{url page="announcement" op="view" path=$announcement->getId()}" />

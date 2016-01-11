@@ -4,7 +4,8 @@
 <!--
   * plugins/generic/roundedCorners/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the Greek locale.
@@ -18,7 +19,7 @@
   *
   -->
  
-<locale name="el_GR" full_name="Greek">	
-	<message key="plugins.generic.roundedcorners.displayName">Rounded Corners</message>
-	<message key="plugins.generic.roundedcorners.description">Αυτό το Plugin βάζει ένα φόντο σε κάθε block της πλαϊνής μπάρας και στρογγυλεύει τις γωνίες του.  Αλλαγές στα χρώματα μπορούν να γίνουν διαμορφώνοντας κατάλληλα το CSS stylesheet που βρίσκετε στο plugin.</message>
+<locale name="el_GR" full_name="ελληνικά">	
+	<message key="plugins.generic.roundedcorners.displayName">Στρογγυλεμένες Γωνίες</message>
+	<message key="plugins.generic.roundedcorners.description">Αυτό το πρόσθετο βάζει ένα φόντο σε κάθε δομική μονάδα της πλαϊνής μπάρας και στρογγυλεύει τις γωνίες του.  Αλλαγές στα χρώματα μπορούν να γίνουν διαμορφώνοντας κατάλληλα το αρχείο στυλ CSS που βρίσκεται στο πρόσθετο.</message>
 </locale>

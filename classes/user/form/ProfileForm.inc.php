@@ -3,7 +3,8 @@
 /**
  * @file classes/user/form/ProfileForm.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class ProfileForm
@@ -35,6 +36,7 @@ class ProfileForm extends Form {
 		$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 		$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 		$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+		$this->addCheck(new FormValidatorORCID($this, 'orcid', 'optional', 'user.profile.form.orcidInvalid'));
 		$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array($user->getId(), true), true));
 		$this->addCheck(new FormValidatorPost($this));
 	}
@@ -173,6 +175,7 @@ class ProfileForm extends Form {
 			'affiliation' => $user->getAffiliation(null), // Localized
 			'signature' => $user->getSignature(null), // Localized
 			'email' => $user->getEmail(),
+			'orcid' => $user->getData('orcid'),
 			'userUrl' => $user->getUrl(),
 			'phone' => $user->getPhone(),
 			'fax' => $user->getFax(),
@@ -186,6 +189,8 @@ class ProfileForm extends Form {
 			'interestsKeywords' => $interestManager->getInterestsForUser($user),
 			'interestsTextOnly' => $interestManager->getInterestsString($user),
 		);
+
+		return parent::initData();
 	}
 
 	/**
@@ -202,6 +207,7 @@ class ProfileForm extends Form {
 			'affiliation',
 			'signature',
 			'email',
+			'orcid',
 			'userUrl',
 			'phone',
 			'fax',
@@ -242,6 +248,7 @@ class ProfileForm extends Form {
 		$user->setAffiliation($this->getData('affiliation'), null); // Localized
 		$user->setSignature($this->getData('signature'), null); // Localized
 		$user->setEmail($this->getData('email'));
+		$user->setData('orcid', $this->getData('orcid'));
 		$user->setUrl($this->getData('userUrl'));
 		$user->setPhone($this->getData('phone'));
 		$user->setFax($this->getData('fax'));
@@ -265,6 +272,8 @@ class ProfileForm extends Form {
 			}
 		}
 		$user->setLocales($locales);
+
+		parent::execute($user);
 
 		$userDao =& DAORegistry::getDAO('UserDAO');
 		$userDao->updateObject($user);

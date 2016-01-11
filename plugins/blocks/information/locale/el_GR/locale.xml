@@ -4,7 +4,8 @@
 <!--
   * plugins/blocks/information/locale/el_GR/locale.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * Localization strings for the Greek locale.
@@ -18,8 +19,8 @@
   *
   -->
  
-<locale name="el_GR" full_name="Greek">
-	<message key="plugins.block.information.displayName">Block Πληροφοριών</message>
-	<message key="plugins.block.information.description">Το plugin αυτό παρέχει ένα σύνδεσμο Πληροφορίες στην πλαϊνή μπάρα.</message>
+<locale name="el_GR" full_name="ελληνικά">
+	<message key="plugins.block.information.displayName">Δομική Μονάδα Πληροφοριών</message>
+	<message key="plugins.block.information.description">Το πρόσθετο αυτό παρέχει ένα σύνδεσμο "Πληροφορίες" στην πλαϊνή μπάρα.</message>
 	<message key="plugins.block.information.link">Πληροφορίες</message>
 </locale>

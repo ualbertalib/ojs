@@ -1,7 +1,8 @@
 {**
  * templates/about/submissions.tpl
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * About the Journal / Submissions.
@@ -16,66 +17,44 @@
 		($currentJournal->getSetting('submissionFeeEnabled') || $currentJournal->getSetting('fastTrackFeeEnabled') || $currentJournal->getSetting('publicationFeeEnabled')) }
 	{assign var="authorFees" value=1}
 {/if}
-<ul class="plain">
 
-{if $currentJournal->getJournalId() !='62' && $currentJournal->getJournalId() !=13  }
-<li>&#187; <a href="{url page="about" op="submissions" anchor="onlineSubmissions"}">{translate key="about.onlineSubmissions"}</a></li>
-{/if}
-	{if $currentJournal->getLocalizedSetting('authorGuidelines') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="authorGuidelines"}">{translate key="about.authorGuidelines"}</a></li>{/if}
-	{if $currentJournal->getLocalizedSetting('copyrightNotice') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="copyrightNotice"}">{translate key="about.copyrightNotice"}</a></li>{/if}
-	{if $currentJournal->getLocalizedSetting('privacyStatement') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>{/if}
-	{if $authorFees}<li>&#187; <a href="{url page="about" op="submissions" anchor="authorFees"}">{translate key="about.authorFees"}</a></li>{/if}	
+<ul>
+	<li id="linkDisableUserReg"><a href="{url page="about" op="submissions" anchor="onlineSubmissions"}">{translate key="about.onlineSubmissions"}</a></li>
+	{if $currentJournal->getLocalizedSetting('authorGuidelines') != ''}<li id="linkAuthorGuidelines"><a href="{url page="about" op="submissions" anchor="authorGuidelines"}">{translate key="about.authorGuidelines"}</a></li>{/if}
+	{if $currentJournal->getLocalizedSetting('copyrightNotice') != ''}<li id="linkCopyrightNotice"><a href="{url page="about" op="submissions" anchor="copyrightNotice"}">{translate key="about.copyrightNotice"}</a></li>{/if}
+ {if $currentJournal->getJournalId() !='21' }
+	{if $currentJournal->getLocalizedSetting('privacyStatement') != ''}<li id="linkPrivacyStatement"><a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>{/if}
+	{if $authorFees}<li id="linkAuthorFees"><a href="{url page="about" op="submissions" anchor="authorFees"}">{translate key="about.authorFees"}</a></li>{/if}
+ {elseif $currentJournal->getJournalId() =='21'}    
+            <p>We are not currently taking online submissions for our journal. Please see information in Author Guidelines for submission information.</p>
+            {/if}
+                        </ul>
 </ul>
 
-<div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
-<p>
-	{translate key="about.onlineSubmissions.haveAccount" journalTitle=$siteTitle|escape}<br />
-	<a href="{url page="login"}" class="action">{translate key="about.onlineSubmissions.login"}</a>
-</p>
-<p>
-	{translate key="about.onlineSubmissions.needAccount"}<br />
-	<a href="{url page="user" op="register"}" class="action">{translate key="about.onlineSubmissions.registration"}</a>
-</p>
-<p>{translate key="about.onlineSubmissions.registrationRequired"}</p>
-<div class="separator">&nbsp;</div>
-{**
- * Custom Code by Jeremy 
- * Added IF statement
- * Do not display for Past imperfect (journal 21)
- * 
- *}
-	{if $currentJournal->getJournalId() !='21' }
-	
-			{if $currentJournal->getLocalizedSetting('privacyStatement') != ''}<li>&#187; <a href="{url page="about" op="submissions" anchor="privacyStatement"}">{translate key="about.privacyStatement"}</a></li>{/if}
-			{if $authorFees}<li>&#187; <a href="{url page="about" op="submissions" anchor="authorFees"}">{translate key="about.authorFees"}</a></li>{/if}	
-			
-	{elseif $currentJournal->getJournalId() =='21'}  	
-            <p>We are not currently taking online submissions for our journal. Please see information in Author Guidelines for submission information.</p> 
 
-	{/if}
-		</ul>
+{if $currentJournal->getJournalId() !='21' && $currentJournal->getJournalId() !='62' && $currentJournal->getJournalId() !='49'  && $currentJournal->getJournalId() !='13'}
 
-{if $currentJournal->getJournalId() !='21' && $currentJournal->getJournalId() !='62' && $currentJournal->getJournalId() !='49' && $currentJournal->getJournalId() !='13'}
-		<div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
-		<p>
-			{translate key="about.onlineSubmissions.haveAccount" journalTitle=$siteTitle|escape}<br />
-			<a href="{url page="login"}" class="action">{translate key="about.onlineSubmissions.login"}</a>
-		</p>
+<div id="onlineSubmissions">
+	<h3>{translate key="about.onlineSubmissions"}</h3>
+	<p>
+		{translate key="about.onlineSubmissions.haveAccount" journalTitle=$siteTitle|escape}<br />
+		<a href="{url page="login"}" class="action">{translate key="about.onlineSubmissions.login"}</a>
+	</p>
+	{if !$currentJournal->getSetting('disableUserReg')}
 		<p>
 			{translate key="about.onlineSubmissions.needAccount"}<br />
 			<a href="{url page="user" op="register"}" class="action">{translate key="about.onlineSubmissions.registration"}</a>
 		</p>
 		<p>{translate key="about.onlineSubmissions.registrationRequired"}</p>
-	<div class="separator">&nbsp;</div>
+	{/if}
 </div>
 {/if}
 {if $currentJournal->getJournalId() =='49'}
-	<div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
-		We currently do not accept online submissions. Please see the details below for submission information.
-		<div class="separator">&nbsp;</div>
-	</div>
+            <div id="onlineSubmissions"><h3>{translate key="about.onlineSubmissions"}</h3>
+                        We currently do not accept online submissions. Please see the details below for submission information.
+            </div>
 {/if}
-			
+<div class="separator">&nbsp;</div>
 
 {if $currentJournal->getLocalizedSetting('authorGuidelines') != ''}
 <div id="authorGuidelines"><h3>{translate key="about.authorGuidelines"}</h3>
@@ -96,7 +75,7 @@
 	<p>{translate key="about.submissionPreparationChecklist.description"}</p>
 	<ol>
 		{foreach from=$submissionChecklist item=checklistItem}
-			<li>{$checklistItem.content|nl2br}</li>	
+			<li>{$checklistItem.content|nl2br}</li>
 		{/foreach}
 	</ol>
 	<div class="separator">&nbsp;</div>
@@ -129,11 +108,11 @@
 	{/if}
 	{if $currentJournal->getSetting('fastTrackFeeEnabled')}
 		<p>{$currentJournal->getLocalizedSetting('fastTrackFeeName')|escape}: {$currentJournal->getSetting('fastTrackFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')})<br />
-		{$currentJournal->getLocalizedSetting('fastTrackFeeDescription')|nl2br}<p>	
+		{$currentJournal->getLocalizedSetting('fastTrackFeeDescription')|nl2br}<p>
 	{/if}
 	{if $currentJournal->getSetting('publicationFeeEnabled')}
 		<p>{$currentJournal->getLocalizedSetting('publicationFeeName')|escape}: {$currentJournal->getSetting('publicationFee')|string_format:"%.2f"} ({$currentJournal->getSetting('currency')})<br />
-		{$currentJournal->getLocalizedSetting('publicationFeeDescription')|nl2br}<p>	
+		{$currentJournal->getLocalizedSetting('publicationFeeDescription')|nl2br}<p>
 	{/if}
 	{if $currentJournal->getLocalizedSetting('waiverPolicy') != ''}
 		<p>{$currentJournal->getLocalizedSetting('waiverPolicy')|nl2br}</p>

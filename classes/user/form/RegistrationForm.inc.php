@@ -7,7 +7,8 @@
 /**
  * @file classes/user/form/RegistrationForm.inc.php
  *
- * Copyright (c) 2003-2013 John Willinsky
+ * Copyright (c) 2013-2015 Simon Fraser University Library
+ * Copyright (c) 2003-2015 John Willinsky
  * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
  *
  * @class RegistrationForm
@@ -74,6 +75,7 @@ class RegistrationForm extends Form {
 				$this->addCheck(new FormValidator($this, 'lastName', 'required', 'user.profile.form.lastNameRequired'));
 				$this->addCheck(new FormValidatorUrl($this, 'userUrl', 'optional', 'user.profile.form.urlInvalid'));
 				$this->addCheck(new FormValidatorEmail($this, 'email', 'required', 'user.profile.form.emailRequired'));
+				$this->addCheck(new FormValidatorORCID($this, 'orcid', 'optional', 'user.profile.form.orcidInvalid'));
 				$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailsDoNotMatch', create_function('$email,$form', 'return $email == $form->getData(\'confirmEmail\');'), array(&$this)));
 				$this->addCheck(new FormValidatorCustom($this, 'email', 'required', 'user.register.form.emailExists', array(DAORegistry::getDAO('UserDAO'), 'userExistsByEmail'), array(), true));
 				if ($this->captchaEnabled) {
@@ -157,7 +159,7 @@ class RegistrationForm extends Form {
 		$this->setData('registerAsReader', 1);
 		$this->setData('existingUser', $this->existingUser);
 		$this->setData('userLocales', array());
-		$this->setData('sendPassword', 1);
+		$this->setData('sendPassword', 0);
 	}
 
 	/**
@@ -168,7 +170,7 @@ class RegistrationForm extends Form {
 			'username', 'password', 'password2',
 			'salutation', 'firstName', 'middleName', 'lastName',
 			'gender', 'initials', 'country',
-			'affiliation', 'email', 'confirmEmail', 'userUrl', 'phone', 'fax', 'signature',
+			'affiliation', 'email', 'confirmEmail', 'orcid', 'userUrl', 'phone', 'fax', 'signature',
 			'mailingAddress', 'biography', 'interestsTextOnly', 'keywords', 'userLocales',
 			'registerAsReader', 'openAccessNotification', 'registerAsAuthor',
 			'registerAsReviewer', 'existingUser', 'sendPassword'
@@ -215,17 +217,17 @@ class RegistrationForm extends Form {
 				$sessionManager =& SessionManager::getManager();
 				$session =& $sessionManager->getUserSession();
 
-				$user =& $userDao->getUserByUsername($session->getSessionVar('username'));
+				$user =& $userDao->getByUsername($session->getSessionVar('username'));
 			} else {
-				$user =& $userDao->getUserByUsername($this->getData('username'));
+				$user =& $userDao->getByUsername($this->getData('username'));
 			}
 
 			if ($user == null) {
 				return false;
 			}
 
+			parent::execute($user);
 			$userId = $user->getId();
-
 		} else {
 			// New user
 			$user = new User();
@@ -240,6 +242,7 @@ class RegistrationForm extends Form {
 			$user->setAffiliation($this->getData('affiliation'), null); // Localized
 			$user->setSignature($this->getData('signature'), null); // Localized
 			$user->setEmail($this->getData('email'));
+			$user->setData('orcid', $this->getData('orcid'));
 			$user->setUrl($this->getData('userUrl'));
 			$user->setPhone($this->getData('phone'));
 			$user->setFax($this->getData('fax'));
@@ -274,6 +277,7 @@ class RegistrationForm extends Form {
 				$user->setDisabledReason(__('user.login.accountNotValidated'));
 			}
 
+			parent::execute($user);
 			$userDao =& DAORegistry::getDAO('UserDAO');
 			$userDao->insertUser($user);
 			$userId = $user->getId();
@@ -332,7 +336,7 @@ class RegistrationForm extends Form {
 
 				// Send email validation request to user
 				$mail = new MailTemplate('USER_VALIDATE');
-				$mail->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+				$mail->setReplyTo(null);
 				$mail->assignParams(array(
 					'userFullName' => $user->getFullName(),
 					'activateUrl' => Request::url($journal->getPath(), 'user', 'activateUser', array($this->getData('username'), $accessKey))
@@ -344,7 +348,7 @@ class RegistrationForm extends Form {
 			if ($this->getData('sendPassword')) {
 				// Send welcome email to user
 				$mail = new MailTemplate('USER_REGISTER');
-				$mail->setFrom($journal->getSetting('contactEmail'), $journal->getSetting('contactName'));
+				$mail->setReplyTo(null);
 				$mail->assignParams(array(
 					'username' => $this->getData('username'),
 					'password' => String::substr($this->getData('password'), 0, 30), // Prevent mailer abuse via long passwords

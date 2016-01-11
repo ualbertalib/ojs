@@ -4,7 +4,8 @@
 <!--
   * 000008.xml
   *
-  * Copyright (c) 2003-2013 John Willinsky
+  * Copyright (c) 2013-2015 Simon Fraser University Library
+  * Copyright (c) 2003-2015 John Willinsky
   * Distributed under the GNU GPL v2. For full terms see the file docs/COPYING.
   *
   * table of contents for Editorial Process - Reviewer's Role
@@ -16,5 +17,5 @@
 	<topic id="editorial/topic/000031" title="Révision" />
 
 	<breadcrumb url="editorial/topic/000000" title="Processus éditorial" />
-	<breadcrumb url="editorial/topic/000008" title="Rôle du critique" />
+	<breadcrumb url="editorial/topic/000008" title="Rôle de l'évaluateur" />
 </toc>
